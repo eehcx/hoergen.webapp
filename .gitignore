@@ -24,5 +24,7 @@ dist-ssr
 *.sw?
 
 firebase.ts
+firebase.json
+.firebaserc
 
 pnpm-lock.yaml
