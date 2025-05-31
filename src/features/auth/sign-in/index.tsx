@@ -12,7 +12,7 @@ import { UserAuthForm } from './components/user-auth-form'
 export default function SignIn() {
   return (
     <AuthLayout>
-      <Card className='gap-4'>
+      <Card className='gap-4 rounded-[0.3rem]'>
         <CardHeader>
           <CardTitle className='text-lg tracking-tight'>Login</CardTitle>
           <CardDescription>
@@ -21,20 +21,24 @@ export default function SignIn() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <UserAuthForm />
+          <UserAuthForm/>
         </CardContent>
         <CardFooter>
           <p className='text-muted-foreground px-8 text-center text-sm'>
             By clicking login, you agree to our{' '}
             <a
-              href='/terms'
+              target='_blank'
+              rel='noopener noreferrer'
+              href='https://www.hoergen.com/terms'
               className='hover:text-primary underline underline-offset-4'
             >
               Terms of Service
             </a>{' '}
             and{' '}
             <a
-              href='/privacy'
+              target='_blank'
+              rel='noopener noreferrer'
+              href='https://www.hoergen.com/privacy'
               className='hover:text-primary underline underline-offset-4'
             >
               Privacy Policy

@@ -6,6 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { useAuth } from './hooks/useAuth'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/authStore'
@@ -51,7 +52,8 @@ const queryClient = new QueryClient({
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           toast.error('Session expired!')
-          useAuthStore.getState().auth.reset()
+          useAuthStore.getState().setUser(null)
+          useAuthStore.getState().setClaims(null)
           const redirect = `${router.history.location.href}`
           router.navigate({ to: '/sign-in', search: { redirect } })
         }
@@ -91,10 +93,18 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
           <FontProvider>
+            {/* RouterProvider no necesita children */}
             <RouterProvider router={router} />
+            <AuthInitializer />
           </FontProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>
   )
+}
+
+// AuthInitializer component to initialize authentication
+function AuthInitializer() {
+  useAuth() // Hook to initialize authentication state
+  return null
 }

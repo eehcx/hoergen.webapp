@@ -5,12 +5,21 @@ import { SearchProvider } from '@/context/search-context'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import SkipToMain from '@/components/skip-to-main'
+import { AuthGuard } from '@/components/auth/authGuard'
 
 export const Route = createFileRoute('/_authenticated')({
-  component: RouteComponent,
+  component: AuthenticatedLayout,
 })
 
-function RouteComponent() {
+function AuthenticatedLayout() {
+  return (
+    <AuthGuard>
+      <AuthenticatedContent />
+    </AuthGuard>
+  )
+}
+
+function AuthenticatedContent() {
   const defaultOpen = Cookies.get('sidebar_state') !== 'false'
   return (
     <SearchProvider>

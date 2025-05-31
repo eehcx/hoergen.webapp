@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import {
   BadgeCheck,
   Bell,
@@ -7,6 +7,8 @@ import {
   LogOut,
   Sparkles,
 } from 'lucide-react'
+import { signOut } from '@/lib/auth'
+import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -34,6 +36,21 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate()
+
+  const handleSignOut = async () => {
+    try {
+      console.log("⏳ Iniciando proceso de cierre de sesión...");
+      await signOut()
+      console.log("✅ Cierre de sesión completado en Firebase");
+      toast.success('You have been logged out successfully.')
+      console.log("🔄 Navegando a /sign-in...");
+      navigate({ to: '/sign-in' })
+    } catch (error) {
+      toast.error('Failed to log out. Please try again.')
+      console.error('Logout error:', error)
+    }
+  }
 
   return (
     <SidebarMenu>
@@ -102,7 +119,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onSelect={handleSignOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

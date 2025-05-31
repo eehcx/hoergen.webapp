@@ -1,25 +1,35 @@
-import Cookies from 'js-cookie'
+//import Cookies from 'js-cookie'
 import { create } from 'zustand'
+import { User } from 'firebase/auth'
 
-const ACCESS_TOKEN = 'thisisjustarandomstring'
+//const ACCESS_TOKEN = 'thisisjustarandomstring'
 
-interface AuthUser {
-  accountNo: string
-  email: string
-  role: string[]
-  exp: number
-}
+//interface AuthUser {
+//  accountNo: string
+//  email: string
+//  role: string[]
+//  exp: number
+//}
 
 interface AuthState {
-  auth: {
-    user: AuthUser | null
-    setUser: (user: AuthUser | null) => void
-    accessToken: string
-    setAccessToken: (accessToken: string) => void
-    resetAccessToken: () => void
-    reset: () => void
-  }
+  user: User | null;
+  claims: { plan?: string; role?: string } | null;
+  isLoading: boolean;
+  setUser: (user: User | null) => void;
+  setClaims: (claims: { plan?: string; role?: string } | null) => void;
+  setLoading: (isLoading: boolean) => void;
 }
+
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  claims: null,
+  isLoading: true,
+  setUser: (user) => set({ user }),
+  setClaims: (claims) => set({ claims }),
+  setLoading: (isLoading) => set({ isLoading }),
+}));
+
+/*
 
 export const useAuthStore = create<AuthState>()((set) => {
   const cookieState = Cookies.get(ACCESS_TOKEN)
@@ -51,5 +61,6 @@ export const useAuthStore = create<AuthState>()((set) => {
     },
   }
 })
+*/
 
 // export const useAuth = () => useAuthStore((state) => state.auth)
