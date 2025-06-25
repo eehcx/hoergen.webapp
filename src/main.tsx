@@ -16,6 +16,7 @@ import { ThemeProvider } from './context/theme-context'
 import './index.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
+import { MiniPlayerProvider } from '@/components/mini-player-context'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -93,9 +94,11 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
           <FontProvider>
-            {/* RouterProvider no necesita children */}
-            <RouterProvider router={router} />
-            <AuthInitializer />
+            <MiniPlayerProvider>
+              {/* RouterProvider no necesita children */}
+              <RouterProvider router={router} />
+              <AuthInitializer />
+            </MiniPlayerProvider>
           </FontProvider>
         </ThemeProvider>
       </QueryClientProvider>

@@ -47,19 +47,7 @@ export class StationService extends BaseService {
      */
     async getAllStations(params?: StationQueryParams): Promise<ResponseStationDto[]> {
         try {
-        // Build query string if params are provided
-        let endpoint = '/stations'
-        if (params) {
-            const queryParams = new URLSearchParams()
-            if (params.countryId) queryParams.append('countryId', params.countryId)
-            if (params.genreId) queryParams.append('genreId', params.genreId)
-            if (params.ownerId) queryParams.append('ownerId', params.ownerId)
-            
-            const queryString = queryParams.toString()
-            if (queryString) endpoint += `?${queryString}`
-        }
-        
-        const response = await this.api.get(endpoint)
+        const response = await this.api.get('/stations', { params })
         return response.data
         } catch (error) {
         return this.handleError(error)

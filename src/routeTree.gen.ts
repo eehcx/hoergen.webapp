@@ -17,7 +17,6 @@ import { Route as AuthenticatedSearchImport } from './routes/_authenticated/sear
 import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedLibraryImport } from './routes/_authenticated/library'
 import { Route as AuthenticatedBrowseImport } from './routes/_authenticated/browse'
-import { Route as AuthenticatedAppImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAdminImport } from './routes/_authenticated/admin'
 import { Route as errors503Import } from './routes/(errors)/503'
 import { Route as errors500Import } from './routes/(errors)/500'
@@ -46,21 +45,9 @@ import { Route as AuthenticatedSettingsAccountImport } from './routes/_authentic
 import { Route as AuthenticatedLibraryHistoryImport } from './routes/_authenticated/library/history'
 import { Route as AuthenticatedLibraryFollowingImport } from './routes/_authenticated/library/following'
 import { Route as AuthenticatedLibraryFavoritesImport } from './routes/_authenticated/library/favorites'
-import { Route as AuthenticatedAppSearchImport } from './routes/_authenticated/app/search'
-import { Route as AuthenticatedAppRadioImport } from './routes/_authenticated/app/radio'
-import { Route as AuthenticatedAppProfileImport } from './routes/_authenticated/app/profile'
-import { Route as AuthenticatedAppLibraryImport } from './routes/_authenticated/app/library'
-import { Route as AuthenticatedAppBrowseImport } from './routes/_authenticated/app/browse'
-import { Route as AuthenticatedAppAdminImport } from './routes/_authenticated/app/admin'
 import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminStationsImport } from './routes/_authenticated/admin/stations'
 import { Route as AuthenticatedAdminAnalyticsImport } from './routes/_authenticated/admin/analytics'
-import { Route as AuthenticatedAppLibrarySubscriptionsImport } from './routes/_authenticated/app/library/subscriptions'
-import { Route as AuthenticatedAppLibraryHistoryImport } from './routes/_authenticated/app/library/history'
-import { Route as AuthenticatedAppLibraryFavoritesImport } from './routes/_authenticated/app/library/favorites'
-import { Route as AuthenticatedAppAdminUsersImport } from './routes/_authenticated/app/admin/users'
-import { Route as AuthenticatedAppAdminStationsImport } from './routes/_authenticated/app/admin/stations'
-import { Route as AuthenticatedAppAdminAnalyticsImport } from './routes/_authenticated/app/admin/analytics'
 
 // Create/Update Routes
 
@@ -96,12 +83,6 @@ const AuthenticatedLibraryRoute = AuthenticatedLibraryImport.update({
 const AuthenticatedBrowseRoute = AuthenticatedBrowseImport.update({
   id: '/browse',
   path: '/browse',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
-const AuthenticatedAppRoute = AuthenticatedAppImport.update({
-  id: '/app',
-  path: '/app',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
@@ -291,42 +272,6 @@ const AuthenticatedLibraryFavoritesRoute =
     getParentRoute: () => AuthenticatedLibraryRoute,
   } as any)
 
-const AuthenticatedAppSearchRoute = AuthenticatedAppSearchImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => AuthenticatedAppRoute,
-} as any)
-
-const AuthenticatedAppRadioRoute = AuthenticatedAppRadioImport.update({
-  id: '/radio',
-  path: '/radio',
-  getParentRoute: () => AuthenticatedAppRoute,
-} as any)
-
-const AuthenticatedAppProfileRoute = AuthenticatedAppProfileImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedAppRoute,
-} as any)
-
-const AuthenticatedAppLibraryRoute = AuthenticatedAppLibraryImport.update({
-  id: '/library',
-  path: '/library',
-  getParentRoute: () => AuthenticatedAppRoute,
-} as any)
-
-const AuthenticatedAppBrowseRoute = AuthenticatedAppBrowseImport.update({
-  id: '/browse',
-  path: '/browse',
-  getParentRoute: () => AuthenticatedAppRoute,
-} as any)
-
-const AuthenticatedAppAdminRoute = AuthenticatedAppAdminImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedAppRoute,
-} as any)
-
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersImport.update({
   id: '/users',
   path: '/users',
@@ -346,49 +291,6 @@ const AuthenticatedAdminAnalyticsRoute =
     id: '/analytics',
     path: '/analytics',
     getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-
-const AuthenticatedAppLibrarySubscriptionsRoute =
-  AuthenticatedAppLibrarySubscriptionsImport.update({
-    id: '/subscriptions',
-    path: '/subscriptions',
-    getParentRoute: () => AuthenticatedAppLibraryRoute,
-  } as any)
-
-const AuthenticatedAppLibraryHistoryRoute =
-  AuthenticatedAppLibraryHistoryImport.update({
-    id: '/history',
-    path: '/history',
-    getParentRoute: () => AuthenticatedAppLibraryRoute,
-  } as any)
-
-const AuthenticatedAppLibraryFavoritesRoute =
-  AuthenticatedAppLibraryFavoritesImport.update({
-    id: '/favorites',
-    path: '/favorites',
-    getParentRoute: () => AuthenticatedAppLibraryRoute,
-  } as any)
-
-const AuthenticatedAppAdminUsersRoute = AuthenticatedAppAdminUsersImport.update(
-  {
-    id: '/users',
-    path: '/users',
-    getParentRoute: () => AuthenticatedAppAdminRoute,
-  } as any,
-)
-
-const AuthenticatedAppAdminStationsRoute =
-  AuthenticatedAppAdminStationsImport.update({
-    id: '/stations',
-    path: '/stations',
-    getParentRoute: () => AuthenticatedAppAdminRoute,
-  } as any)
-
-const AuthenticatedAppAdminAnalyticsRoute =
-  AuthenticatedAppAdminAnalyticsImport.update({
-    id: '/analytics',
-    path: '/analytics',
-    getParentRoute: () => AuthenticatedAppAdminRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -493,13 +395,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminImport
       parentRoute: typeof AuthenticatedRouteImport
     }
-    '/_authenticated/app': {
-      id: '/_authenticated/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AuthenticatedAppImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
     '/_authenticated/browse': {
       id: '/_authenticated/browse'
       path: '/browse'
@@ -555,48 +450,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/users'
       preLoaderRoute: typeof AuthenticatedAdminUsersImport
       parentRoute: typeof AuthenticatedAdminImport
-    }
-    '/_authenticated/app/admin': {
-      id: '/_authenticated/app/admin'
-      path: '/admin'
-      fullPath: '/app/admin'
-      preLoaderRoute: typeof AuthenticatedAppAdminImport
-      parentRoute: typeof AuthenticatedAppImport
-    }
-    '/_authenticated/app/browse': {
-      id: '/_authenticated/app/browse'
-      path: '/browse'
-      fullPath: '/app/browse'
-      preLoaderRoute: typeof AuthenticatedAppBrowseImport
-      parentRoute: typeof AuthenticatedAppImport
-    }
-    '/_authenticated/app/library': {
-      id: '/_authenticated/app/library'
-      path: '/library'
-      fullPath: '/app/library'
-      preLoaderRoute: typeof AuthenticatedAppLibraryImport
-      parentRoute: typeof AuthenticatedAppImport
-    }
-    '/_authenticated/app/profile': {
-      id: '/_authenticated/app/profile'
-      path: '/profile'
-      fullPath: '/app/profile'
-      preLoaderRoute: typeof AuthenticatedAppProfileImport
-      parentRoute: typeof AuthenticatedAppImport
-    }
-    '/_authenticated/app/radio': {
-      id: '/_authenticated/app/radio'
-      path: '/radio'
-      fullPath: '/app/radio'
-      preLoaderRoute: typeof AuthenticatedAppRadioImport
-      parentRoute: typeof AuthenticatedAppImport
-    }
-    '/_authenticated/app/search': {
-      id: '/_authenticated/app/search'
-      path: '/search'
-      fullPath: '/app/search'
-      preLoaderRoute: typeof AuthenticatedAppSearchImport
-      parentRoute: typeof AuthenticatedAppImport
     }
     '/_authenticated/library/favorites': {
       id: '/_authenticated/library/favorites'
@@ -703,48 +556,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexImport
       parentRoute: typeof AuthenticatedRouteImport
     }
-    '/_authenticated/app/admin/analytics': {
-      id: '/_authenticated/app/admin/analytics'
-      path: '/analytics'
-      fullPath: '/app/admin/analytics'
-      preLoaderRoute: typeof AuthenticatedAppAdminAnalyticsImport
-      parentRoute: typeof AuthenticatedAppAdminImport
-    }
-    '/_authenticated/app/admin/stations': {
-      id: '/_authenticated/app/admin/stations'
-      path: '/stations'
-      fullPath: '/app/admin/stations'
-      preLoaderRoute: typeof AuthenticatedAppAdminStationsImport
-      parentRoute: typeof AuthenticatedAppAdminImport
-    }
-    '/_authenticated/app/admin/users': {
-      id: '/_authenticated/app/admin/users'
-      path: '/users'
-      fullPath: '/app/admin/users'
-      preLoaderRoute: typeof AuthenticatedAppAdminUsersImport
-      parentRoute: typeof AuthenticatedAppAdminImport
-    }
-    '/_authenticated/app/library/favorites': {
-      id: '/_authenticated/app/library/favorites'
-      path: '/favorites'
-      fullPath: '/app/library/favorites'
-      preLoaderRoute: typeof AuthenticatedAppLibraryFavoritesImport
-      parentRoute: typeof AuthenticatedAppLibraryImport
-    }
-    '/_authenticated/app/library/history': {
-      id: '/_authenticated/app/library/history'
-      path: '/history'
-      fullPath: '/app/library/history'
-      preLoaderRoute: typeof AuthenticatedAppLibraryHistoryImport
-      parentRoute: typeof AuthenticatedAppLibraryImport
-    }
-    '/_authenticated/app/library/subscriptions': {
-      id: '/_authenticated/app/library/subscriptions'
-      path: '/subscriptions'
-      fullPath: '/app/library/subscriptions'
-      preLoaderRoute: typeof AuthenticatedAppLibrarySubscriptionsImport
-      parentRoute: typeof AuthenticatedAppLibraryImport
-    }
   }
 }
 
@@ -814,64 +625,6 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
 const AuthenticatedAdminRouteWithChildren =
   AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
-interface AuthenticatedAppAdminRouteChildren {
-  AuthenticatedAppAdminAnalyticsRoute: typeof AuthenticatedAppAdminAnalyticsRoute
-  AuthenticatedAppAdminStationsRoute: typeof AuthenticatedAppAdminStationsRoute
-  AuthenticatedAppAdminUsersRoute: typeof AuthenticatedAppAdminUsersRoute
-}
-
-const AuthenticatedAppAdminRouteChildren: AuthenticatedAppAdminRouteChildren = {
-  AuthenticatedAppAdminAnalyticsRoute: AuthenticatedAppAdminAnalyticsRoute,
-  AuthenticatedAppAdminStationsRoute: AuthenticatedAppAdminStationsRoute,
-  AuthenticatedAppAdminUsersRoute: AuthenticatedAppAdminUsersRoute,
-}
-
-const AuthenticatedAppAdminRouteWithChildren =
-  AuthenticatedAppAdminRoute._addFileChildren(
-    AuthenticatedAppAdminRouteChildren,
-  )
-
-interface AuthenticatedAppLibraryRouteChildren {
-  AuthenticatedAppLibraryFavoritesRoute: typeof AuthenticatedAppLibraryFavoritesRoute
-  AuthenticatedAppLibraryHistoryRoute: typeof AuthenticatedAppLibraryHistoryRoute
-  AuthenticatedAppLibrarySubscriptionsRoute: typeof AuthenticatedAppLibrarySubscriptionsRoute
-}
-
-const AuthenticatedAppLibraryRouteChildren: AuthenticatedAppLibraryRouteChildren =
-  {
-    AuthenticatedAppLibraryFavoritesRoute:
-      AuthenticatedAppLibraryFavoritesRoute,
-    AuthenticatedAppLibraryHistoryRoute: AuthenticatedAppLibraryHistoryRoute,
-    AuthenticatedAppLibrarySubscriptionsRoute:
-      AuthenticatedAppLibrarySubscriptionsRoute,
-  }
-
-const AuthenticatedAppLibraryRouteWithChildren =
-  AuthenticatedAppLibraryRoute._addFileChildren(
-    AuthenticatedAppLibraryRouteChildren,
-  )
-
-interface AuthenticatedAppRouteChildren {
-  AuthenticatedAppAdminRoute: typeof AuthenticatedAppAdminRouteWithChildren
-  AuthenticatedAppBrowseRoute: typeof AuthenticatedAppBrowseRoute
-  AuthenticatedAppLibraryRoute: typeof AuthenticatedAppLibraryRouteWithChildren
-  AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
-  AuthenticatedAppRadioRoute: typeof AuthenticatedAppRadioRoute
-  AuthenticatedAppSearchRoute: typeof AuthenticatedAppSearchRoute
-}
-
-const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
-  AuthenticatedAppAdminRoute: AuthenticatedAppAdminRouteWithChildren,
-  AuthenticatedAppBrowseRoute: AuthenticatedAppBrowseRoute,
-  AuthenticatedAppLibraryRoute: AuthenticatedAppLibraryRouteWithChildren,
-  AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
-  AuthenticatedAppRadioRoute: AuthenticatedAppRadioRoute,
-  AuthenticatedAppSearchRoute: AuthenticatedAppSearchRoute,
-}
-
-const AuthenticatedAppRouteWithChildren =
-  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
-
 interface AuthenticatedLibraryRouteChildren {
   AuthenticatedLibraryFavoritesRoute: typeof AuthenticatedLibraryFavoritesRoute
   AuthenticatedLibraryFollowingRoute: typeof AuthenticatedLibraryFollowingRoute
@@ -891,7 +644,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedUserSettingsRouteRoute: typeof AuthenticatedUserSettingsRouteRouteWithChildren
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
   AuthenticatedBrowseRoute: typeof AuthenticatedBrowseRoute
   AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRouteWithChildren
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
@@ -905,7 +657,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUserSettingsRouteRoute:
     AuthenticatedUserSettingsRouteRouteWithChildren,
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
   AuthenticatedBrowseRoute: AuthenticatedBrowseRoute,
   AuthenticatedLibraryRoute: AuthenticatedLibraryRouteWithChildren,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
@@ -932,7 +683,6 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/app': typeof AuthenticatedAppRouteWithChildren
   '/browse': typeof AuthenticatedBrowseRoute
   '/library': typeof AuthenticatedLibraryRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
@@ -941,12 +691,6 @@ export interface FileRoutesByFullPath {
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/app/admin': typeof AuthenticatedAppAdminRouteWithChildren
-  '/app/browse': typeof AuthenticatedAppBrowseRoute
-  '/app/library': typeof AuthenticatedAppLibraryRouteWithChildren
-  '/app/profile': typeof AuthenticatedAppProfileRoute
-  '/app/radio': typeof AuthenticatedAppRadioRoute
-  '/app/search': typeof AuthenticatedAppSearchRoute
   '/library/favorites': typeof AuthenticatedLibraryFavoritesRoute
   '/library/following': typeof AuthenticatedLibraryFollowingRoute
   '/library/history': typeof AuthenticatedLibraryHistoryRoute
@@ -962,12 +706,6 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/user-settings/': typeof AuthenticatedUserSettingsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
-  '/app/admin/analytics': typeof AuthenticatedAppAdminAnalyticsRoute
-  '/app/admin/stations': typeof AuthenticatedAppAdminStationsRoute
-  '/app/admin/users': typeof AuthenticatedAppAdminUsersRoute
-  '/app/library/favorites': typeof AuthenticatedAppLibraryFavoritesRoute
-  '/app/library/history': typeof AuthenticatedAppLibraryHistoryRoute
-  '/app/library/subscriptions': typeof AuthenticatedAppLibrarySubscriptionsRoute
 }
 
 export interface FileRoutesByTo {
@@ -981,7 +719,6 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/app': typeof AuthenticatedAppRouteWithChildren
   '/browse': typeof AuthenticatedBrowseRoute
   '/library': typeof AuthenticatedLibraryRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
@@ -990,12 +727,6 @@ export interface FileRoutesByTo {
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/app/admin': typeof AuthenticatedAppAdminRouteWithChildren
-  '/app/browse': typeof AuthenticatedAppBrowseRoute
-  '/app/library': typeof AuthenticatedAppLibraryRouteWithChildren
-  '/app/profile': typeof AuthenticatedAppProfileRoute
-  '/app/radio': typeof AuthenticatedAppRadioRoute
-  '/app/search': typeof AuthenticatedAppSearchRoute
   '/library/favorites': typeof AuthenticatedLibraryFavoritesRoute
   '/library/following': typeof AuthenticatedLibraryFollowingRoute
   '/library/history': typeof AuthenticatedLibraryHistoryRoute
@@ -1011,12 +742,6 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/user-settings': typeof AuthenticatedUserSettingsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
-  '/app/admin/analytics': typeof AuthenticatedAppAdminAnalyticsRoute
-  '/app/admin/stations': typeof AuthenticatedAppAdminStationsRoute
-  '/app/admin/users': typeof AuthenticatedAppAdminUsersRoute
-  '/app/library/favorites': typeof AuthenticatedAppLibraryFavoritesRoute
-  '/app/library/history': typeof AuthenticatedAppLibraryHistoryRoute
-  '/app/library/subscriptions': typeof AuthenticatedAppLibrarySubscriptionsRoute
 }
 
 export interface FileRoutesById {
@@ -1035,7 +760,6 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/_authenticated/browse': typeof AuthenticatedBrowseRoute
   '/_authenticated/library': typeof AuthenticatedLibraryRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
@@ -1044,12 +768,6 @@ export interface FileRoutesById {
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/_authenticated/app/admin': typeof AuthenticatedAppAdminRouteWithChildren
-  '/_authenticated/app/browse': typeof AuthenticatedAppBrowseRoute
-  '/_authenticated/app/library': typeof AuthenticatedAppLibraryRouteWithChildren
-  '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
-  '/_authenticated/app/radio': typeof AuthenticatedAppRadioRoute
-  '/_authenticated/app/search': typeof AuthenticatedAppSearchRoute
   '/_authenticated/library/favorites': typeof AuthenticatedLibraryFavoritesRoute
   '/_authenticated/library/following': typeof AuthenticatedLibraryFollowingRoute
   '/_authenticated/library/history': typeof AuthenticatedLibraryHistoryRoute
@@ -1065,12 +783,6 @@ export interface FileRoutesById {
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/user-settings/': typeof AuthenticatedUserSettingsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
-  '/_authenticated/app/admin/analytics': typeof AuthenticatedAppAdminAnalyticsRoute
-  '/_authenticated/app/admin/stations': typeof AuthenticatedAppAdminStationsRoute
-  '/_authenticated/app/admin/users': typeof AuthenticatedAppAdminUsersRoute
-  '/_authenticated/app/library/favorites': typeof AuthenticatedAppLibraryFavoritesRoute
-  '/_authenticated/app/library/history': typeof AuthenticatedAppLibraryHistoryRoute
-  '/_authenticated/app/library/subscriptions': typeof AuthenticatedAppLibrarySubscriptionsRoute
 }
 
 export interface FileRouteTypes {
@@ -1090,7 +802,6 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/admin'
-    | '/app'
     | '/browse'
     | '/library'
     | '/profile'
@@ -1099,12 +810,6 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/stations'
     | '/admin/users'
-    | '/app/admin'
-    | '/app/browse'
-    | '/app/library'
-    | '/app/profile'
-    | '/app/radio'
-    | '/app/search'
     | '/library/favorites'
     | '/library/following'
     | '/library/history'
@@ -1120,12 +825,6 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/user-settings/'
     | '/users'
-    | '/app/admin/analytics'
-    | '/app/admin/stations'
-    | '/app/admin/users'
-    | '/app/library/favorites'
-    | '/app/library/history'
-    | '/app/library/subscriptions'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -1138,7 +837,6 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
-    | '/app'
     | '/browse'
     | '/library'
     | '/profile'
@@ -1147,12 +845,6 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/stations'
     | '/admin/users'
-    | '/app/admin'
-    | '/app/browse'
-    | '/app/library'
-    | '/app/profile'
-    | '/app/radio'
-    | '/app/search'
     | '/library/favorites'
     | '/library/following'
     | '/library/history'
@@ -1168,12 +860,6 @@ export interface FileRouteTypes {
     | '/settings'
     | '/user-settings'
     | '/users'
-    | '/app/admin/analytics'
-    | '/app/admin/stations'
-    | '/app/admin/users'
-    | '/app/library/favorites'
-    | '/app/library/history'
-    | '/app/library/subscriptions'
   id:
     | '__root__'
     | '/_authenticated'
@@ -1190,7 +876,6 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/admin'
-    | '/_authenticated/app'
     | '/_authenticated/browse'
     | '/_authenticated/library'
     | '/_authenticated/profile'
@@ -1199,12 +884,6 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/stations'
     | '/_authenticated/admin/users'
-    | '/_authenticated/app/admin'
-    | '/_authenticated/app/browse'
-    | '/_authenticated/app/library'
-    | '/_authenticated/app/profile'
-    | '/_authenticated/app/radio'
-    | '/_authenticated/app/search'
     | '/_authenticated/library/favorites'
     | '/_authenticated/library/following'
     | '/_authenticated/library/history'
@@ -1220,12 +899,6 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/'
     | '/_authenticated/user-settings/'
     | '/_authenticated/users/'
-    | '/_authenticated/app/admin/analytics'
-    | '/_authenticated/app/admin/stations'
-    | '/_authenticated/app/admin/users'
-    | '/_authenticated/app/library/favorites'
-    | '/_authenticated/app/library/history'
-    | '/_authenticated/app/library/subscriptions'
   fileRoutesById: FileRoutesById
 }
 
@@ -1286,7 +959,6 @@ export const routeTree = rootRoute
         "/_authenticated/settings",
         "/_authenticated/user-settings",
         "/_authenticated/admin",
-        "/_authenticated/app",
         "/_authenticated/browse",
         "/_authenticated/library",
         "/_authenticated/profile",
@@ -1357,18 +1029,6 @@ export const routeTree = rootRoute
         "/_authenticated/admin/"
       ]
     },
-    "/_authenticated/app": {
-      "filePath": "_authenticated/app.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/app/admin",
-        "/_authenticated/app/browse",
-        "/_authenticated/app/library",
-        "/_authenticated/app/profile",
-        "/_authenticated/app/radio",
-        "/_authenticated/app/search"
-      ]
-    },
     "/_authenticated/browse": {
       "filePath": "_authenticated/browse.tsx",
       "parent": "/_authenticated"
@@ -1405,40 +1065,6 @@ export const routeTree = rootRoute
     "/_authenticated/admin/users": {
       "filePath": "_authenticated/admin/users.tsx",
       "parent": "/_authenticated/admin"
-    },
-    "/_authenticated/app/admin": {
-      "filePath": "_authenticated/app/admin.tsx",
-      "parent": "/_authenticated/app",
-      "children": [
-        "/_authenticated/app/admin/analytics",
-        "/_authenticated/app/admin/stations",
-        "/_authenticated/app/admin/users"
-      ]
-    },
-    "/_authenticated/app/browse": {
-      "filePath": "_authenticated/app/browse.tsx",
-      "parent": "/_authenticated/app"
-    },
-    "/_authenticated/app/library": {
-      "filePath": "_authenticated/app/library.tsx",
-      "parent": "/_authenticated/app",
-      "children": [
-        "/_authenticated/app/library/favorites",
-        "/_authenticated/app/library/history",
-        "/_authenticated/app/library/subscriptions"
-      ]
-    },
-    "/_authenticated/app/profile": {
-      "filePath": "_authenticated/app/profile.tsx",
-      "parent": "/_authenticated/app"
-    },
-    "/_authenticated/app/radio": {
-      "filePath": "_authenticated/app/radio.tsx",
-      "parent": "/_authenticated/app"
-    },
-    "/_authenticated/app/search": {
-      "filePath": "_authenticated/app/search.tsx",
-      "parent": "/_authenticated/app"
     },
     "/_authenticated/library/favorites": {
       "filePath": "_authenticated/library/favorites.tsx",
@@ -1499,30 +1125,6 @@ export const routeTree = rootRoute
     "/_authenticated/users/": {
       "filePath": "_authenticated/users/index.tsx",
       "parent": "/_authenticated"
-    },
-    "/_authenticated/app/admin/analytics": {
-      "filePath": "_authenticated/app/admin/analytics.tsx",
-      "parent": "/_authenticated/app/admin"
-    },
-    "/_authenticated/app/admin/stations": {
-      "filePath": "_authenticated/app/admin/stations.tsx",
-      "parent": "/_authenticated/app/admin"
-    },
-    "/_authenticated/app/admin/users": {
-      "filePath": "_authenticated/app/admin/users.tsx",
-      "parent": "/_authenticated/app/admin"
-    },
-    "/_authenticated/app/library/favorites": {
-      "filePath": "_authenticated/app/library/favorites.tsx",
-      "parent": "/_authenticated/app/library"
-    },
-    "/_authenticated/app/library/history": {
-      "filePath": "_authenticated/app/library/history.tsx",
-      "parent": "/_authenticated/app/library"
-    },
-    "/_authenticated/app/library/subscriptions": {
-      "filePath": "_authenticated/app/library/subscriptions.tsx",
-      "parent": "/_authenticated/app/library"
     }
   }
 }

@@ -99,17 +99,17 @@ export class HistoryService extends BaseService {
     /**
      * Get recent listening history for user
      */
-    async getRecentHistory(userId: string, limit: number = 3): Promise<HistoryResponseDto[]> {
+    async getRecentHistory(userId: string, limit: number = 10): Promise<HistoryResponseDto[]> {
         try {
-            const response = await this.api.get(`/history/${userId}?limit=${limit}&sort=desc`)
-            return response.data
+        const response = await this.api.get(`/history/${userId}?limit=${limit}&orderBy=createdAt&order=desc`)
+        return response.data
         } catch (error) {
-            return this.handleError(error)
+        return this.handleError(error)
         }
     }
 
     /**
-     * Get top stations for user based on listening history
+     * Get most listened stations by user
      */
     async getMostListenedStations(userId: string, limit: number = 10): Promise<{
         stationId: string
