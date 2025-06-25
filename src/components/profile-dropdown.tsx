@@ -21,7 +21,7 @@ export function ProfileDropdown() {
   const user = useAuthStore((state) => state.user)
   //const { user } = useAuth()
 
-  // Datos de usuario
+  // User data
   //const displayName = 'User Name' 
   //const email = 'User Email'
   //const photoURL = '/avatars/01.png'

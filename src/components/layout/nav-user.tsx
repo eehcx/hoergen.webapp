@@ -39,12 +39,11 @@ export function NavUser({
   const navigate = useNavigate()
 
   const handleSignOut = async () => {
-    try {
-      console.log("⏳ Iniciando proceso de cierre de sesión...");
+    try {      console.log("⏳ Starting logout process...");
       await signOut()
-      console.log("✅ Cierre de sesión completado en Firebase");
+      console.log("✅ Firebase logout completed");
       toast.success('You have been logged out successfully.')
-      console.log("🔄 Navegando a /sign-in...");
+      console.log("🔄 Navigating to /sign-in...");
       navigate({ to: '/sign-in' })
     } catch (error) {
       toast.error('Failed to log out. Please try again.')

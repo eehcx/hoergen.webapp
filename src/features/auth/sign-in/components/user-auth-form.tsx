@@ -60,13 +60,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     
     try {
       await signIn(values.email, values.password)
-      toast.success('Inicio de sesión exitoso')
+      toast.success('Login successful')
       
-      // Navegar a la ruta de redirección o al dashboard por defecto
+      // Navigate to redirect route or dashboard by default
       navigate({ to: redirect as string })
     } catch (error: any) {
       // Manejar errores específicos
-      let errorMessage = 'Error al iniciar sesión'
+      let errorMessage = 'Login error'
       
       // Capturar errores comunes de Firebase
       switch (error.code) {
@@ -83,7 +83,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           errorMessage = 'Credenciales inválidas'
           break
         default:
-          errorMessage = error.message || 'Error al iniciar sesión'
+          errorMessage = error.message || 'Login error'
       }
       
       toast.error(errorMessage)
@@ -97,10 +97,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     try {
       await signInWithGoogle();
-      toast.success('Inicio de sesión con Google exitoso');
+      toast.success('Google login successful');
       navigate({ to: redirect as string });
     } catch (error: any) {
-      let errorMessage = 'Error al iniciar sesión con Google';
+      let errorMessage = 'Google login error';
 
       // Manejar errores específicos de Firebase
       switch (error.code) {
@@ -109,16 +109,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           errorMessage = 'Ventana cerrada. Intenta de nuevo'
           break
         case 'auth/cancelled-popup-request':
-          errorMessage = 'Operación cancelada'
+          errorMessage = 'Operation cancelled'
           break
         case 'auth/account-exists-with-different-credential':
-          errorMessage = 'Ya existe una cuenta con este email usando otro método de inicio de sesión'
+          errorMessage = 'An account with this email already exists using another login method'
           break
         case 'auth/popup-blocked':
           errorMessage = 'Ventana emergente bloqueada por el navegador'
           break
         case 'auth/unauthorized-domain':
-          errorMessage = 'Este dominio no está autorizado para operaciones de autenticación'
+          errorMessage = 'This domain is not authorized for authentication operations'
           break
         
         // Errores generales que también aplican a Google
@@ -129,7 +129,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           errorMessage = 'Credenciales inválidas'
           break
         default:
-          errorMessage = error.message || 'Error al iniciar sesión con Google'
+          errorMessage = error.message || 'Google login error'
       }
 
       toast.error(errorMessage);
@@ -154,9 +154,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder='you@hoergen.com' {...field} />
+              <FormLabel>Email</FormLabel>              <FormControl>
+                <Input placeholder='you@hoergen.com' className='placeholder:font-[Orbitron] placeholder:tracking-wide' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

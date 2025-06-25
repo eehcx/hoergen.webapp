@@ -1,4 +1,4 @@
-import { LinkProps } from '@tanstack/react-router'
+// Removed LinkProps import to allow flexible URL strings
 
 interface User {
   name: string
@@ -18,13 +18,15 @@ interface BaseNavItem {
   icon?: React.ElementType
 }
 
+/** A nav link with a URL string to allow custom routes */
 type NavLink = BaseNavItem & {
-  url: LinkProps['to']
+  url: string
   items?: never
 }
 
+/** A collapsible nav group with sub-items using URL strings */
 type NavCollapsible = BaseNavItem & {
-  items: (BaseNavItem & { url: LinkProps['to'] })[]
+  items: (BaseNavItem & { url: string })[]
   url?: never
 }
 

@@ -1,33 +1,40 @@
 //import Cookies from 'js-cookie'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { User } from 'firebase/auth'
-
-//const ACCESS_TOKEN = 'thisisjustarandomstring'
-
-//interface AuthUser {
-//  accountNo: string
-//  email: string
-//  role: string[]
-//  exp: number
-//}
 
 interface AuthState {
   user: User | null;
   claims: { plan?: string; role?: string } | null;
   isLoading: boolean;
+  isInitialized: boolean;
   setUser: (user: User | null) => void;
   setClaims: (claims: { plan?: string; role?: string } | null) => void;
   setLoading: (isLoading: boolean) => void;
+  setInitialized: (isInitialized: boolean) => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  claims: null,
-  isLoading: true,
-  setUser: (user) => set({ user }),
-  setClaims: (claims) => set({ claims }),
-  setLoading: (isLoading) => set({ isLoading }),
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      claims: null,
+      isLoading: true,
+      isInitialized: false,
+      setUser: (user) => set({ user }),
+      setClaims: (claims) => set({ claims }),
+      setLoading: (isLoading) => set({ isLoading }),
+      setInitialized: (isInitialized) => set({ isInitialized }),
+    }),
+    {
+      name: 'auth-storage',
+      partialize: (state) => ({ 
+        claims: state.claims,
+        isInitialized: state.isInitialized 
+      }),
+    }
+  )
+);
 
 /*
 

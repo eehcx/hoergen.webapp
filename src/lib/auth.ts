@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, signOut as firebaseSignOut, onAuthStateChanged, getIdTokenResult } from "firebase/auth";
-import { auth, googleProvider } from "@/config/firebase";
+import { auth, googleProvider } from "@/core/firebase";
 import { useAuthStore } from "@/stores/authStore";
 import { signInWithPopup } from "firebase/auth";
 
@@ -10,11 +10,11 @@ export const signIn = async (email: string, password: string) => {
 export async function signInWithGoogle() {
     try {
         const result = await signInWithPopup(auth, googleProvider);
-        // El usuario está autenticado, puedes obtener la información:
+        // User is authenticated, you can get the information:
         const user = result.user;
         console.log("Usuario autenticado:", user.displayName, user.email);
     } catch (error) {
-        console.error("Error al iniciar sesión con Google:", error);
+        console.error("Error logging in with Google:", error);
         throw error; // Propaga el error para manejarlo en el componente
     }
 }

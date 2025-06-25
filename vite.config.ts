@@ -36,5 +36,15 @@ export default defineConfig(({ mode }) => {
         '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
       },
     },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://nestjs-kzphduejga-uc.a.run.app',
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
   };
 })
