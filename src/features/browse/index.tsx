@@ -23,7 +23,7 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 // Mini player context
 import { MiniPlayer } from '@/components/mini-player'
-import { useMiniPlayer } from '@/components/mini-player-context'
+import { useMiniPlayer } from '@/context/mini-player-context'
 // Radio Browser hooks
 import { useRadioBrowserInfiniteQuery } from '@/hooks/radio-browser'
 import type { RadioBrowserInfiniteParams } from '@/hooks/radio-browser'
@@ -361,6 +361,7 @@ export default function Browse() {
                     streamUrl={player.streamUrl}
                     stationName={player.stationName}
                     stationCover={player.stationCover}
+                    isPlaying={player.isPlaying}
                 />
             )}
         </div>

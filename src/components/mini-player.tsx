@@ -1,28 +1,97 @@
 import { useEffect, useRef, useState } from 'react'
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
+import { useMiniPlayer } from '../context/mini-player-context'
 
 export interface MiniPlayerProps {
     streamUrl: string
     stationName: string
     stationCover?: string
+    isPlaying?: boolean
 }
 
-export function MiniPlayer({ streamUrl, stationName, stationCover }: MiniPlayerProps) {
+export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = true }: MiniPlayerProps) {
     const playerRef = useRef<AudioPlayer>(null)
     const [elapsed, setElapsed] = useState(0)
+    const [currentStreamUrl, setCurrentStreamUrl] = useState<string>('')
+    const { setIsPlaying } = useMiniPlayer()
 
+    // Solo reproduce automáticamente cuando cambia a una nueva estación
     useEffect(() => {
-        playerRef.current?.audio.current?.play()
-        setElapsed(0)
-        const interval = setInterval(() => {
-        const audio = playerRef.current?.audio.current
-        if (audio && !audio.paused) {
-            setElapsed(Math.floor(audio.currentTime))
+        const isNewStation = streamUrl !== currentStreamUrl
+        if (isNewStation) {
+            setCurrentStreamUrl(streamUrl)
+            setElapsed(0)
+            // Solo reproduce automáticamente si es una nueva estación Y isPlaying es true
+            if (isPlaying && playerRef.current?.audio.current) {
+                const playPromise = playerRef.current.audio.current.play()
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Auto-play was prevented:', error)
+                    })
+                }
+            }
         }
+    }, [streamUrl, isPlaying, currentStreamUrl])
+
+    // Maneja el estado de reproducción cuando cambia isPlaying (pero NO para nuevas estaciones)
+    useEffect(() => {
+        const isNewStation = streamUrl !== currentStreamUrl
+        if (!isNewStation && playerRef.current?.audio.current) {
+            if (isPlaying) {
+                const playPromise = playerRef.current.audio.current.play()
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Play was prevented:', error)
+                    })
+                }
+            } else {
+                playerRef.current.audio.current.pause()
+            }
+        }
+    }, [isPlaying, streamUrl, currentStreamUrl])
+
+    // Efecto adicional para manejar el estado cuando el componente se monta con un estado específico
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (playerRef.current?.audio.current) {
+                const audio = playerRef.current.audio.current
+                // Si el estado actual del audio no coincide con isPlaying, corregirlo
+                if (isPlaying && audio.paused) {
+                    const playPromise = audio.play()
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.log('Play was prevented on mount:', error)
+                        })
+                    }
+                } else if (!isPlaying && !audio.paused) {
+                    audio.pause()
+                }
+            }
+        }, 100) // Pequeño delay para asegurar que el audio esté listo
+
+        return () => clearTimeout(timer)
+    }, []) // Solo se ejecuta una vez al montar el componente
+
+    // Contador de tiempo
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const audio = playerRef.current?.audio.current
+            if (audio && !audio.paused) {
+                setElapsed(Math.floor(audio.currentTime))
+            }
         }, 1000)
         return () => clearInterval(interval)
-    }, [streamUrl])
+    }, [])
+
+    // Manejadores de eventos del audio player
+    const handlePlay = () => {
+        setIsPlaying(true)
+    }
+
+    const handlePause = () => {
+        setIsPlaying(false)
+    }
 
     // Formatea el tiempo transcurrido en mm:ss
     const formatTime = (seconds: number) => {
@@ -58,7 +127,9 @@ export function MiniPlayer({ streamUrl, stationName, stationCover }: MiniPlayerP
                             <AudioPlayer
                                 ref={playerRef}
                                 src={streamUrl}
-                                autoPlay
+                                autoPlay={false}
+                                onPlay={handlePlay}
+                                onPause={handlePause}
                                 showJumpControls={false}
                                 showDownloadProgress={false}
                                 showFilledProgress={false}

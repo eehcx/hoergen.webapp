@@ -4,22 +4,31 @@ type PlayerState = {
   streamUrl: string
   stationName: string
   stationCover?: string
+  isPlaying?: boolean
 }
 
 type PlayerContextType = {
   player: PlayerState | null
   play: (data: PlayerState) => void
   stop: () => void
+  pause: () => void
+  resume: () => void
+  setIsPlaying: (isPlaying: boolean) => void
 }
 
 const MiniPlayerContext = createContext<PlayerContextType | undefined>(undefined)
 
 export function MiniPlayerProvider({ children }: { children: React.ReactNode }) {
   const [player, setPlayer] = useState<PlayerState | null>(null)
-  const play = (data: PlayerState) => setPlayer(data)
+  
+  const play = (data: PlayerState) => setPlayer({ ...data, isPlaying: true })
   const stop = () => setPlayer(null)
+  const pause = () => setPlayer(prev => prev ? { ...prev, isPlaying: false } : null)
+  const resume = () => setPlayer(prev => prev ? { ...prev, isPlaying: true } : null)
+  const setIsPlaying = (isPlaying: boolean) => setPlayer(prev => prev ? { ...prev, isPlaying } : null)
+  
   return (
-    <MiniPlayerContext.Provider value={{ player, play, stop }}>
+    <MiniPlayerContext.Provider value={{ player, play, stop, pause, resume, setIsPlaying }}>
       {children}
     </MiniPlayerContext.Provider>
   )

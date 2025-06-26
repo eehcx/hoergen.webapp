@@ -17,7 +17,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
-import { MiniPlayerProvider } from '@/components/mini-player-context'
+import { MiniPlayerProvider } from '@/context/mini-player-context'
 
 const queryClient = new QueryClient({
   defaultOptions: {

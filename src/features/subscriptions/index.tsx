@@ -16,7 +16,7 @@ import { ThemeSwitch } from '@/components/theme-switch'
 // Components
 import { Footer } from '@/components/footer'
 import { MiniPlayer } from '@/components/mini-player'
-import { useMiniPlayer } from '@/components/mini-player-context'
+import { useMiniPlayer } from '@/context/mini-player-context'
 // Icons
 import { IconCrown, IconCheck, IconX } from '@tabler/icons-react'
 // Dependencies
@@ -591,6 +591,7 @@ export default function SubscriptionsPanel() {
                     streamUrl={player.streamUrl}
                     stationName={player.stationName}
                     stationCover={player.stationCover}
+                    isPlaying={player.isPlaying}
                 />
                 )}
             </div>
