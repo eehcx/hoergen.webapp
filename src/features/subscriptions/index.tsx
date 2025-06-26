@@ -1,8 +1,8 @@
 // TanStack and TanStack Query hooks
 import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useProducts } from '@/hooks/useProducts'
-import { useUserSubscription } from '@/hooks/useUserSubscription'
+import { useProducts, useUserSubscription } from "@/hooks/subscriptions";
+// Hooks
 import { useGlobalUserRole } from '@/hooks/useAuth';
 // React hooks
 import { useState, useEffect } from 'react';
@@ -143,30 +143,12 @@ export default function SubscriptionsPanel() {
         createCheckout(priceId);
     };
 
-    // 🚨 Debug: mostrar errores en consola (opcional - puedes remover)
-    /*
-    if (isProductsError) {
-        console.error('Error loading products:', productsError)
-    }
-    if (isSubscriptionError) {
-        console.error('Error loading subscription:', subscriptionError)
-    }
-    */
-
     // Invalidate userSubscription query on subscription change
     useEffect(() => {
         if (currentSubscription) {
             queryClient.invalidateQueries({ queryKey: ['userSubscription'] });
         }
     }, [currentSubscription, queryClient]);
-
-    // Verificar y mostrar en consola los cambios en los claims del usuario
-    useEffect(() => {
-        if (userRole) {
-            console.log('User Role:', userRole.role);
-            console.log('User Plan:', userRole.plan);
-        }
-    }, [userRole]);
 
     // Helper functions
     const getStatusColor = (status: string) => {

@@ -31,6 +31,11 @@ export function MiniPlayer({ streamUrl, stationName, stationCover }: MiniPlayerP
         return `${m}:${s.toString().padStart(2, '0')}`
     }
 
+    // Trunca el nombre de la estación si es muy largo
+    const truncateStationName = (name: string, maxLength: number = 45) => {
+        return name.length > maxLength ? `${name.substring(0, maxLength)}...` : name
+    }
+
     return (
         <div
             className="fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg flex items-center justify-center px-6 py-2 backdrop-blur-sm bg-gradient-to-br from-zinc-50 via-zinc-100 to-zinc-100/90 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-700/90"
@@ -45,7 +50,7 @@ export function MiniPlayer({ streamUrl, stationName, stationCover }: MiniPlayerP
                         <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse" />
                         <span className="text-xs font-bold text-red-500 uppercase tracking-widest">LIVE</span>
                     </span>
-                    <span className="font-semibold truncate text-base text-foreground">{stationName}</span>
+                    <span className="font-semibold truncate text-base text-foreground select-none">{truncateStationName(stationName)}</span>
                 </div>
                 <div className="flex items-center justify-end gap-6 min-w-[120px] flex-1">
                     <div className="flex items-center gap-4 ml-auto">

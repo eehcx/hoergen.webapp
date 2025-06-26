@@ -7,9 +7,10 @@ export function Footer() {
                 {/* Top section - Country and Language */}
                 <div className="mb-6">
                     <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-                        <span>México</span>
-                        <DividerVerticalIcon className="h-4 w-4" />
-                        <span>English</span>
+                        <a href="https://www.hoergen.com" className="text-muted-foreground hover:text-foreground transition-colors">
+                            Home
+                        </a>                        <DividerVerticalIcon className="h-4 w-4" />
+                        <span className="select-none">English</span>
                     </div>
                 </div>
 

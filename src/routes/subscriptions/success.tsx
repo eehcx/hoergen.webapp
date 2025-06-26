@@ -4,13 +4,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { UserService } from '@/core/services/users/user.service';
 import { createFileRoute } from '@tanstack/react-router';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/core/firebase';
 
 export default function SubscriptionSuccess() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const { user } = useAuth();
+    const { user, refreshClaims } = useAuth();
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -19,14 +17,7 @@ export default function SubscriptionSuccess() {
         if (plan && user?.uid) {
             const updateUserAfterSuccess = async () => {
                 try {
-                    const userRef = doc(db, 'users', user.uid);
-                    const userSnap = await getDoc(userRef);
-
-                    if (!userSnap.exists()) {
-                        console.error('User does not exist in Firestore');
-                        return;
-                    }
-
+                    // 1) Llamada al backend para setear custom claims
                     const userService = UserService.getInstance();
                     const userRole = plan === 'pro' ? 'pro' : 'creator';
                     const userPlan = plan as 'pro' | 'creator' | 'free';
@@ -36,8 +27,16 @@ export default function SubscriptionSuccess() {
                         plan: userPlan,
                     });
 
-                    queryClient.invalidateQueries({ queryKey: ['userSubscription'] });
-                    queryClient.invalidateQueries({ queryKey: ['products'] });
+                    // 2) Refrescar claims automáticamente (esto forzará el refresh del token)
+                    await refreshClaims();
+
+                    // 3) Invalidar queries dependientes
+                    await queryClient.invalidateQueries({ queryKey: ['userSubscription'] });
+                    await queryClient.invalidateQueries({ queryKey: ['products'] });
+                    await queryClient.invalidateQueries({ queryKey: ['userRole'] });
+
+                    // 4) Redirigir a suscripciones
+                    navigate({ to: '/subscriptions' });
                 } catch (error) {
                     console.error('Error updating user after success:', error);
                 }
@@ -51,7 +50,7 @@ export default function SubscriptionSuccess() {
         }, 5000);
 
         return () => clearTimeout(timeout);
-    }, [navigate, queryClient, user]);
+    }, [navigate, queryClient, user, refreshClaims]);
 
     return (
         <div className="container mx-auto flex flex-col items-center justify-center h-screen bg-background">

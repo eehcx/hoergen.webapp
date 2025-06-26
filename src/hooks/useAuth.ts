@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useAuthStore } from "@/stores/authStore";
-import { onAuthStateChanged } from "firebase/auth";
+import { onIdTokenChanged } from "firebase/auth";
 import { auth } from "@/core/firebase";
 import { useQuery } from '@tanstack/react-query';
 import { UserService } from '@/core/services/users/user.service';
@@ -17,6 +17,27 @@ export function useAuth() {
         setInitialized 
     } = useAuthStore();
 
+    // Función para refrescar claims después de una actualización
+    const refreshClaims = useCallback(async () => {
+        if (auth.currentUser) {
+            try {
+                // Forzar refresh del token para obtener nuevos claims
+                await auth.currentUser.getIdToken(true);
+                const tokenResult = await auth.currentUser.getIdTokenResult();
+                
+                const newClaims = {
+                    role: (tokenResult.claims?.role as string | undefined) || "listener",
+                    plan: (tokenResult.claims?.plan as string | undefined) || "free"
+                };
+                
+                setClaims(newClaims);
+                console.log('Claims refreshed:', newClaims);
+            } catch (error) {
+                console.error('Error refreshing claims:', error);
+            }
+        }
+    }, [setClaims]);
+
     useEffect(() => {
         // Si ya tenemos claims persistidos y Firebase tiene usuario, cargar inmediatamente
         if (isInitialized && claims && auth.currentUser) {
@@ -27,18 +48,21 @@ export function useAuth() {
 
         setLoading(true);
 
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        // Usar onIdTokenChanged para capturar cambios en el token (incluyendo refreshes)
+        const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
             try {
                 if (firebaseUser) {
                     setUser(firebaseUser);
                     
-                    // Si ya tenemos claims persistidos, usarlos inmediatamente
-                    if (claims && isInitialized) {
+                    // Si ya tenemos claims persistidos y es el mismo usuario, usarlos inmediatamente
+                    if (claims && isInitialized && user?.uid === firebaseUser.uid) {
                         setLoading(false);
+                        // Pero aún así refrescar claims en background
+                        setTimeout(() => refreshClaims(), 100);
                         return;
                     }
                     
-                    // Solo obtener claims si no los tenemos (primera vez o cambio de usuario)
+                    // Obtener claims del token (primera vez o cambio de usuario)
                     const timeoutPromise = new Promise((_, reject) => 
                         setTimeout(() => reject(new Error('Timeout')), 2000)
                     );
@@ -77,13 +101,14 @@ export function useAuth() {
         });
 
         return () => unsubscribe();
-    }, [setUser, setClaims, setLoading, setInitialized, claims, isInitialized]);
+    }, [setUser, setClaims, setLoading, setInitialized, claims, isInitialized, user?.uid, refreshClaims]);
 
     return {
         user,
         claims,
         isLoading,
         isAuthenticated: !!user,
+        refreshClaims, // Exponemos la función para uso externo
     };
 }
 

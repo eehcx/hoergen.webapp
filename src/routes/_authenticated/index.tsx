@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
-import ListenerPanel from "@/features/listener"
+import Listener from "@/features/listener"
 import { useAuth } from "@/hooks/useAuth"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
@@ -42,7 +42,7 @@ function HomePage() {
             </>
           )}
         </div>
-        <ListenerPanel />
+        <Listener />
       </div>
     </>
   )

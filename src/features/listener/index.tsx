@@ -12,22 +12,30 @@ import { useMiniPlayer } from '@/components/mini-player-context'
 // Icons
 import { IconPlayerPlay, IconHeart, IconSearch } from '@tabler/icons-react'
 // Dependencies
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
+// Hooks
+import { useRadioBrowserStations } from '@/hooks/radio-browser'
 // Services
-import { stationService, userService, genreService, radioBrowserService } from '@/core/services'
+import { stationService, userService, genreService } from '@/core/services'
 import type { ResponseStationDto, GenreResponseDto, RadioBrowserStation } from '@/core/types'
 
-export default function ListenerPanel() {
+export default function Listener() {
+  // Navigations
+  const navigate = useNavigate()
   const [featuredStation, setFeaturedStation] = useState<ResponseStationDto | null>(null)
   const [liveStations, setLiveStations] = useState<ResponseStationDto[]>([])
   const [madeForYouStations, setMadeForYouStations] = useState<ResponseStationDto[]>([])
-  const [radioBrowserStations, setRadioBrowserStations] = useState<RadioBrowserStation[]>([])
   const [creatorNames, setCreatorNames] = useState<Record<string, string>>({})
   const [genres, setGenres] = useState<GenreResponseDto[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingGenres, setIsLoadingGenres] = useState(true)
-  const [isLoadingRadioBrowser, setIsLoadingRadioBrowser] = useState(true)
-  const { player, play, stop } = useMiniPlayer()
+  const { player, play } = useMiniPlayer()
+  
+  // Use TanStack Query for Radio Browser stations
+  const { stations: radioBrowserStations, isLoading: isLoadingRadioBrowser } = useRadioBrowserStations({
+    strategy: 'random-genre',
+    genreFilter: ['garage', 'house', 'techno', 'jazz', 'electronic', 'indie']
+  })
 
   // Load stations on component mount
   useEffect(() => {
@@ -117,104 +125,6 @@ export default function ListenerPanel() {
     loadGenres()
   }, [])
 
-  // Load Radio Browser stations for Global Stations section
-  useEffect(() => {
-    const loadRadioBrowserStations = async () => {
-      try {
-        setIsLoadingRadioBrowser(true)
-        
-        // Multiple strategies to get varied, popular music stations
-        const strategies = [
-          // Strategy 1: Top voted music stations
-          async () => {
-            const topStations = await radioBrowserService.getTopStations(50)
-            return topStations.filter(station => 
-              station.bitrate >= 128 &&
-              station.lastcheckok === 1 &&
-              station.votes >= 10 &&
-              (station.tags.toLowerCase().includes('music') ||
-               station.tags.toLowerCase().includes('pop') ||
-               station.tags.toLowerCase().includes('rock') ||
-               station.tags.toLowerCase().includes('jazz') ||
-               station.tags.toLowerCase().includes('electronic') ||
-               station.tags.toLowerCase().includes('indie'))
-            )
-          },
-          
-          // Strategy 2: Most clicked music stations
-          async () => {
-            const popularStations = await radioBrowserService.getPopularStations(50)
-            return popularStations.filter(station => 
-              station.bitrate >= 128 &&
-              station.lastcheckok === 1 &&
-              station.clickcount >= 100 &&
-              (station.tags.toLowerCase().includes('music') ||
-               station.name.toLowerCase().includes('music') ||
-               station.tags.toLowerCase().includes('pop') ||
-               station.tags.toLowerCase().includes('rock'))
-            )
-          },
-          
-          // Strategy 3: Random music genre stations
-          async () => {
-            const musicGenres = ['pop', 'rock', 'jazz', 'electronic', 'indie', 'alternative', 'dance', 'hip-hop']
-            const randomGenre = musicGenres[Math.floor(Math.random() * musicGenres.length)]
-            const genreStations = await radioBrowserService.getStationsByTag(randomGenre, 30)
-            return genreStations.filter(station => 
-              station.bitrate >= 128 &&
-              station.lastcheckok === 1 &&
-              (station.votes >= 5 || station.clickcount >= 50)
-            )
-          }
-        ]
-        
-        // Use random strategy each time
-        const randomStrategy = strategies[Math.floor(Math.random() * strategies.length)]
-        const stations = await randomStrategy()
-        
-        // Remove duplicates by station UUID and get unique, high-quality stations
-        const uniqueStations = stations.reduce((unique, station) => {
-          const isDuplicate = unique.some(s => 
-            s.stationuuid === station.stationuuid || 
-            s.name.toLowerCase() === station.name.toLowerCase()
-          )
-          if (!isDuplicate && unique.length < 3) {
-            unique.push(station)
-          }
-          return unique
-        }, [] as typeof stations)
-        
-        // Sort by popularity metrics and take top 3
-        const finalStations = uniqueStations
-          .sort((a, b) => {
-            const scoreA = (a.votes * 2) + (a.clickcount / 100) + (a.bitrate / 10)
-            const scoreB = (b.votes * 2) + (b.clickcount / 100) + (b.bitrate / 10)
-            return scoreB - scoreA
-          })
-          .slice(0, 3)
-        
-        setRadioBrowserStations(finalStations)
-        
-      } catch (error) {
-        console.error('Error loading Radio Browser stations:', error)
-        // Fallback: simple top stations if strategies fail
-        try {
-          const fallbackStations = await radioBrowserService.getTopStations(10)
-          const musicFallback = fallbackStations
-            .filter(station => station.bitrate >= 128 && station.lastcheckok === 1)
-            .slice(0, 3)
-          setRadioBrowserStations(musicFallback)
-        } catch (fallbackError) {
-          console.error('Fallback also failed:', fallbackError)
-        }
-      } finally {
-        setIsLoadingRadioBrowser(false)
-      }
-    }
-
-    loadRadioBrowserStations()
-  }, [])
-
   // Color palette for genre cards
   const genreColors = [
     'from-blue-500/20 to-blue-600/20',
@@ -252,6 +162,10 @@ export default function ListenerPanel() {
       stationCover: station.coverImage || undefined,
     })
   }
+
+  const handleViewAll = () => {
+    navigate({ to: '/browse' });
+  };
 
   return (
     <>
@@ -361,7 +275,14 @@ export default function ListenerPanel() {
             <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold tracking-tight">Worldwide Radio</h2>
-                <Button variant="outline" size="sm" className="rounded-xs">View all</Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="rounded-xs"
+                  onClick={handleViewAll}
+                >
+                  View all
+                </Button>
               </div>
               
               {isLoadingRadioBrowser ? (
@@ -389,8 +310,21 @@ export default function ListenerPanel() {
                             alt={station.name}
                             className="w-full h-full object-cover"
                             onError={(e) => {
-                              // Fallback if favicon fails to load
-                              e.currentTarget.style.display = 'none'
+                              // Fallback to gradient background if favicon fails to load
+                              const target = e.currentTarget
+                              target.style.display = 'none'
+                              const parent = target.parentElement
+                              if (parent) {
+                                parent.classList.add('bg-gradient-to-br', 'from-blue-500/30', 'via-purple-500/30', 'to-pink-500/30')
+                              }
+                            }}
+                            onLoad={(e) => {
+                              // Remove gradient classes if image loads successfully
+                              const target = e.currentTarget
+                              const parent = target.parentElement
+                              if (parent) {
+                                parent.classList.remove('bg-gradient-to-br', 'from-blue-500/30', 'via-purple-500/30', 'to-pink-500/30')
+                              }
                             }}
                           />
                         ) : (
