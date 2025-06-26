@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Get API URLs from environment variables
-const API_URL_V1 = import.meta.env.VITE_API_URL_V1 || 'http://localhost:3000/api/v1';
-const API_URL_V2 = import.meta.env.VITE_API_URL_V2 || 'http://localhost:3000/api/v2';
+const API_URL_V1 = import.meta.env.VITE_API_URL_V1 || 'v1';
+const API_URL_V2 = import.meta.env.VITE_API_URL_V2 || 'v2';
 
 // Configuración común
 const commonConfig = {

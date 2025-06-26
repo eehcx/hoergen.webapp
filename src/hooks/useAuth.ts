@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useAuthStore } from "@/stores/authStore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/core/firebase";
+import { useQuery } from '@tanstack/react-query';
+import { UserService } from '@/core/services/users/user.service';
 
 export function useAuth() {
     const { 
@@ -83,4 +85,25 @@ export function useAuth() {
         isLoading,
         isAuthenticated: !!user,
     };
+}
+
+export function useGlobalUserRole() {
+    const { user } = useAuth();
+
+    return useQuery({
+        queryKey: ['userRole', user?.uid],
+        queryFn: async () => {
+            if (!user?.uid) {
+                throw new Error('User is not authenticated');
+            }
+
+            const userService = UserService.getInstance();
+            const userData = await userService.getUserById(user.uid);
+
+            return {
+                role: userData.role || 'listener',
+                plan: userData.plan || 'free',
+            };
+        },
+    });
 }

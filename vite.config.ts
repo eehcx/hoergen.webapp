@@ -38,11 +38,17 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
-        '/api': {
-          target: 'https://nestjs-kzphduejga-uc.a.run.app',
+        '/v1': {
+          target: 'https://api-kzphduejga-uc.a.run.app/v1',
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path) => path.replace(/^\/v1/, ''),
+        },
+        '/v2': {
+          target: 'https://nestjs-kzphduejga-uc.a.run.app/v2',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/v2/, ''),
         },
       },
     },

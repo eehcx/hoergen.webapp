@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
-import { IconBrandGoogle, IconBrandApple } from '@tabler/icons-react'
+import { IconBrandGoogle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { signIn, signInWithGoogle } from '@/lib/auth'
@@ -143,8 +143,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(
-          'grid gap-3', 
-          '[&_button]:rounded-[0.15rem] [&_input]:rounded-[0.15rem]',
+          'grid gap-3',
           className
         )}
         {...props}
@@ -195,12 +194,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
         </div>
 
-        <div className='grid grid-cols-2 gap-2'>
+        <div className='grid grid-cols-1'>
           <Button variant='outline' type='button' disabled={isLoading} onClick={handleGoogleSignIn}>
             <IconBrandGoogle className='h-4 w-4' /> Google
-          </Button>
-          <Button variant='outline' type='button' disabled={isLoading}>
-            <IconBrandApple className='h-4 w-4' /> Apple
           </Button>
         </div>
       </form>

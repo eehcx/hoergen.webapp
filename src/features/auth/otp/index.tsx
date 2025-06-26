@@ -13,7 +13,7 @@ import { OtpForm } from './components/otp-form'
 export default function Otp() {
   return (
     <AuthLayout>
-      <Card className='gap-4'>
+      <Card className='gap-4 rounded-[0.3rem]'>
         <CardHeader>
           <CardTitle className='text-base tracking-tight'>
             Two-factor Authentication

@@ -4,12 +4,12 @@ export interface CreateProductDto {
   imageUrl?: string
   priceAmount: number
   currency: string
-  recurringInterval: 'month' | 'year'
-  accessLevel: number
+  recurringInterval: string
+  accessLevel: string
   createdFrom: string
-  features: string
-  subscriptionType: 'free' | 'premium' | 'business'
-  type: 'subscription' | 'one_time'
+  features: string[]
+  subscriptionType: string
+  type: string
 }
 
 export interface UpdateProductDto {
@@ -18,12 +18,12 @@ export interface UpdateProductDto {
   imageUrl?: string
   priceAmount?: number
   currency?: string
-  recurringInterval?: 'month' | 'year'
-  accessLevel?: number
+  recurringInterval?: string
+  accessLevel?: string
   createdFrom?: string
-  features?: string
-  subscriptionType?: 'free' | 'premium' | 'business'
-  type?: 'subscription' | 'one_time'
+  features?: string[]
+  subscriptionType?: string
+  type?: string
 }
 
 export interface ProductResponseDto {
@@ -33,16 +33,31 @@ export interface ProductResponseDto {
   imageUrl?: string
   priceAmount: number
   currency: string
-  recurringInterval: 'month' | 'year'
-  accessLevel: number
+  recurringInterval: string
+  accessLevel: string
   createdFrom: string
-  features: string
-  subscriptionType: 'free' | 'premium' | 'business'
-  type: 'subscription' | 'one_time'
+  features: string[]
+  subscriptionType: string
+  type: string
   createdAt: string
   updatedAt: string
 }
 
 export interface ProductQueryParams {
-  type?: 'subscription' | 'one_time'
+  type?: string
+  subscriptionType?: string
+}
+
+// Price interface for the new prices endpoint
+export interface ProductPriceDto {
+  id: string
+  productId: string
+  amount: number
+  currency: string
+  interval?: string
+  intervalCount?: number
+  type: 'recurring' | 'one_time'
+  active: boolean
+  createdAt: string
+  updatedAt: string
 }

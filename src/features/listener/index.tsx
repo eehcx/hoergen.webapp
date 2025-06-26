@@ -12,7 +12,6 @@ import { useMiniPlayer } from '@/components/mini-player-context'
 // Icons
 import { IconPlayerPlay, IconHeart, IconSearch } from '@tabler/icons-react'
 // Dependencies
-import { Helmet } from 'react-helmet'
 import { Link } from '@tanstack/react-router'
 // Services
 import { stationService, userService, genreService, radioBrowserService } from '@/core/services'
@@ -256,9 +255,6 @@ export default function ListenerPanel() {
 
   return (
     <>
-      <Helmet>
-        <title>Listen to global stations on Hörgen</title>
-      </Helmet>
       <div className="flex flex-col min-h-screen bg-background">
         {/* Header */}
         <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90">
@@ -459,14 +455,14 @@ export default function ListenerPanel() {
                   <div key={station.id} className="group cursor-pointer bg-muted/20 rounded-xs p-6 hover:bg-muted/30 transition-all duration-300">
                     <div className="flex items-center gap-4">
                       {/* Station Cover */}
-                      <div className="w-20 h-20 bg-gradient-to-br from-muted via-muted/80 to-muted/60 rounded-lg flex-shrink-0 relative overflow-hidden">
+                      <div className="w-20 h-20 bg-gradient-to-br from-muted via-muted/80 to-muted/60 rounded-none flex-shrink-0 relative overflow-hidden">
                         {station.coverImage && (
                           <img src={station.coverImage} alt={station.name} className="w-full h-full object-cover" />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                         <div className="absolute bottom-1 right-1">
                           <Button size="sm" className="rounded-full h-6 w-6 p-0 bg-white/90 hover:bg-white text-black" onClick={() => handlePlayOwnStation(station)}>
-                            <IconPlayerPlay className="h-3 w-3" />
+                            <IconPlayerPlay className="h-3 w-3"/>
                           </Button>
                         </div>
                       </div>
@@ -480,7 +476,7 @@ export default function ListenerPanel() {
                           by {creatorNames[station.ownerId] || 'Loading...'}
                         </p>
                         <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="text-xs rounded-md">Radio</Badge>
+                          <Badge variant="secondary" className="text-xs rounded-xs">Radio</Badge>
                           <Badge variant="outline" className="text-xs rounded-xs">
                             {station.favoritesCount} listeners
                           </Badge>
@@ -524,9 +520,9 @@ export default function ListenerPanel() {
                     ))
                   ) : (
                     liveStations.map((station) => (
-                      <div key={station.id} className="group flex items-center gap-4 p-3 rounded-lg hover:bg-muted/30 transition-colors cursor-pointer">
+                      <div key={station.id} className="group flex items-center gap-4 p-3 rounded-xs hover:bg-muted/30 transition-colors cursor-pointer">
                         {/* Mini Cover */}
-                        <div className="w-12 h-12 bg-gradient-to-br from-muted via-muted/80 to-muted/60 rounded-md flex-shrink-0 relative overflow-hidden">
+                        <div className="w-12 h-12 bg-gradient-to-br from-muted via-muted/80 to-muted/60 rounded-none flex-shrink-0 relative overflow-hidden">
                           {station.coverImage && (
                             <img src={station.coverImage} alt={station.name} className="w-full h-full object-cover" />
                           )}

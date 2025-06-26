@@ -1,14 +1,20 @@
 import { BaseService } from '../base.service'
 import {
     CreateProductDto,
-    UpdateProductDto,
     ProductResponseDto,
-    ProductQueryParams,
+    ProductPriceDto,
     ApiResponse
 } from '../../types'
 
 /**
  * Product Service - Manages all product-related API operations
+ * Uses v1 API for core product operations as per API documentation:
+ * - POST /v1/products - Create product
+ * - GET /v1/products - Get active products  
+ * - GET /v1/products/:id - Get product by ID
+ * - GET /v1/products/:id/prices - Get product prices
+ * 
+ * Fallback to v2 API for operations not available in v1
  * Singleton pattern like Angular services
  */
 export class ProductService extends BaseService {
@@ -23,101 +29,59 @@ export class ProductService extends BaseService {
      */
     static getInstance(): ProductService {
         if (!ProductService.instance) {
-        ProductService.instance = new ProductService()
+            ProductService.instance = new ProductService()
         }
         return ProductService.instance
     }
 
     /**
-     * Create a new product (with Stripe integration)
+     * Create a new product (v1 API)
      */
     async createProduct(data: CreateProductDto): Promise<ApiResponse> {
         try {
-        const response = await this.api.post('/products', data)
-        return response.data
+            const response = await this.apiV1.post('/products', data)
+            return response.data
         } catch (error) {
-        return this.handleError(error)
+            return this.handleError(error)
         }
     }
 
     /**
-     * Get all products with optional filters
+     * Get active products (v1 API)
      */
-    async getAllProducts(params?: ProductQueryParams): Promise<ProductResponseDto[]> {
+    async getActiveProducts(): Promise<ProductResponseDto[]> {
         try {
-        const response = await this.api.get('/products', { params })
-        return response.data
+            const response = await this.apiV1.get('/products')
+            return response.data
         } catch (error) {
-        return this.handleError(error)
+            return this.handleError(error)
         }
     }
 
     /**
-     * Get product by ID
+     * Get product by ID (v1 API)
      */
     async getProductById(id: string): Promise<ProductResponseDto> {
         try {
-        const response = await this.api.get(`/products/${id}`)
-        return response.data
+            const response = await this.apiV1.get(`/products/${id}`)
+            return response.data
         } catch (error) {
-        return this.handleError(error)
+            return this.handleError(error)
         }
     }
 
     /**
-     * Update product by ID
+     * Get product prices (v1 API)
      */
-    async updateProduct(id: string, data: UpdateProductDto): Promise<ApiResponse> {
+    async getProductPrices(id: string): Promise<ProductPriceDto[]> {
         try {
-        const response = await this.api.put(`/products/${id}`, data)
-        return response.data
+            const response = await this.apiV1.get(`/products/${id}/prices`)
+            
+            return response.data
         } catch (error) {
-        return this.handleError(error)
+            return this.handleError(error)
         }
     }
 
-    /**
-     * Delete product by ID
-     */
-    async deleteProduct(id: string): Promise<ApiResponse> {
-        try {
-        const response = await this.api.delete(`/products/${id}`)
-        return response.data
-        } catch (error) {
-        return this.handleError(error)
-        }
-    }
 
-    /**
-     * Get products by type
-     */
-    async getProductsByType(type: 'subscription' | 'one_time'): Promise<ProductResponseDto[]> {
-        return this.getAllProducts({ type })
-    }
-
-    /**
-     * Get subscription products
-     */
-    async getSubscriptionProducts(): Promise<ProductResponseDto[]> {
-        return this.getProductsByType('subscription')
-    }
-
-    /**
-     * Get one-time purchase products
-     */
-    async getOneTimeProducts(): Promise<ProductResponseDto[]> {
-        return this.getProductsByType('one_time')
-    }
-
-    /**
-     * Get products by subscription type
-     */
-    async getProductsBySubscriptionType(subscriptionType: 'free' | 'premium' | 'business'): Promise<ProductResponseDto[]> {
-        try {
-        const response = await this.api.get(`/products?subscriptionType=${subscriptionType}`)
-        return response.data
-        } catch (error) {
-        return this.handleError(error)
-        }
-    }
 }

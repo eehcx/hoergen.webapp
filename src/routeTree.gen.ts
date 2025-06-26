@@ -12,7 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
+import { Route as SubscriptionsIndexImport } from './routes/subscriptions/index'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as SubscriptionsSuccessImport } from './routes/subscriptions/success'
+import { Route as SubscriptionsCancelImport } from './routes/subscriptions/cancel'
 import { Route as AuthenticatedSearchImport } from './routes/_authenticated/search'
 import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedLibraryImport } from './routes/_authenticated/library'
@@ -56,10 +59,28 @@ const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SubscriptionsIndexRoute = SubscriptionsIndexImport.update({
+  id: '/subscriptions/',
+  path: '/subscriptions/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const SubscriptionsSuccessRoute = SubscriptionsSuccessImport.update({
+  id: '/subscriptions/success',
+  path: '/subscriptions/success',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SubscriptionsCancelRoute = SubscriptionsCancelImport.update({
+  id: '/subscriptions/cancel',
+  path: '/subscriptions/cancel',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const AuthenticatedSearchRoute = AuthenticatedSearchImport.update({
@@ -423,12 +444,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSearchImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/subscriptions/cancel': {
+      id: '/subscriptions/cancel'
+      path: '/subscriptions/cancel'
+      fullPath: '/subscriptions/cancel'
+      preLoaderRoute: typeof SubscriptionsCancelImport
+      parentRoute: typeof rootRoute
+    }
+    '/subscriptions/success': {
+      id: '/subscriptions/success'
+      path: '/subscriptions/success'
+      fullPath: '/subscriptions/success'
+      preLoaderRoute: typeof SubscriptionsSuccessImport
+      parentRoute: typeof rootRoute
+    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexImport
       parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/subscriptions/': {
+      id: '/subscriptions/'
+      path: '/subscriptions'
+      fullPath: '/subscriptions'
+      preLoaderRoute: typeof SubscriptionsIndexImport
+      parentRoute: typeof rootRoute
     }
     '/_authenticated/admin/analytics': {
       id: '/_authenticated/admin/analytics'
@@ -687,7 +729,10 @@ export interface FileRoutesByFullPath {
   '/library': typeof AuthenticatedLibraryRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/search': typeof AuthenticatedSearchRoute
+  '/subscriptions/cancel': typeof SubscriptionsCancelRoute
+  '/subscriptions/success': typeof SubscriptionsSuccessRoute
   '/': typeof AuthenticatedIndexRoute
+  '/subscriptions': typeof SubscriptionsIndexRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
@@ -723,7 +768,10 @@ export interface FileRoutesByTo {
   '/library': typeof AuthenticatedLibraryRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/search': typeof AuthenticatedSearchRoute
+  '/subscriptions/cancel': typeof SubscriptionsCancelRoute
+  '/subscriptions/success': typeof SubscriptionsSuccessRoute
   '/': typeof AuthenticatedIndexRoute
+  '/subscriptions': typeof SubscriptionsIndexRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
@@ -764,7 +812,10 @@ export interface FileRoutesById {
   '/_authenticated/library': typeof AuthenticatedLibraryRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/search': typeof AuthenticatedSearchRoute
+  '/subscriptions/cancel': typeof SubscriptionsCancelRoute
+  '/subscriptions/success': typeof SubscriptionsSuccessRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/subscriptions/': typeof SubscriptionsIndexRoute
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
@@ -806,7 +857,10 @@ export interface FileRouteTypes {
     | '/library'
     | '/profile'
     | '/search'
+    | '/subscriptions/cancel'
+    | '/subscriptions/success'
     | '/'
+    | '/subscriptions'
     | '/admin/analytics'
     | '/admin/stations'
     | '/admin/users'
@@ -841,7 +895,10 @@ export interface FileRouteTypes {
     | '/library'
     | '/profile'
     | '/search'
+    | '/subscriptions/cancel'
+    | '/subscriptions/success'
     | '/'
+    | '/subscriptions'
     | '/admin/analytics'
     | '/admin/stations'
     | '/admin/users'
@@ -880,7 +937,10 @@ export interface FileRouteTypes {
     | '/_authenticated/library'
     | '/_authenticated/profile'
     | '/_authenticated/search'
+    | '/subscriptions/cancel'
+    | '/subscriptions/success'
     | '/_authenticated/'
+    | '/subscriptions/'
     | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/stations'
     | '/_authenticated/admin/users'
@@ -914,6 +974,9 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  SubscriptionsCancelRoute: typeof SubscriptionsCancelRoute
+  SubscriptionsSuccessRoute: typeof SubscriptionsSuccessRoute
+  SubscriptionsIndexRoute: typeof SubscriptionsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -928,6 +991,9 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  SubscriptionsCancelRoute: SubscriptionsCancelRoute,
+  SubscriptionsSuccessRoute: SubscriptionsSuccessRoute,
+  SubscriptionsIndexRoute: SubscriptionsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -950,7 +1016,10 @@ export const routeTree = rootRoute
         "/(errors)/403",
         "/(errors)/404",
         "/(errors)/500",
-        "/(errors)/503"
+        "/(errors)/503",
+        "/subscriptions/cancel",
+        "/subscriptions/success",
+        "/subscriptions/"
       ]
     },
     "/_authenticated": {
@@ -1050,9 +1119,18 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/search.tsx",
       "parent": "/_authenticated"
     },
+    "/subscriptions/cancel": {
+      "filePath": "subscriptions/cancel.tsx"
+    },
+    "/subscriptions/success": {
+      "filePath": "subscriptions/success.tsx"
+    },
     "/_authenticated/": {
       "filePath": "_authenticated/index.tsx",
       "parent": "/_authenticated"
+    },
+    "/subscriptions/": {
+      "filePath": "subscriptions/index.tsx"
     },
     "/_authenticated/admin/analytics": {
       "filePath": "_authenticated/admin/analytics.tsx",

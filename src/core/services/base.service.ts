@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios'
-import { apiV2 } from '../api/client'
+import { apiV1, apiV2 } from '../api/client'
 
 /**
  * Base service class implementing singleton pattern like Angular services
@@ -7,9 +7,11 @@ import { apiV2 } from '../api/client'
  */
 export abstract class BaseService {
     protected api: AxiosInstance
+    protected apiV1: AxiosInstance
 
     protected constructor() {
         this.api = apiV2
+        this.apiV1 = apiV1
     }
 
     /**

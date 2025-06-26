@@ -13,6 +13,7 @@ import { useAuthStore } from '@/stores/authStore'
 import { handleServerError } from '@/utils/handle-server-error'
 import { FontProvider } from './context/font-context'
 import { ThemeProvider } from './context/theme-context'
+import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
@@ -91,17 +92,19 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
-          <FontProvider>
-            <MiniPlayerProvider>
-              {/* RouterProvider no necesita children */}
-              <RouterProvider router={router} />
-              <AuthInitializer />
-            </MiniPlayerProvider>
-          </FontProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
+            <FontProvider>
+              <MiniPlayerProvider>
+                {/* RouterProvider no necesita children */}
+                <RouterProvider router={router} />
+                <AuthInitializer />
+              </MiniPlayerProvider>
+            </FontProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
     </StrictMode>
   )
 }
