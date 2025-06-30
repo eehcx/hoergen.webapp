@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 // Icons 
 import { IconSearch } from '@tabler/icons-react'
 // Shadcn components
@@ -7,9 +7,13 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function HeaderNavbar() {
+export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
+    const router = useRouter();
+    const currentPath = router.state.location.pathname;
+    // Helper para saber si la ruta está activa
+    const isActive = (path: string) => currentPath === path;
     return (
-        <header className="top-0 left-0 right-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90">
+        <header className={`top-0 left-0 right-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90${sticky ? ' sticky' : ''}`}>
             <div className="container flex h-20 items-center">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 select-none">
@@ -18,23 +22,30 @@ export default function HeaderNavbar() {
             
             {/* Navigation */}
             <nav className="ml-8 flex items-center space-x-1">
-                <Button variant="ghost" size="sm" asChild className="font-medium text-sm h-9 px-4 rounded-xs">
+                <Button
+                    variant={isActive("/") ? "default" : "ghost"}
+                    size="sm"
+                    asChild
+                    className={`font-medium text-sm h-9 px-4 rounded-xs${isActive("/") ? ' text-white dark:text-[#111]' : ''}`}
+                >
                     <Link to="/">Radio</Link>
                 </Button>
-                <Button variant="ghost" size="sm" asChild className="font-medium text-sm h-9 px-4 rounded-xs">
+                <Button
+                    variant={isActive("/browse") ? "default" : "ghost"}
+                    size="sm"
+                    asChild
+                    className={`font-medium text-sm h-9 px-4 rounded-xs${isActive("/browse") ? ' text-white dark:text-[#111]' : ''}`}
+                >
                     <Link to="/browse">Browse</Link>
                 </Button>
-                <Button variant="ghost" size="sm" asChild className="font-medium text-sm h-9 px-4 rounded-xs">
-                    <Link to="/library">Library</Link>
+                <Button
+                    variant={isActive("/you/library") ? "default" : "ghost"}
+                    size="sm"
+                    asChild
+                    className={`font-medium text-sm h-9 px-4 rounded-xs${isActive("/you/library") ? ' text-white dark:text-[#111]' : ''}`}
+                >
+                    <Link to="/you/library">Library</Link>
                 </Button>
-                {/*
-                <Button variant="ghost" size="sm" asChild className="font-medium text-sm h-9 px-4 rounded-xs">
-                    <Link to="/search">Search</Link>
-                </Button>
-                <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs bg-primary text-primary-foreground">
-                Settings
-                </Button>
-                */}
             </nav>
             
             {/* Search */}
@@ -44,7 +55,12 @@ export default function HeaderNavbar() {
                 <Input
                     type="search"
                     placeholder="Search radio stations around the world..."
-                    className="pl-12 h-11 bg-muted/50 border-0 rounded-lg focus-visible:ring-2 focus-visible:ring-primary/30 text-sm"
+                    className="pl-12 h-11 bg-muted/50 border-0 rounded-xs focus-visible:ring-2 focus-visible:ring-primary/30 text-sm"
+                    onFocus={() => {
+                        if (currentPath !== '/browse') {
+                            router.navigate({ to: '/browse' });
+                        }
+                    }}
                 />
                 </div>
             </div>

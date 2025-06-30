@@ -93,7 +93,7 @@ function useCheckoutSession() {
     });
 }
 
-export default function SubscriptionsPanel() {
+export default function Subscriptions() {
     // TankStack Router
     const navigate = useNavigate()
     
@@ -206,7 +206,7 @@ export default function SubscriptionsPanel() {
                                 <Link to="/browse">Browse</Link>
                             </Button>
                             <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
-                                <Link to="/library">Library</Link>
+                                <Link to="/you/library">Library</Link>
                             </Button>
                         </nav>
                         

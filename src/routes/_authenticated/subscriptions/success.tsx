@@ -72,6 +72,6 @@ export default function SubscriptionSuccess() {
     );
 }
 
-export const Route = createFileRoute('/subscriptions/success')({
+export const Route = createFileRoute('/_authenticated/subscriptions/success')({
     component: SubscriptionSuccess,
 });

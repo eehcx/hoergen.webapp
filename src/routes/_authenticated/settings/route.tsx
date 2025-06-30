@@ -1,20 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useAuth } from '@/hooks/useAuth'
 import Settings from '@/features/settings'
-import ListenerSettings from '@/features/listener-settings'
+import HeaderNavbar from '@/components/header-navbar'
 
 export const Route = createFileRoute('/_authenticated/settings')({
-  component: SettingsRouter,
+  component: SettingsLayout,
 })
 
-function SettingsRouter() {
-  const { claims } = useAuth()
-  
-  // Si es admin, muestra el panel de admin settings
-  if (claims?.role === 'admin') {
-    return <Settings />
-  }
-  
-  // Por defecto, muestra settings para listeners
-  return <ListenerSettings />
+function SettingsLayout() {
+  return (
+    <>
+      <HeaderNavbar />
+      <div className='p-4'>
+        <Settings />
+      </div>
+    </>
+  )
 }

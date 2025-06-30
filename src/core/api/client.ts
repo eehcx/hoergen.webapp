@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// Get API URLs from environment variables
-const API_URL_V1 = import.meta.env.VITE_API_URL_V1 || 'v1';
-const API_URL_V2 = import.meta.env.VITE_API_URL_V2 || 'v2';
+// Get API URLs from environment variables with fallback to production URLs
+const API_URL_V1 = import.meta.env.VITE_API_URL_V1 || 'https://api-kzphduejga-uc.a.run.app/v1';
+const API_URL_V2 = import.meta.env.VITE_API_URL_V2 || 'https://nestjs-kzphduejga-uc.a.run.app/v2';
 
 // Configuración común
 const commonConfig = {

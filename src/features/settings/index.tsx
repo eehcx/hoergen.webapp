@@ -1,4 +1,4 @@
-import { Outlet } from '@tanstack/react-router'
+import { Outlet, useRouterState } from '@tanstack/react-router'
 import {
   IconBrowserCheck,
   IconNotification,
@@ -7,25 +7,19 @@ import {
   IconUser,
 } from '@tabler/icons-react'
 import { Separator } from '@/components/ui/separator'
-import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import SidebarNav from './components/sidebar-nav'
+import SettingsAccount from './account'
 
 export default function Settings() {
+  const { location } = useRouterState()
+  // Detecta si estamos en la ruta padre exacta
+  const isRoot =
+    location.pathname === '/_authenticated/settings' ||
+    location.pathname === '/_authenticated/settings/'
+
   return (
     <>
-      {/* ===== Top Heading ===== */}
-      <Header>
-        <Search />
-        <div className='ml-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ProfileDropdown />
-        </div>
-      </Header>
-
       <Main fixed>
         <div className='space-y-0.5'>
           <h1 className='text-2xl font-bold tracking-tight md:text-3xl'>
@@ -41,7 +35,7 @@ export default function Settings() {
             <SidebarNav items={sidebarNavItems} />
           </aside>
           <div className='flex w-full overflow-y-hidden p-1'>
-            <Outlet />
+            {isRoot ? <SettingsAccount /> : <Outlet />}
           </div>
         </div>
       </Main>
@@ -50,11 +44,11 @@ export default function Settings() {
 }
 
 const sidebarNavItems = [
-  {
+  /*{
     title: 'Profile',
     icon: <IconUser size={18} />,
     href: '/settings',
-  },
+  },*/
   {
     title: 'Account',
     icon: <IconTool size={18} />,

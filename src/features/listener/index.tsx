@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react'
 // Shadcn UI components
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { ThemeSwitch } from '@/components/theme-switch'
 // Components
 import { Footer } from '@/components/footer'
 import { MiniPlayer } from '@/components/mini-player'
 import { useMiniPlayer } from '@/context/mini-player-context'
+import HeaderNavbar from '@/components/header-navbar'
 // Icons
 import { IconPlayerPlay, IconHeart, IconSearch } from '@tabler/icons-react'
 // Dependencies
@@ -18,6 +16,8 @@ import { useRadioBrowserStations } from '@/hooks/radio-browser'
 // Services
 import { stationService, userService, genreService } from '@/core/services'
 import type { ResponseStationDto, GenreResponseDto, RadioBrowserStation } from '@/core/types'
+import { normalizeRadioBrowserStation } from '@/lib/utils/normalizeRadioBrowserStation'
+import { slugify } from '@/lib/utils/slugify'
 
 export default function Listener() {
   // Navigations
@@ -147,20 +147,12 @@ export default function Listener() {
 
   // Handler para reproducir una estación de RadioBrowser
   function handlePlayRadioBrowserStation(station: RadioBrowserStation) {
-    play({
-      streamUrl: station.url_resolved,
-      stationName: station.name,
-      stationCover: station.favicon || undefined,
-    })
+    play({ station: normalizeRadioBrowserStation(station) })
   }
 
   // Handler para reproducir una estación propia
   function handlePlayOwnStation(station: ResponseStationDto) {
-    play({
-      streamUrl: station.streamUrl,
-      stationName: station.name,
-      stationCover: station.coverImage || undefined,
-    })
+    play({ station }) 
   }
 
   const handleViewAll = () => {
@@ -171,45 +163,7 @@ export default function Listener() {
     <>
       <div className="flex flex-col min-h-screen bg-background">
         {/* Header */}
-        <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90">
-          <div className="container flex h-20 items-center">
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2 select-none">
-              <h1 className="text-xl font-bold tracking-widest font-[Orbitron]">Hörgen</h1>
-            </Link>
-            
-            {/* Navigation */}
-            <nav className="ml-8 flex items-center space-x-1">
-              <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs bg-primary text-primary-foreground">
-                <Link to="/">Radio</Link>
-              </Button>
-              <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
-                <Link to="/browse">Browse</Link>
-              </Button>
-              <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
-                <Link to="/library">Library</Link>
-              </Button>
-            </nav>
-            
-            {/* Search */}
-            <div className="ml-8 flex-1 max-w-md relative">
-              <div className="relative">
-                <IconSearch className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search radio stations around the world..."
-                  className="pl-12 h-11 bg-muted/50 border-0 rounded-lg focus-visible:ring-2 focus-visible:ring-primary/30 text-sm"
-                />
-              </div>
-            </div>
-
-            {/* User Actions */}
-            <div className="ml-6 flex items-center space-x-4">
-              <ThemeSwitch />
-              <ProfileDropdown />
-            </div>
-          </div>
-        </header>
+        <HeaderNavbar sticky />
 
         {/* Main Content */}
         <main className="flex-1 bg-background">
@@ -219,7 +173,7 @@ export default function Listener() {
               <div className="text-center space-y-4 mb-12">
                 <h1 className="text-5xl font-bold tracking-tight">Broadcast the Rebellion</h1>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  From Berlin basements to Villahermosa backstreets — tune into raw, live broadcasts from independent stations defying the mainstream.
+                  From Berlin basements to México backstreets — tune into raw, live broadcasts from independent stations defying the mainstream.
                 </p>
               </div>
               
@@ -252,10 +206,14 @@ export default function Listener() {
                     </p>
                     <p className="text-sm text-muted-foreground mb-6">{featuredStation.description || 'No description available'}</p>
                     <div className="flex items-center gap-4">
-                      <Button size="lg" className="rounded-xs h-9 px-4">
-                        <IconPlayerPlay className="h-5 w-5 mr-2" />
+                      <Link 
+                        to='/s/$stationSlug' 
+                        params={{ stationSlug: slugify(featuredStation.name) }} 
+                        search={featuredStation}
+                        className="flex items-center justify-center text-normal text-white dark:text-zinc-900 h-8 px-5 bg-zinc-900 dark:bg-white"
+                      >
                         Listen Now
-                      </Button>
+                      </Link>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <span>{featuredStation.favoritesCount} favorites</span>
                       </div>
@@ -305,28 +263,35 @@ export default function Listener() {
                       {/* Station Cover */}
                       <div className="relative aspect-square bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-t-xl mb-4 overflow-hidden">
                         {station.favicon ? (
-                          <img 
-                            src={station.favicon} 
-                            alt={station.name}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              // Fallback to gradient background if favicon fails to load
-                              const target = e.currentTarget
-                              target.style.display = 'none'
-                              const parent = target.parentElement
-                              if (parent) {
-                                parent.classList.add('bg-gradient-to-br', 'from-blue-500/30', 'via-purple-500/30', 'to-pink-500/30')
-                              }
-                            }}
-                            onLoad={(e) => {
-                              // Remove gradient classes if image loads successfully
-                              const target = e.currentTarget
-                              const parent = target.parentElement
-                              if (parent) {
-                                parent.classList.remove('bg-gradient-to-br', 'from-blue-500/30', 'via-purple-500/30', 'to-pink-500/30')
-                              }
-                            }}
-                          />
+                          <Link
+                            to='/s/$stationSlug'
+                            params={{ stationSlug: slugify(station.name) }}
+                            search={station}
+                            className="absolute inset-0 flex items-center justify-center"
+                          >
+                            <img 
+                              src={station.favicon} 
+                              alt={station.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                // Fallback to gradient background if favicon fails to load
+                                const target = e.currentTarget
+                                target.style.display = 'none'
+                                const parent = target.parentElement
+                                if (parent) {
+                                  parent.classList.add('bg-gradient-to-br', 'from-blue-500/30', 'via-purple-500/30', 'to-pink-500/30')
+                                }
+                              }}
+                              onLoad={(e) => {
+                                // Remove gradient classes if image loads successfully
+                                const target = e.currentTarget
+                                const parent = target.parentElement
+                                if (parent) {
+                                  parent.classList.remove('bg-gradient-to-br', 'from-blue-500/30', 'via-purple-500/30', 'to-pink-500/30')
+                                }
+                              }}
+                            />
+                          </Link>
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                         )}
@@ -381,12 +346,18 @@ export default function Listener() {
             <div className="my-28">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-bold tracking-tight">Made for You</h2>
-                <Button variant="outline" size="sm" className="rounded-xs">View more</Button>
+                {/*<Button variant="outline" size="sm" className="rounded-xs">View more</Button>*/}
               </div>
               
               <div className="grid gap-4 md:grid-cols-2">
                 {madeForYouStations.map((station) => (
-                  <div key={station.id} className="group cursor-pointer bg-muted/20 rounded-xs p-6 hover:bg-muted/30 transition-all duration-300">
+                  <Link
+                    key={station.id}
+                    to='/s/$stationSlug'
+                    params={{ stationSlug: slugify(station.name) }}
+                    search={station}
+                    className="group cursor-pointer bg-muted/20 rounded-xs p-6 hover:bg-muted/30 transition-all duration-300 no-underline"
+                  >
                     <div className="flex items-center gap-4">
                       {/* Station Cover */}
                       <div className="w-20 h-20 bg-gradient-to-br from-muted via-muted/80 to-muted/60 rounded-none flex-shrink-0 relative overflow-hidden">
@@ -429,7 +400,7 @@ export default function Listener() {
                         </Button>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -501,9 +472,11 @@ export default function Listener() {
                     ))
                   ) : genres.length > 0 ? (
                     genres.map((genre) => (
-                      <div
+                      <Link 
                         key={genre.id}
                         className={`relative overflow-hidden rounded p-4 h-20 cursor-pointer hover:scale-95 transition-transform bg-gradient-to-br ${getRandomColor()}`}
+                        to="/browse"
+                        search={{ genre: genre.canonicalName }}
                       >
                         <div className="relative z-10">
                           <h4 className="font-semibold text-sm">{genre.name}</h4>
@@ -513,7 +486,7 @@ export default function Listener() {
                             </p>
                           )}
                         </div>
-                      </div>
+                      </Link>
                     ))
                   ) : (
                     // Fallback to hardcoded genres if API fails
@@ -542,12 +515,7 @@ export default function Listener() {
         </main>
         <Footer />
         {player && (
-          <MiniPlayer
-            streamUrl={player.streamUrl}
-            stationName={player.stationName}
-            stationCover={player.stationCover}
-            isPlaying={player.isPlaying}
-          />
+          <MiniPlayer />
         )}
       </div>
     </>

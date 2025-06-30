@@ -34,6 +34,6 @@ export default function SubscriptionCancel() {
     );
 }
 
-export const Route = createFileRoute('/subscriptions/cancel')({
+export const Route = createFileRoute('/_authenticated/subscriptions/cancel')({
     component: SubscriptionCancel,
 });

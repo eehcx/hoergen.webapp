@@ -28,8 +28,8 @@ export class UserService extends BaseService {
     }
 
     /**
-     * Get singleton instance
-     */
+    * Get singleton instance
+    */
     static getInstance(): UserService {
         if (!UserService.instance) {
             UserService.instance = new UserService()
@@ -38,12 +38,11 @@ export class UserService extends BaseService {
     }
 
     /**
-     * Register a new user
-     */
+    * Register a new user
+    */
     async registerUser(data: CreateUserDto): Promise<ApiResponse> {
         try {
             const response = await this.api.post('/users/register', data)
-            
             return response.data
         } catch (error) {
             return this.handleError(error)
@@ -51,8 +50,8 @@ export class UserService extends BaseService {
     }
 
     /**
-     * Register user in Firestore using Firebase SDK
-     */
+    * Register user in Firestore using Firebase SDK
+    */
     async registerUserFirestore(data: CreateUserFirebaseDto): Promise<void> {
         try {
             const userRef = doc(db, 'users', data.uid)
@@ -84,14 +83,14 @@ export class UserService extends BaseService {
     }
 
     /**
-     * Get all users
-     */
+    * Get all users
+    */
     async getAllUsers(): Promise<UserResponseDto[]> {
         try {
-        const response = await this.api.get('/users')
-        return response.data
+            const response = await this.api.get('/users')
+            return response.data
         } catch (error) {
-        return this.handleError(error)
+            return this.handleError(error)
         }
     }
 
@@ -100,10 +99,10 @@ export class UserService extends BaseService {
     */
     async getUserById(id: string): Promise<UserResponseDto> {
         try {
-        const response = await this.api.get(`/users/${id}`)
-        return response.data
+            const response = await this.api.get(`/users/${id}`)
+            return response.data
         } catch (error) {
-        return this.handleError(error)
+            return this.handleError(error)
         }
     }
 
@@ -113,7 +112,6 @@ export class UserService extends BaseService {
     async updateUser(uid: string, data: UpdateUserDto): Promise<ApiResponse> {
         try {
             const response = await this.api.put(`/users/${uid}`, data)
-            
             return response.data
         } catch (error) {
             return this.handleError(error)
@@ -123,7 +121,6 @@ export class UserService extends BaseService {
     async updateClaims(uid: string, data: CustomClaimsDto): Promise<ApiResponse> {
         try {
             const response = await this.api.put(`/users/${uid}`, data)
-            
             return response.data
         } catch (error) {
             return this.handleError(error)
@@ -131,8 +128,8 @@ export class UserService extends BaseService {
     }
 
     /**
-     * Update user favorites
-     */
+    * Update user favorites
+    */
     async updateUserFavorites(id: string, data: UpdateUserFavoritesDto): Promise<ApiResponse> {
         try {
             const response = await this.api.put(`/users/${id}/favorites`, data)
@@ -144,37 +141,11 @@ export class UserService extends BaseService {
     }
 
     /**
-     * Delete user by UID
-     */
+    * Delete user by UID
+    */
     async deleteUser(uid: string): Promise<ApiResponse> {
         try {
             const response = await this.api.delete(`/users/${uid}`)
-            
-            return response.data
-        } catch (error) {
-            return this.handleError(error)
-        }
-    }
-
-    /**
-     * Get users by role
-     */
-    async getUsersByRole(role: 'user' | 'admin' | 'moderator'): Promise<UserResponseDto[]> {
-        try {
-            const response = await this.api.get(`/users?role=${role}`)
-            
-            return response.data
-        } catch (error) {
-            return this.handleError(error)
-        }
-    }
-
-    /**
-     * Get users by plan
-     */
-    async getUsersByPlan(plan: 'free' | 'premium' | 'business'): Promise<UserResponseDto[]> {
-        try {
-            const response = await this.api.get(`/users?plan=${plan}`)
             
             return response.data
         } catch (error) {

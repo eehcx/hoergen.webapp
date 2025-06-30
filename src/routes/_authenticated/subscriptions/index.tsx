@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Helmet } from "react-helmet-async";
-import SubscriptionsPanel from "@/features/subscriptions";
+import Subscriptions from "@/features/subscriptions";
 
-export const Route = createFileRoute('/subscriptions/')({
+export const Route = createFileRoute('/_authenticated/subscriptions/')({
   component: SubscriptionsPage,
 });
 
@@ -16,7 +16,7 @@ function SubscriptionsPage() {
           content="Manage your Hörgen subscriptions, billing, and access premium features that amplify your underground radio experience."
         />
       </Helmet>
-      <SubscriptionsPanel />
+      <Subscriptions />
     </>
   );
 }

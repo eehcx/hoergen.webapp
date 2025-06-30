@@ -36,21 +36,6 @@ export default defineConfig(({ mode }) => {
         '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
       },
     },
-    server: {
-      proxy: {
-        '/v1': {
-          target: 'https://api-kzphduejga-uc.a.run.app/v1',
-          changeOrigin: true,
-          secure: true,
-          rewrite: (path) => path.replace(/^\/v1/, ''),
-        },
-        '/v2': {
-          target: 'https://nestjs-kzphduejga-uc.a.run.app/v2',
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/v2/, ''),
-        },
-      },
-    },
+    // Proxy removido - ahora usamos URLs directas con CORS configurado
   };
 })

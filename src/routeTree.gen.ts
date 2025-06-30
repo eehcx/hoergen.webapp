@@ -12,15 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
-import { Route as SubscriptionsIndexImport } from './routes/subscriptions/index'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
-import { Route as SubscriptionsSuccessImport } from './routes/subscriptions/success'
-import { Route as SubscriptionsCancelImport } from './routes/subscriptions/cancel'
-import { Route as AuthenticatedSearchImport } from './routes/_authenticated/search'
-import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedLibraryImport } from './routes/_authenticated/library'
-import { Route as AuthenticatedBrowseImport } from './routes/_authenticated/browse'
-import { Route as AuthenticatedAdminImport } from './routes/_authenticated/admin'
 import { Route as errors503Import } from './routes/(errors)/503'
 import { Route as errors500Import } from './routes/(errors)/500'
 import { Route as errors404Import } from './routes/(errors)/404'
@@ -31,26 +23,25 @@ import { Route as authSignIn2Import } from './routes/(auth)/sign-in-2'
 import { Route as authSignInImport } from './routes/(auth)/sign-in'
 import { Route as authOtpImport } from './routes/(auth)/otp'
 import { Route as authForgotPasswordImport } from './routes/(auth)/forgot-password'
-import { Route as AuthenticatedUserSettingsRouteImport } from './routes/_authenticated/user-settings/route'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings/route'
+import { Route as AuthenticatedYouIndexImport } from './routes/_authenticated/you/index'
 import { Route as AuthenticatedUsersIndexImport } from './routes/_authenticated/users/index'
-import { Route as AuthenticatedUserSettingsIndexImport } from './routes/_authenticated/user-settings/index'
+import { Route as AuthenticatedSubscriptionsIndexImport } from './routes/_authenticated/subscriptions/index'
 import { Route as AuthenticatedSettingsIndexImport } from './routes/_authenticated/settings/index'
+import { Route as AuthenticatedBrowseIndexImport } from './routes/_authenticated/browse/index'
 import { Route as AuthenticatedAdminIndexImport } from './routes/_authenticated/admin/index'
-import { Route as AuthenticatedUserSettingsPreferencesImport } from './routes/_authenticated/user-settings/preferences'
-import { Route as AuthenticatedUserSettingsAudioImport } from './routes/_authenticated/user-settings/audio'
+import { Route as AuthenticatedSubscriptionsSuccessImport } from './routes/_authenticated/subscriptions/success'
+import { Route as AuthenticatedSubscriptionsCancelImport } from './routes/_authenticated/subscriptions/cancel'
 import { Route as AuthenticatedSettingsPreferencesImport } from './routes/_authenticated/settings/preferences'
 import { Route as AuthenticatedSettingsNotificationsImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsDisplayImport } from './routes/_authenticated/settings/display'
-import { Route as AuthenticatedSettingsAudioImport } from './routes/_authenticated/settings/audio'
 import { Route as AuthenticatedSettingsAppearanceImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountImport } from './routes/_authenticated/settings/account'
-import { Route as AuthenticatedLibraryHistoryImport } from './routes/_authenticated/library/history'
-import { Route as AuthenticatedLibraryFollowingImport } from './routes/_authenticated/library/following'
-import { Route as AuthenticatedLibraryFavoritesImport } from './routes/_authenticated/library/favorites'
+import { Route as AuthenticatedSStationSlugImport } from './routes/_authenticated/s/$stationSlug'
 import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminStationsImport } from './routes/_authenticated/admin/stations'
 import { Route as AuthenticatedAdminAnalyticsImport } from './routes/_authenticated/admin/analytics'
+import { Route as AuthenticatedYouLibraryIndexImport } from './routes/_authenticated/you/library/index'
 
 // Create/Update Routes
 
@@ -59,57 +50,9 @@ const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SubscriptionsIndexRoute = SubscriptionsIndexImport.update({
-  id: '/subscriptions/',
-  path: '/subscriptions/',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AuthenticatedIndexRoute = AuthenticatedIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
-const SubscriptionsSuccessRoute = SubscriptionsSuccessImport.update({
-  id: '/subscriptions/success',
-  path: '/subscriptions/success',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SubscriptionsCancelRoute = SubscriptionsCancelImport.update({
-  id: '/subscriptions/cancel',
-  path: '/subscriptions/cancel',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthenticatedSearchRoute = AuthenticatedSearchImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
-const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
-const AuthenticatedLibraryRoute = AuthenticatedLibraryImport.update({
-  id: '/library',
-  path: '/library',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
-const AuthenticatedBrowseRoute = AuthenticatedBrowseImport.update({
-  id: '/browse',
-  path: '/browse',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
-const AuthenticatedAdminRoute = AuthenticatedAdminImport.update({
-  id: '/admin',
-  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
@@ -173,13 +116,6 @@ const authForgotPasswordRoute = authForgotPasswordImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedUserSettingsRouteRoute =
-  AuthenticatedUserSettingsRouteImport.update({
-    id: '/user-settings',
-    path: '/user-settings',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-
 const AuthenticatedSettingsRouteRoute = AuthenticatedSettingsRouteImport.update(
   {
     id: '/settings',
@@ -188,17 +124,23 @@ const AuthenticatedSettingsRouteRoute = AuthenticatedSettingsRouteImport.update(
   } as any,
 )
 
+const AuthenticatedYouIndexRoute = AuthenticatedYouIndexImport.update({
+  id: '/you/',
+  path: '/you/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
 const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexImport.update({
   id: '/users/',
   path: '/users/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
-const AuthenticatedUserSettingsIndexRoute =
-  AuthenticatedUserSettingsIndexImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedUserSettingsRouteRoute,
+const AuthenticatedSubscriptionsIndexRoute =
+  AuthenticatedSubscriptionsIndexImport.update({
+    id: '/subscriptions/',
+    path: '/subscriptions/',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 const AuthenticatedSettingsIndexRoute = AuthenticatedSettingsIndexImport.update(
@@ -209,24 +151,30 @@ const AuthenticatedSettingsIndexRoute = AuthenticatedSettingsIndexImport.update(
   } as any,
 )
 
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedAdminRoute,
+const AuthenticatedBrowseIndexRoute = AuthenticatedBrowseIndexImport.update({
+  id: '/browse/',
+  path: '/browse/',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
-const AuthenticatedUserSettingsPreferencesRoute =
-  AuthenticatedUserSettingsPreferencesImport.update({
-    id: '/preferences',
-    path: '/preferences',
-    getParentRoute: () => AuthenticatedUserSettingsRouteRoute,
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedSubscriptionsSuccessRoute =
+  AuthenticatedSubscriptionsSuccessImport.update({
+    id: '/subscriptions/success',
+    path: '/subscriptions/success',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
-const AuthenticatedUserSettingsAudioRoute =
-  AuthenticatedUserSettingsAudioImport.update({
-    id: '/audio',
-    path: '/audio',
-    getParentRoute: () => AuthenticatedUserSettingsRouteRoute,
+const AuthenticatedSubscriptionsCancelRoute =
+  AuthenticatedSubscriptionsCancelImport.update({
+    id: '/subscriptions/cancel',
+    path: '/subscriptions/cancel',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 const AuthenticatedSettingsPreferencesRoute =
@@ -250,14 +198,6 @@ const AuthenticatedSettingsDisplayRoute =
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
 
-const AuthenticatedSettingsAudioRoute = AuthenticatedSettingsAudioImport.update(
-  {
-    id: '/audio',
-    path: '/audio',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
-  } as any,
-)
-
 const AuthenticatedSettingsAppearanceRoute =
   AuthenticatedSettingsAppearanceImport.update({
     id: '/appearance',
@@ -272,46 +212,38 @@ const AuthenticatedSettingsAccountRoute =
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
 
-const AuthenticatedLibraryHistoryRoute =
-  AuthenticatedLibraryHistoryImport.update({
-    id: '/history',
-    path: '/history',
-    getParentRoute: () => AuthenticatedLibraryRoute,
-  } as any)
-
-const AuthenticatedLibraryFollowingRoute =
-  AuthenticatedLibraryFollowingImport.update({
-    id: '/following',
-    path: '/following',
-    getParentRoute: () => AuthenticatedLibraryRoute,
-  } as any)
-
-const AuthenticatedLibraryFavoritesRoute =
-  AuthenticatedLibraryFavoritesImport.update({
-    id: '/favorites',
-    path: '/favorites',
-    getParentRoute: () => AuthenticatedLibraryRoute,
-  } as any)
+const AuthenticatedSStationSlugRoute = AuthenticatedSStationSlugImport.update({
+  id: '/s/$stationSlug',
+  path: '/s/$stationSlug',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRoute,
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 const AuthenticatedAdminStationsRoute = AuthenticatedAdminStationsImport.update(
   {
-    id: '/stations',
-    path: '/stations',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin/stations',
+    path: '/admin/stations',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any,
 )
 
 const AuthenticatedAdminAnalyticsRoute =
   AuthenticatedAdminAnalyticsImport.update({
-    id: '/analytics',
-    path: '/analytics',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin/analytics',
+    path: '/admin/analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+
+const AuthenticatedYouLibraryIndexRoute =
+  AuthenticatedYouLibraryIndexImport.update({
+    id: '/you/library/',
+    path: '/you/library/',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -330,13 +262,6 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/user-settings': {
-      id: '/_authenticated/user-settings'
-      path: '/user-settings'
-      fullPath: '/user-settings'
-      preLoaderRoute: typeof AuthenticatedUserSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteImport
     }
     '/(auth)/forgot-password': {
@@ -409,55 +334,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof errors503Import
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/browse': {
-      id: '/_authenticated/browse'
-      path: '/browse'
-      fullPath: '/browse'
-      preLoaderRoute: typeof AuthenticatedBrowseImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/library': {
-      id: '/_authenticated/library'
-      path: '/library'
-      fullPath: '/library'
-      preLoaderRoute: typeof AuthenticatedLibraryImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/search': {
-      id: '/_authenticated/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof AuthenticatedSearchImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/subscriptions/cancel': {
-      id: '/subscriptions/cancel'
-      path: '/subscriptions/cancel'
-      fullPath: '/subscriptions/cancel'
-      preLoaderRoute: typeof SubscriptionsCancelImport
-      parentRoute: typeof rootRoute
-    }
-    '/subscriptions/success': {
-      id: '/subscriptions/success'
-      path: '/subscriptions/success'
-      fullPath: '/subscriptions/success'
-      preLoaderRoute: typeof SubscriptionsSuccessImport
-      parentRoute: typeof rootRoute
-    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
@@ -465,54 +341,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexImport
       parentRoute: typeof AuthenticatedRouteImport
     }
-    '/subscriptions/': {
-      id: '/subscriptions/'
-      path: '/subscriptions'
-      fullPath: '/subscriptions'
-      preLoaderRoute: typeof SubscriptionsIndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_authenticated/admin/analytics': {
       id: '/_authenticated/admin/analytics'
-      path: '/analytics'
+      path: '/admin/analytics'
       fullPath: '/admin/analytics'
       preLoaderRoute: typeof AuthenticatedAdminAnalyticsImport
-      parentRoute: typeof AuthenticatedAdminImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/admin/stations': {
       id: '/_authenticated/admin/stations'
-      path: '/stations'
+      path: '/admin/stations'
       fullPath: '/admin/stations'
       preLoaderRoute: typeof AuthenticatedAdminStationsImport
-      parentRoute: typeof AuthenticatedAdminImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
-      path: '/users'
+      path: '/admin/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AuthenticatedAdminUsersImport
-      parentRoute: typeof AuthenticatedAdminImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
-    '/_authenticated/library/favorites': {
-      id: '/_authenticated/library/favorites'
-      path: '/favorites'
-      fullPath: '/library/favorites'
-      preLoaderRoute: typeof AuthenticatedLibraryFavoritesImport
-      parentRoute: typeof AuthenticatedLibraryImport
-    }
-    '/_authenticated/library/following': {
-      id: '/_authenticated/library/following'
-      path: '/following'
-      fullPath: '/library/following'
-      preLoaderRoute: typeof AuthenticatedLibraryFollowingImport
-      parentRoute: typeof AuthenticatedLibraryImport
-    }
-    '/_authenticated/library/history': {
-      id: '/_authenticated/library/history'
-      path: '/history'
-      fullPath: '/library/history'
-      preLoaderRoute: typeof AuthenticatedLibraryHistoryImport
-      parentRoute: typeof AuthenticatedLibraryImport
+    '/_authenticated/s/$stationSlug': {
+      id: '/_authenticated/s/$stationSlug'
+      path: '/s/$stationSlug'
+      fullPath: '/s/$stationSlug'
+      preLoaderRoute: typeof AuthenticatedSStationSlugImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/settings/account': {
       id: '/_authenticated/settings/account'
@@ -526,13 +381,6 @@ declare module '@tanstack/react-router' {
       path: '/appearance'
       fullPath: '/settings/appearance'
       preLoaderRoute: typeof AuthenticatedSettingsAppearanceImport
-      parentRoute: typeof AuthenticatedSettingsRouteImport
-    }
-    '/_authenticated/settings/audio': {
-      id: '/_authenticated/settings/audio'
-      path: '/audio'
-      fullPath: '/settings/audio'
-      preLoaderRoute: typeof AuthenticatedSettingsAudioImport
       parentRoute: typeof AuthenticatedSettingsRouteImport
     }
     '/_authenticated/settings/display': {
@@ -556,26 +404,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsPreferencesImport
       parentRoute: typeof AuthenticatedSettingsRouteImport
     }
-    '/_authenticated/user-settings/audio': {
-      id: '/_authenticated/user-settings/audio'
-      path: '/audio'
-      fullPath: '/user-settings/audio'
-      preLoaderRoute: typeof AuthenticatedUserSettingsAudioImport
-      parentRoute: typeof AuthenticatedUserSettingsRouteImport
+    '/_authenticated/subscriptions/cancel': {
+      id: '/_authenticated/subscriptions/cancel'
+      path: '/subscriptions/cancel'
+      fullPath: '/subscriptions/cancel'
+      preLoaderRoute: typeof AuthenticatedSubscriptionsCancelImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
-    '/_authenticated/user-settings/preferences': {
-      id: '/_authenticated/user-settings/preferences'
-      path: '/preferences'
-      fullPath: '/user-settings/preferences'
-      preLoaderRoute: typeof AuthenticatedUserSettingsPreferencesImport
-      parentRoute: typeof AuthenticatedUserSettingsRouteImport
+    '/_authenticated/subscriptions/success': {
+      id: '/_authenticated/subscriptions/success'
+      path: '/subscriptions/success'
+      fullPath: '/subscriptions/success'
+      preLoaderRoute: typeof AuthenticatedSubscriptionsSuccessImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
-      path: '/'
-      fullPath: '/admin/'
+      path: '/admin'
+      fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminIndexImport
-      parentRoute: typeof AuthenticatedAdminImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/browse/': {
+      id: '/_authenticated/browse/'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof AuthenticatedBrowseIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/settings/': {
       id: '/_authenticated/settings/'
@@ -584,18 +439,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexImport
       parentRoute: typeof AuthenticatedSettingsRouteImport
     }
-    '/_authenticated/user-settings/': {
-      id: '/_authenticated/user-settings/'
-      path: '/'
-      fullPath: '/user-settings/'
-      preLoaderRoute: typeof AuthenticatedUserSettingsIndexImport
-      parentRoute: typeof AuthenticatedUserSettingsRouteImport
+    '/_authenticated/subscriptions/': {
+      id: '/_authenticated/subscriptions/'
+      path: '/subscriptions'
+      fullPath: '/subscriptions'
+      preLoaderRoute: typeof AuthenticatedSubscriptionsIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/users/': {
       id: '/_authenticated/users/'
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof AuthenticatedUsersIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/you/': {
+      id: '/_authenticated/you/'
+      path: '/you'
+      fullPath: '/you'
+      preLoaderRoute: typeof AuthenticatedYouIndexImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/you/library/': {
+      id: '/_authenticated/you/library/'
+      path: '/you/library'
+      fullPath: '/you/library'
+      preLoaderRoute: typeof AuthenticatedYouLibraryIndexImport
       parentRoute: typeof AuthenticatedRouteImport
     }
   }
@@ -606,7 +475,6 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedSettingsRouteRouteChildren {
   AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
   AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
-  AuthenticatedSettingsAudioRoute: typeof AuthenticatedSettingsAudioRoute
   AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute
   AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
   AuthenticatedSettingsPreferencesRoute: typeof AuthenticatedSettingsPreferencesRoute
@@ -617,7 +485,6 @@ const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteCh
   {
     AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
     AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
-    AuthenticatedSettingsAudioRoute: AuthenticatedSettingsAudioRoute,
     AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
     AuthenticatedSettingsNotificationsRoute:
       AuthenticatedSettingsNotificationsRoute,
@@ -631,80 +498,39 @@ const AuthenticatedSettingsRouteRouteWithChildren =
     AuthenticatedSettingsRouteRouteChildren,
   )
 
-interface AuthenticatedUserSettingsRouteRouteChildren {
-  AuthenticatedUserSettingsAudioRoute: typeof AuthenticatedUserSettingsAudioRoute
-  AuthenticatedUserSettingsPreferencesRoute: typeof AuthenticatedUserSettingsPreferencesRoute
-  AuthenticatedUserSettingsIndexRoute: typeof AuthenticatedUserSettingsIndexRoute
-}
-
-const AuthenticatedUserSettingsRouteRouteChildren: AuthenticatedUserSettingsRouteRouteChildren =
-  {
-    AuthenticatedUserSettingsAudioRoute: AuthenticatedUserSettingsAudioRoute,
-    AuthenticatedUserSettingsPreferencesRoute:
-      AuthenticatedUserSettingsPreferencesRoute,
-    AuthenticatedUserSettingsIndexRoute: AuthenticatedUserSettingsIndexRoute,
-  }
-
-const AuthenticatedUserSettingsRouteRouteWithChildren =
-  AuthenticatedUserSettingsRouteRoute._addFileChildren(
-    AuthenticatedUserSettingsRouteRouteChildren,
-  )
-
-interface AuthenticatedAdminRouteChildren {
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminStationsRoute: typeof AuthenticatedAdminStationsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedSStationSlugRoute: typeof AuthenticatedSStationSlugRoute
+  AuthenticatedSubscriptionsCancelRoute: typeof AuthenticatedSubscriptionsCancelRoute
+  AuthenticatedSubscriptionsSuccessRoute: typeof AuthenticatedSubscriptionsSuccessRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
-}
-
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
-  AuthenticatedAdminStationsRoute: AuthenticatedAdminStationsRoute,
-  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
-  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
-interface AuthenticatedLibraryRouteChildren {
-  AuthenticatedLibraryFavoritesRoute: typeof AuthenticatedLibraryFavoritesRoute
-  AuthenticatedLibraryFollowingRoute: typeof AuthenticatedLibraryFollowingRoute
-  AuthenticatedLibraryHistoryRoute: typeof AuthenticatedLibraryHistoryRoute
-}
-
-const AuthenticatedLibraryRouteChildren: AuthenticatedLibraryRouteChildren = {
-  AuthenticatedLibraryFavoritesRoute: AuthenticatedLibraryFavoritesRoute,
-  AuthenticatedLibraryFollowingRoute: AuthenticatedLibraryFollowingRoute,
-  AuthenticatedLibraryHistoryRoute: AuthenticatedLibraryHistoryRoute,
-}
-
-const AuthenticatedLibraryRouteWithChildren =
-  AuthenticatedLibraryRoute._addFileChildren(AuthenticatedLibraryRouteChildren)
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
-  AuthenticatedUserSettingsRouteRoute: typeof AuthenticatedUserSettingsRouteRouteWithChildren
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedBrowseRoute: typeof AuthenticatedBrowseRoute
-  AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRouteWithChildren
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
-  AuthenticatedSearchRoute: typeof AuthenticatedSearchRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedBrowseIndexRoute: typeof AuthenticatedBrowseIndexRoute
+  AuthenticatedSubscriptionsIndexRoute: typeof AuthenticatedSubscriptionsIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
+  AuthenticatedYouIndexRoute: typeof AuthenticatedYouIndexRoute
+  AuthenticatedYouLibraryIndexRoute: typeof AuthenticatedYouLibraryIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
-  AuthenticatedUserSettingsRouteRoute:
-    AuthenticatedUserSettingsRouteRouteWithChildren,
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  AuthenticatedBrowseRoute: AuthenticatedBrowseRoute,
-  AuthenticatedLibraryRoute: AuthenticatedLibraryRouteWithChildren,
-  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
-  AuthenticatedSearchRoute: AuthenticatedSearchRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
+  AuthenticatedAdminStationsRoute: AuthenticatedAdminStationsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedSStationSlugRoute: AuthenticatedSStationSlugRoute,
+  AuthenticatedSubscriptionsCancelRoute: AuthenticatedSubscriptionsCancelRoute,
+  AuthenticatedSubscriptionsSuccessRoute:
+    AuthenticatedSubscriptionsSuccessRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedBrowseIndexRoute: AuthenticatedBrowseIndexRoute,
+  AuthenticatedSubscriptionsIndexRoute: AuthenticatedSubscriptionsIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+  AuthenticatedYouIndexRoute: AuthenticatedYouIndexRoute,
+  AuthenticatedYouLibraryIndexRoute: AuthenticatedYouLibraryIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -713,7 +539,6 @@ const AuthenticatedRouteRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
-  '/user-settings': typeof AuthenticatedUserSettingsRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
@@ -724,33 +549,25 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/browse': typeof AuthenticatedBrowseRoute
-  '/library': typeof AuthenticatedLibraryRouteWithChildren
-  '/profile': typeof AuthenticatedProfileRoute
-  '/search': typeof AuthenticatedSearchRoute
-  '/subscriptions/cancel': typeof SubscriptionsCancelRoute
-  '/subscriptions/success': typeof SubscriptionsSuccessRoute
   '/': typeof AuthenticatedIndexRoute
-  '/subscriptions': typeof SubscriptionsIndexRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/library/favorites': typeof AuthenticatedLibraryFavoritesRoute
-  '/library/following': typeof AuthenticatedLibraryFollowingRoute
-  '/library/history': typeof AuthenticatedLibraryHistoryRoute
+  '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
-  '/settings/audio': typeof AuthenticatedSettingsAudioRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/settings/preferences': typeof AuthenticatedSettingsPreferencesRoute
-  '/user-settings/audio': typeof AuthenticatedUserSettingsAudioRoute
-  '/user-settings/preferences': typeof AuthenticatedUserSettingsPreferencesRoute
-  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
+  '/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/browse': typeof AuthenticatedBrowseIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/user-settings/': typeof AuthenticatedUserSettingsIndexRoute
+  '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/you': typeof AuthenticatedYouIndexRoute
+  '/you/library': typeof AuthenticatedYouLibraryIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -764,39 +581,31 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/browse': typeof AuthenticatedBrowseRoute
-  '/library': typeof AuthenticatedLibraryRouteWithChildren
-  '/profile': typeof AuthenticatedProfileRoute
-  '/search': typeof AuthenticatedSearchRoute
-  '/subscriptions/cancel': typeof SubscriptionsCancelRoute
-  '/subscriptions/success': typeof SubscriptionsSuccessRoute
   '/': typeof AuthenticatedIndexRoute
-  '/subscriptions': typeof SubscriptionsIndexRoute
   '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/library/favorites': typeof AuthenticatedLibraryFavoritesRoute
-  '/library/following': typeof AuthenticatedLibraryFollowingRoute
-  '/library/history': typeof AuthenticatedLibraryHistoryRoute
+  '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
-  '/settings/audio': typeof AuthenticatedSettingsAudioRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/settings/preferences': typeof AuthenticatedSettingsPreferencesRoute
-  '/user-settings/audio': typeof AuthenticatedUserSettingsAudioRoute
-  '/user-settings/preferences': typeof AuthenticatedUserSettingsPreferencesRoute
+  '/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
+  '/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/browse': typeof AuthenticatedBrowseIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/user-settings': typeof AuthenticatedUserSettingsIndexRoute
+  '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/you': typeof AuthenticatedYouIndexRoute
+  '/you/library': typeof AuthenticatedYouLibraryIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
-  '/_authenticated/user-settings': typeof AuthenticatedUserSettingsRouteRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/otp': typeof authOtpRoute
   '/(auth)/sign-in': typeof authSignInRoute
@@ -807,33 +616,25 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/_authenticated/browse': typeof AuthenticatedBrowseRoute
-  '/_authenticated/library': typeof AuthenticatedLibraryRouteWithChildren
-  '/_authenticated/profile': typeof AuthenticatedProfileRoute
-  '/_authenticated/search': typeof AuthenticatedSearchRoute
-  '/subscriptions/cancel': typeof SubscriptionsCancelRoute
-  '/subscriptions/success': typeof SubscriptionsSuccessRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/subscriptions/': typeof SubscriptionsIndexRoute
   '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
-  '/_authenticated/library/favorites': typeof AuthenticatedLibraryFavoritesRoute
-  '/_authenticated/library/following': typeof AuthenticatedLibraryFollowingRoute
-  '/_authenticated/library/history': typeof AuthenticatedLibraryHistoryRoute
+  '/_authenticated/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
-  '/_authenticated/settings/audio': typeof AuthenticatedSettingsAudioRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_authenticated/settings/preferences': typeof AuthenticatedSettingsPreferencesRoute
-  '/_authenticated/user-settings/audio': typeof AuthenticatedUserSettingsAudioRoute
-  '/_authenticated/user-settings/preferences': typeof AuthenticatedUserSettingsPreferencesRoute
+  '/_authenticated/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
+  '/_authenticated/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/browse/': typeof AuthenticatedBrowseIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/_authenticated/user-settings/': typeof AuthenticatedUserSettingsIndexRoute
+  '/_authenticated/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/_authenticated/you/': typeof AuthenticatedYouIndexRoute
+  '/_authenticated/you/library/': typeof AuthenticatedYouLibraryIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -841,7 +642,6 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/settings'
-    | '/user-settings'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
@@ -852,33 +652,25 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
-    | '/admin'
-    | '/browse'
-    | '/library'
-    | '/profile'
-    | '/search'
-    | '/subscriptions/cancel'
-    | '/subscriptions/success'
     | '/'
-    | '/subscriptions'
     | '/admin/analytics'
     | '/admin/stations'
     | '/admin/users'
-    | '/library/favorites'
-    | '/library/following'
-    | '/library/history'
+    | '/s/$stationSlug'
     | '/settings/account'
     | '/settings/appearance'
-    | '/settings/audio'
     | '/settings/display'
     | '/settings/notifications'
     | '/settings/preferences'
-    | '/user-settings/audio'
-    | '/user-settings/preferences'
-    | '/admin/'
+    | '/subscriptions/cancel'
+    | '/subscriptions/success'
+    | '/admin'
+    | '/browse'
     | '/settings/'
-    | '/user-settings/'
+    | '/subscriptions'
     | '/users'
+    | '/you'
+    | '/you/library'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -891,37 +683,29 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
-    | '/browse'
-    | '/library'
-    | '/profile'
-    | '/search'
-    | '/subscriptions/cancel'
-    | '/subscriptions/success'
     | '/'
-    | '/subscriptions'
     | '/admin/analytics'
     | '/admin/stations'
     | '/admin/users'
-    | '/library/favorites'
-    | '/library/following'
-    | '/library/history'
+    | '/s/$stationSlug'
     | '/settings/account'
     | '/settings/appearance'
-    | '/settings/audio'
     | '/settings/display'
     | '/settings/notifications'
     | '/settings/preferences'
-    | '/user-settings/audio'
-    | '/user-settings/preferences'
+    | '/subscriptions/cancel'
+    | '/subscriptions/success'
     | '/admin'
+    | '/browse'
     | '/settings'
-    | '/user-settings'
+    | '/subscriptions'
     | '/users'
+    | '/you'
+    | '/you/library'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/settings'
-    | '/_authenticated/user-settings'
     | '/(auth)/forgot-password'
     | '/(auth)/otp'
     | '/(auth)/sign-in'
@@ -932,33 +716,25 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
-    | '/_authenticated/admin'
-    | '/_authenticated/browse'
-    | '/_authenticated/library'
-    | '/_authenticated/profile'
-    | '/_authenticated/search'
-    | '/subscriptions/cancel'
-    | '/subscriptions/success'
     | '/_authenticated/'
-    | '/subscriptions/'
     | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/stations'
     | '/_authenticated/admin/users'
-    | '/_authenticated/library/favorites'
-    | '/_authenticated/library/following'
-    | '/_authenticated/library/history'
+    | '/_authenticated/s/$stationSlug'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
-    | '/_authenticated/settings/audio'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
     | '/_authenticated/settings/preferences'
-    | '/_authenticated/user-settings/audio'
-    | '/_authenticated/user-settings/preferences'
+    | '/_authenticated/subscriptions/cancel'
+    | '/_authenticated/subscriptions/success'
     | '/_authenticated/admin/'
+    | '/_authenticated/browse/'
     | '/_authenticated/settings/'
-    | '/_authenticated/user-settings/'
+    | '/_authenticated/subscriptions/'
     | '/_authenticated/users/'
+    | '/_authenticated/you/'
+    | '/_authenticated/you/library/'
   fileRoutesById: FileRoutesById
 }
 
@@ -974,9 +750,6 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
-  SubscriptionsCancelRoute: typeof SubscriptionsCancelRoute
-  SubscriptionsSuccessRoute: typeof SubscriptionsSuccessRoute
-  SubscriptionsIndexRoute: typeof SubscriptionsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -991,9 +764,6 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
-  SubscriptionsCancelRoute: SubscriptionsCancelRoute,
-  SubscriptionsSuccessRoute: SubscriptionsSuccessRoute,
-  SubscriptionsIndexRoute: SubscriptionsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -1016,24 +786,26 @@ export const routeTree = rootRoute
         "/(errors)/403",
         "/(errors)/404",
         "/(errors)/500",
-        "/(errors)/503",
-        "/subscriptions/cancel",
-        "/subscriptions/success",
-        "/subscriptions/"
+        "/(errors)/503"
       ]
     },
     "/_authenticated": {
       "filePath": "_authenticated/route.tsx",
       "children": [
         "/_authenticated/settings",
-        "/_authenticated/user-settings",
-        "/_authenticated/admin",
-        "/_authenticated/browse",
-        "/_authenticated/library",
-        "/_authenticated/profile",
-        "/_authenticated/search",
         "/_authenticated/",
-        "/_authenticated/users/"
+        "/_authenticated/admin/analytics",
+        "/_authenticated/admin/stations",
+        "/_authenticated/admin/users",
+        "/_authenticated/s/$stationSlug",
+        "/_authenticated/subscriptions/cancel",
+        "/_authenticated/subscriptions/success",
+        "/_authenticated/admin/",
+        "/_authenticated/browse/",
+        "/_authenticated/subscriptions/",
+        "/_authenticated/users/",
+        "/_authenticated/you/",
+        "/_authenticated/you/library/"
       ]
     },
     "/_authenticated/settings": {
@@ -1042,20 +814,10 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/settings/account",
         "/_authenticated/settings/appearance",
-        "/_authenticated/settings/audio",
         "/_authenticated/settings/display",
         "/_authenticated/settings/notifications",
         "/_authenticated/settings/preferences",
         "/_authenticated/settings/"
-      ]
-    },
-    "/_authenticated/user-settings": {
-      "filePath": "_authenticated/user-settings/route.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/user-settings/audio",
-        "/_authenticated/user-settings/preferences",
-        "/_authenticated/user-settings/"
       ]
     },
     "/(auth)/forgot-password": {
@@ -1088,73 +850,25 @@ export const routeTree = rootRoute
     "/(errors)/503": {
       "filePath": "(errors)/503.tsx"
     },
-    "/_authenticated/admin": {
-      "filePath": "_authenticated/admin.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/admin/analytics",
-        "/_authenticated/admin/stations",
-        "/_authenticated/admin/users",
-        "/_authenticated/admin/"
-      ]
-    },
-    "/_authenticated/browse": {
-      "filePath": "_authenticated/browse.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/library": {
-      "filePath": "_authenticated/library.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/library/favorites",
-        "/_authenticated/library/following",
-        "/_authenticated/library/history"
-      ]
-    },
-    "/_authenticated/profile": {
-      "filePath": "_authenticated/profile.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/search": {
-      "filePath": "_authenticated/search.tsx",
-      "parent": "/_authenticated"
-    },
-    "/subscriptions/cancel": {
-      "filePath": "subscriptions/cancel.tsx"
-    },
-    "/subscriptions/success": {
-      "filePath": "subscriptions/success.tsx"
-    },
     "/_authenticated/": {
       "filePath": "_authenticated/index.tsx",
       "parent": "/_authenticated"
     },
-    "/subscriptions/": {
-      "filePath": "subscriptions/index.tsx"
-    },
     "/_authenticated/admin/analytics": {
       "filePath": "_authenticated/admin/analytics.tsx",
-      "parent": "/_authenticated/admin"
+      "parent": "/_authenticated"
     },
     "/_authenticated/admin/stations": {
       "filePath": "_authenticated/admin/stations.tsx",
-      "parent": "/_authenticated/admin"
+      "parent": "/_authenticated"
     },
     "/_authenticated/admin/users": {
       "filePath": "_authenticated/admin/users.tsx",
-      "parent": "/_authenticated/admin"
+      "parent": "/_authenticated"
     },
-    "/_authenticated/library/favorites": {
-      "filePath": "_authenticated/library/favorites.tsx",
-      "parent": "/_authenticated/library"
-    },
-    "/_authenticated/library/following": {
-      "filePath": "_authenticated/library/following.tsx",
-      "parent": "/_authenticated/library"
-    },
-    "/_authenticated/library/history": {
-      "filePath": "_authenticated/library/history.tsx",
-      "parent": "/_authenticated/library"
+    "/_authenticated/s/$stationSlug": {
+      "filePath": "_authenticated/s/$stationSlug.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/settings/account": {
       "filePath": "_authenticated/settings/account.tsx",
@@ -1162,10 +876,6 @@ export const routeTree = rootRoute
     },
     "/_authenticated/settings/appearance": {
       "filePath": "_authenticated/settings/appearance.tsx",
-      "parent": "/_authenticated/settings"
-    },
-    "/_authenticated/settings/audio": {
-      "filePath": "_authenticated/settings/audio.tsx",
       "parent": "/_authenticated/settings"
     },
     "/_authenticated/settings/display": {
@@ -1180,28 +890,40 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/settings/preferences.tsx",
       "parent": "/_authenticated/settings"
     },
-    "/_authenticated/user-settings/audio": {
-      "filePath": "_authenticated/user-settings/audio.tsx",
-      "parent": "/_authenticated/user-settings"
+    "/_authenticated/subscriptions/cancel": {
+      "filePath": "_authenticated/subscriptions/cancel.tsx",
+      "parent": "/_authenticated"
     },
-    "/_authenticated/user-settings/preferences": {
-      "filePath": "_authenticated/user-settings/preferences.tsx",
-      "parent": "/_authenticated/user-settings"
+    "/_authenticated/subscriptions/success": {
+      "filePath": "_authenticated/subscriptions/success.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/admin/": {
       "filePath": "_authenticated/admin/index.tsx",
-      "parent": "/_authenticated/admin"
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/browse/": {
+      "filePath": "_authenticated/browse/index.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/settings/": {
       "filePath": "_authenticated/settings/index.tsx",
       "parent": "/_authenticated/settings"
     },
-    "/_authenticated/user-settings/": {
-      "filePath": "_authenticated/user-settings/index.tsx",
-      "parent": "/_authenticated/user-settings"
+    "/_authenticated/subscriptions/": {
+      "filePath": "_authenticated/subscriptions/index.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/users/": {
       "filePath": "_authenticated/users/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/you/": {
+      "filePath": "_authenticated/you/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/you/library/": {
+      "filePath": "_authenticated/you/library/index.tsx",
       "parent": "/_authenticated"
     }
   }

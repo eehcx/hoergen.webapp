@@ -23,36 +23,38 @@ const validateStation = async (station: RadioBrowserStation): Promise<boolean> =
     if (!station.url_resolved || station.url_resolved.trim() === '') {
         return false
     }
-    
     // Check if URL is properly formatted
     try {
         new URL(station.url_resolved)
     } catch {
         return false
     }
-    
     // Validate that it's a streaming URL (common streaming protocols)
-    const validProtocols = ['http:', 'https:', 'icecast:', 'shout:']
+    const validProtocols = ['http:', 'https:']
     const url = new URL(station.url_resolved)
     if (!validProtocols.includes(url.protocol)) {
         return false
     }
-    
-    // Check for common invalid extensions or patterns
+    // Only filter out obviously invalid/corrupt URLs (not geo-restricted)
     const invalidPatterns = [
-        /\.html?$/i,
-        /\.php$/i,
-        /\.asp$/i,
-        /\.jsp$/i,
-        /\/redirect/i,
-        /\/listen\.pls$/i,
-        /\/playlist/i
+        /localhost/i,
+        /127\.0\.0\.1/,
+        /0\.0\.0\.0/,
+        /example\.com/,
+        /invalid/,
+        /\.txt$/i,
+        /\.json$/i,
+        /\/test\//i,
+        /\/dummy\//i,
+        /\/404/,
+        /\/notfound/,
+        /\/error/,
+        /\/offline/,
+        /\/unavailable/
     ]
-    
     if (invalidPatterns.some(pattern => pattern.test(station.url_resolved))) {
         return false
     }
-    
     return true
 }
 
@@ -157,7 +159,6 @@ const fetchStationsPage = async (
         }
         
     } catch (error) {
-        console.error('Error fetching Radio Browser stations page:', error)
         throw error
     }
 }

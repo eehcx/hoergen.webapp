@@ -1,21 +1,27 @@
+import { Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
 import { useMiniPlayer } from '../context/mini-player-context'
+import { toast } from 'sonner'
+// Utils
+import { slugify } from '@/lib/utils/slugify'
+import { formatTime } from '@/lib/utils/format'
+import { truncateStationName } from '@/lib/utils/format'
 
-export interface MiniPlayerProps {
-    streamUrl: string
-    stationName: string
-    stationCover?: string
-    isPlaying?: boolean
-}
-
-export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = true }: MiniPlayerProps) {
+export function MiniPlayer() {
     const playerRef = useRef<AudioPlayer>(null)
     const [elapsed, setElapsed] = useState(0)
-    const [currentStreamUrl, setCurrentStreamUrl] = useState<string>('')
-    const { setIsPlaying } = useMiniPlayer()
+    const { player, setIsPlaying } = useMiniPlayer()
+    const [errorToastShown, setErrorToastShown] = useState(false)
 
+    if (!player) return null
+
+    const { station, isPlaying = true } = player
+    const { streamUrl, name: stationName, coverImage: stationCover, genreIds, ...rest } = station
+
+
+    const [currentStreamUrl, setCurrentStreamUrl] = useState<string>('')
     // Solo reproduce automáticamente cuando cambia a una nueva estación
     useEffect(() => {
         const isNewStation = streamUrl !== currentStreamUrl
@@ -26,8 +32,8 @@ export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = t
             if (isPlaying && playerRef.current?.audio.current) {
                 const playPromise = playerRef.current.audio.current.play()
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log('Auto-play was prevented:', error)
+                    playPromise.catch(() => {
+                        // Auto-play was prevented by browser
                     })
                 }
             }
@@ -41,8 +47,8 @@ export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = t
             if (isPlaying) {
                 const playPromise = playerRef.current.audio.current.play()
                 if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log('Play was prevented:', error)
+                    playPromise.catch(() => {
+                        // Play was prevented by browser
                     })
                 }
             } else {
@@ -60,8 +66,8 @@ export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = t
                 if (isPlaying && audio.paused) {
                     const playPromise = audio.play()
                     if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            console.log('Play was prevented on mount:', error)
+                        playPromise.catch(() => {
+                            // Play was prevented on mount
                         })
                     }
                 } else if (!isPlaying && !audio.paused) {
@@ -93,34 +99,62 @@ export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = t
         setIsPlaying(false)
     }
 
-    // Formatea el tiempo transcurrido en mm:ss
-    const formatTime = (seconds: number) => {
-        const m = Math.floor(seconds / 60)
-        const s = seconds % 60
-        return `${m}:${s.toString().padStart(2, '0')}`
-    }
-
-    // Trunca el nombre de la estación si es muy largo
-    const truncateStationName = (name: string, maxLength: number = 45) => {
-        return name.length > maxLength ? `${name.substring(0, maxLength)}...` : name
+    // Audio error handler
+    const handleAudioError = (e: any) => {
+        if (errorToastShown) return
+        setErrorToastShown(true)
+        let message = 'Unable to play this stream.'
+        if (e?.target?.error) {
+            switch (e.target.error.code) {
+                case 1:
+                    message = 'Playback aborted.'
+                    break
+                case 2:
+                    message = 'Network error: Could not load the stream.'
+                    break
+                case 3:
+                    message = 'Unsupported stream format.'
+                    break
+                case 4:
+                    message = 'Stream cannot be played (possibly geo-restricted or offline).'
+                    break
+                default:
+                    message = 'Unknown playback error.'
+            }
+        }
+        toast.error(message, { duration: 5000 })
+        setTimeout(() => setErrorToastShown(false), 6000)
     }
 
     return (
         <div
-            className="fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg flex items-center justify-center px-6 py-2 backdrop-blur-sm bg-gradient-to-br from-zinc-50 via-zinc-100 to-zinc-100/90 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-700/90"
+            className="fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg flex items-center justify-center px-6 py-1 backdrop-blur-sm bg-gradient-to-br from-zinc-50 via-zinc-100 to-zinc-100/90 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-700/90"
             style={{ boxShadow: '0 -2px 16px 0 rgba(0,0,0,0.12)' }}
         >
             <div className="flex items-center gap-4 w-full max-w-5xl mx-auto">
-                {stationCover && (
-                <img src={stationCover} alt={stationName} className="w-12 h-12 object-cover" />
-                )}
-                <div className="flex flex-col justify-center min-w-0" style={{ minWidth: 0 }}>
-                    <span className="inline-flex items-center gap-2 mb-1">
-                        <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                        <span className="text-xs font-bold text-red-500 uppercase tracking-widest">LIVE</span>
-                    </span>
-                    <span className="font-semibold truncate text-base text-foreground select-none">{truncateStationName(stationName)}</span>
-                </div>
+                <Link 
+                    to='/s/$stationSlug'
+                    params={{ stationSlug: slugify(stationName) }}
+                    search={station}
+                    className='flex items-center gap-4 w-full max-w-[400px] min-w-0' style={{ minWidth: 0 }}
+                >
+                    {stationCover && (
+                        <img 
+                            src={stationCover} 
+                            alt={stationName} 
+                            className="w-10 h-10 object-cover"        
+                            loading="lazy"
+                            onError={e => { e.currentTarget.style.display = 'none' }}
+                        />
+                    )}
+                    <div className="flex flex-col justify-center min-w-0" style={{ minWidth: 0 }}>
+                        <span className="inline-flex items-center gap-2 mt-2">
+                            <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                            <span className="text-xs font-bold text-red-500 uppercase tracking-widest">LIVE</span>
+                        </span>
+                        <span className="font-semibold truncate text-base text-foreground select-none">{truncateStationName(stationName)}</span>
+                    </div>
+                </Link>
                 <div className="flex items-center justify-end gap-6 min-w-[120px] flex-1">
                     <div className="flex items-center gap-4 ml-auto">
                         <div className="w-[400px] max-w-[400px]">
@@ -130,6 +164,7 @@ export function MiniPlayer({ streamUrl, stationName, stationCover, isPlaying = t
                                 autoPlay={false}
                                 onPlay={handlePlay}
                                 onPause={handlePause}
+                                onError={handleAudioError}
                                 showJumpControls={false}
                                 showDownloadProgress={false}
                                 showFilledProgress={false}

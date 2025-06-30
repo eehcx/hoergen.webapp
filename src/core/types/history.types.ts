@@ -3,24 +3,14 @@ export interface CreateHistoryDto {
     userId: string
 }
 
-export interface HistoryResponseDto {
-    id: string
-    stationId: string
-    userId: string
-    createdAt: string
-    updatedAt: string
-    // Additional fields that might be included from joins
-    station?: {
-        id: string
-        name: string
-        coverImage?: string
-        streamUrl: string
-    }
-    user?: {
-        id: string
-        displayName: string
-        photoURL?: string
-    }
+export interface HistoryResponse {
+    id: string;
+    stationId: string;
+    userId: string;
+    playedAt: {
+        _seconds: number;
+        _nanoseconds: number;
+    } | string; // Timestamp de Firebase o ISO string
 }
 
 export interface HistoryQueryParams {

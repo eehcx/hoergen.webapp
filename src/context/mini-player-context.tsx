@@ -1,9 +1,8 @@
 import { createContext, useContext, useState } from 'react'
+import { ResponseStationDto } from '@/core/types'
 
 type PlayerState = {
-  streamUrl: string
-  stationName: string
-  stationCover?: string
+  station: ResponseStationDto
   isPlaying?: boolean
 }
 
