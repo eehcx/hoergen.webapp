@@ -37,6 +37,7 @@ import { Route as AuthenticatedSettingsNotificationsImport } from './routes/_aut
 import { Route as AuthenticatedSettingsDisplayImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsAppearanceImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountImport } from './routes/_authenticated/settings/account'
+import { Route as AuthenticatedSChatPopupImport } from './routes/_authenticated/s/chat-popup'
 import { Route as AuthenticatedSStationSlugImport } from './routes/_authenticated/s/$stationSlug'
 import { Route as AuthenticatedAdminUsersImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminStationsImport } from './routes/_authenticated/admin/stations'
@@ -212,6 +213,12 @@ const AuthenticatedSettingsAccountRoute =
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
 
+const AuthenticatedSChatPopupRoute = AuthenticatedSChatPopupImport.update({
+  id: '/s/chat-popup',
+  path: '/s/chat-popup',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
 const AuthenticatedSStationSlugRoute = AuthenticatedSStationSlugImport.update({
   id: '/s/$stationSlug',
   path: '/s/$stationSlug',
@@ -369,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSStationSlugImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/s/chat-popup': {
+      id: '/_authenticated/s/chat-popup'
+      path: '/s/chat-popup'
+      fullPath: '/s/chat-popup'
+      preLoaderRoute: typeof AuthenticatedSChatPopupImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/settings/account': {
       id: '/_authenticated/settings/account'
       path: '/account'
@@ -505,6 +519,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminStationsRoute: typeof AuthenticatedAdminStationsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedSStationSlugRoute: typeof AuthenticatedSStationSlugRoute
+  AuthenticatedSChatPopupRoute: typeof AuthenticatedSChatPopupRoute
   AuthenticatedSubscriptionsCancelRoute: typeof AuthenticatedSubscriptionsCancelRoute
   AuthenticatedSubscriptionsSuccessRoute: typeof AuthenticatedSubscriptionsSuccessRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
@@ -522,6 +537,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminStationsRoute: AuthenticatedAdminStationsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedSStationSlugRoute: AuthenticatedSStationSlugRoute,
+  AuthenticatedSChatPopupRoute: AuthenticatedSChatPopupRoute,
   AuthenticatedSubscriptionsCancelRoute: AuthenticatedSubscriptionsCancelRoute,
   AuthenticatedSubscriptionsSuccessRoute:
     AuthenticatedSubscriptionsSuccessRoute,
@@ -554,6 +570,7 @@ export interface FileRoutesByFullPath {
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
+  '/s/chat-popup': typeof AuthenticatedSChatPopupRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
@@ -586,6 +603,7 @@ export interface FileRoutesByTo {
   '/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
+  '/s/chat-popup': typeof AuthenticatedSChatPopupRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
@@ -621,6 +639,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/stations': typeof AuthenticatedAdminStationsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
+  '/_authenticated/s/chat-popup': typeof AuthenticatedSChatPopupRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
@@ -657,6 +676,7 @@ export interface FileRouteTypes {
     | '/admin/stations'
     | '/admin/users'
     | '/s/$stationSlug'
+    | '/s/chat-popup'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
@@ -688,6 +708,7 @@ export interface FileRouteTypes {
     | '/admin/stations'
     | '/admin/users'
     | '/s/$stationSlug'
+    | '/s/chat-popup'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
@@ -721,6 +742,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/stations'
     | '/_authenticated/admin/users'
     | '/_authenticated/s/$stationSlug'
+    | '/_authenticated/s/chat-popup'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
@@ -798,6 +820,7 @@ export const routeTree = rootRoute
         "/_authenticated/admin/stations",
         "/_authenticated/admin/users",
         "/_authenticated/s/$stationSlug",
+        "/_authenticated/s/chat-popup",
         "/_authenticated/subscriptions/cancel",
         "/_authenticated/subscriptions/success",
         "/_authenticated/admin/",
@@ -868,6 +891,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/s/$stationSlug": {
       "filePath": "_authenticated/s/$stationSlug.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/s/chat-popup": {
+      "filePath": "_authenticated/s/chat-popup.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/settings/account": {

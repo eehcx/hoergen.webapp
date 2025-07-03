@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "@tanstack/react-router";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks";
 
 interface AuthGuardProps {
     children: ReactNode;
@@ -11,23 +11,24 @@ export function AuthGuard({ children, redirectTo = "/sign-in" }: AuthGuardProps)
     const { isAuthenticated, isLoading } = useAuth();
     const [timeoutReached, setTimeoutReached] = useState(false);
 
-    // Security timeout: if loading for more than 5 seconds, assume there's a problem
     useEffect(() => {
         const timer = setTimeout(() => {
             if (isLoading) {
-                console.warn('AuthGuard: Loading timeout reached, bypassing auth check');
+                console.warn('AuthGuard: Loading timeout reached');
                 setTimeoutReached(true);
             }
-        }, 5000);
+        }, 8000); // Más tiempo para conexiones lentas
 
         return () => clearTimeout(timer);
     }, [isLoading]);
 
-    // If timeout, show content without auth for now
+    // ✅ SEGURO - Fallar de forma segura, no bypassing
     if (timeoutReached) {
-        console.log('AuthGuard: Bypassing due to timeout');
-        return <>{children}</>;
-    }    if (isLoading) {
+        console.log('AuthGuard: Timeout reached, redirecting to sign-in');
+        return <Navigate to={redirectTo} />;
+    }
+
+    if (isLoading) {
         return (
             <div className="flex items-center justify-center h-screen bg-background">
                 <div className="flex flex-col items-center space-y-4">
@@ -36,11 +37,12 @@ export function AuthGuard({ children, redirectTo = "/sign-in" }: AuthGuardProps)
                         <div className="w-3 h-3 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
                         <div className="w-3 h-3 bg-primary rounded-full animate-bounce"></div>
                     </div>
+                    <p className="text-sm text-muted-foreground">Signing you in…</p>
                 </div>
             </div>
         );
     }
-    
+
     if (!isAuthenticated) return <Navigate to={redirectTo} />;
     return <>{children}</>;
 }

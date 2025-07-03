@@ -8,7 +8,7 @@ import { MiniPlayer } from '@/components/mini-player'
 import { useMiniPlayer } from '@/context/mini-player-context'
 import HeaderNavbar from '@/components/header-navbar'
 // Icons
-import { IconPlayerPlay, IconHeart, IconSearch } from '@tabler/icons-react'
+import { IconPlayerPlay, IconHeart } from '@tabler/icons-react'
 // Dependencies
 import { Link, useNavigate } from '@tanstack/react-router'
 // Hooks
@@ -30,7 +30,7 @@ export default function Listener() {
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingGenres, setIsLoadingGenres] = useState(true)
   const { player, play } = useMiniPlayer()
-  
+
   // Use TanStack Query for Radio Browser stations
   const { stations: radioBrowserStations, isLoading: isLoadingRadioBrowser } = useRadioBrowserStations({
     strategy: 'random-genre',
@@ -42,15 +42,15 @@ export default function Listener() {
     const loadStations = async () => {
       try {
         setIsLoading(true)
-        
+
         // Get all stations
         const allStations = await stationService.getAllStations()
-        
+
         if (allStations.length > 0) {
           // Select random station for hero
           const randomIndex = Math.floor(Math.random() * allStations.length)
           setFeaturedStation(allStations[randomIndex])
-          
+
           // Get last 3 stations (most recently created) for Latest Stations
           const sortedStations = allStations
             .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -87,7 +87,7 @@ export default function Listener() {
               }
             })
           )
-          
+
           setCreatorNames(creatorNameMap)
         }
       } catch (error) {
@@ -105,10 +105,10 @@ export default function Listener() {
     const loadGenres = async () => {
       try {
         setIsLoadingGenres(true)
-        
+
         // Get all genres
         const allGenres = await genreService.getAllGenres()
-        
+
         if (allGenres.length > 0) {
           // Shuffle and take 6 random genres
           const shuffled = [...allGenres].sort(() => Math.random() - 0.5)
@@ -128,7 +128,7 @@ export default function Listener() {
   // Color palette for genre cards
   const genreColors = [
     'from-blue-500/20 to-blue-600/20',
-    'from-purple-500/20 to-purple-600/20', 
+    'from-purple-500/20 to-purple-600/20',
     'from-red-500/20 to-red-600/20',
     'from-green-500/20 to-green-600/20',
     'from-orange-500/20 to-orange-600/20',
@@ -152,7 +152,7 @@ export default function Listener() {
 
   // Handler para reproducir una estación propia
   function handlePlayOwnStation(station: ResponseStationDto) {
-    play({ station }) 
+    play({ station })
   }
 
   const handleViewAll = () => {
@@ -176,7 +176,7 @@ export default function Listener() {
                   From Berlin basements to México backstreets — tune into raw, live broadcasts from independent stations defying the mainstream.
                 </p>
               </div>
-              
+
               {/* Featured Station Hero */}
               {isLoading ? (
                 <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-8 mb-8">
@@ -206,9 +206,9 @@ export default function Listener() {
                     </p>
                     <p className="text-sm text-muted-foreground mb-6">{featuredStation.description || 'No description available'}</p>
                     <div className="flex items-center gap-4">
-                      <Link 
-                        to='/s/$stationSlug' 
-                        params={{ stationSlug: slugify(featuredStation.name) }} 
+                      <Link
+                        to='/s/$stationSlug'
+                        params={{ stationSlug: slugify(featuredStation.name) }}
                         search={featuredStation}
                         className="flex items-center justify-center text-normal text-white dark:text-zinc-900 h-8 px-5 bg-zinc-900 dark:bg-white"
                       >
@@ -233,16 +233,16 @@ export default function Listener() {
             <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold tracking-tight">Worldwide Radio</h2>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="rounded-xs"
                   onClick={handleViewAll}
                 >
                   View all
                 </Button>
               </div>
-              
+
               {isLoadingRadioBrowser ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {[1, 2, 3].map((i) => (
@@ -269,8 +269,8 @@ export default function Listener() {
                             search={station}
                             className="absolute inset-0 flex items-center justify-center"
                           >
-                            <img 
-                              src={station.favicon} 
+                            <img
+                              src={station.favicon}
                               alt={station.name}
                               className="w-full h-full object-cover"
                               onError={(e) => {
@@ -348,7 +348,7 @@ export default function Listener() {
                 <h2 className="text-2xl font-bold tracking-tight">Made for You</h2>
                 {/*<Button variant="outline" size="sm" className="rounded-xs">View more</Button>*/}
               </div>
-              
+
               <div className="grid gap-4 md:grid-cols-2">
                 {madeForYouStations.map((station) => (
                   <Link
@@ -371,7 +371,7 @@ export default function Listener() {
                           </Button>
                         </div>
                       </div>
-                      
+
                       {/* Station Info */}
                       <div className="flex-1 space-y-1">
                         <h3 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
@@ -392,7 +392,7 @@ export default function Listener() {
                           </p>
                         )}
                       </div>
-                      
+
                       {/* Action Button */}
                       <div className="flex-shrink-0">
                         <Button size="sm" variant="outline" className="rounded-full h-8 w-8 p-0">
@@ -435,7 +435,7 @@ export default function Listener() {
                             <IconPlayerPlay className="h-4 w-4" />
                           </div>
                         </div>
-                        
+
                         {/* Info */}
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm truncate">{station.name}</p>
@@ -443,7 +443,7 @@ export default function Listener() {
                             by {creatorNames[station.ownerId] || 'Loading...'}
                           </p>
                         </div>
-                        
+
                         {/* Favorites */}
                         <div className="text-xs text-muted-foreground">
                           {station.favoritesCount}
@@ -472,7 +472,7 @@ export default function Listener() {
                     ))
                   ) : genres.length > 0 ? (
                     genres.map((genre) => (
-                      <Link 
+                      <Link
                         key={genre.id}
                         className={`relative overflow-hidden rounded p-4 h-20 cursor-pointer hover:scale-95 transition-transform bg-gradient-to-br ${getRandomColor()}`}
                         to="/browse"

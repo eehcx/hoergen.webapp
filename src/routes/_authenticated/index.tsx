@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
 import Listener from "@/features/listener"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/hooks"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 

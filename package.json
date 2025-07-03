@@ -13,6 +13,7 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@emoji-mart/react": "^1.1.1",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-alert-dialog": "^1.1.7",
     "@radix-ui/react-avatar": "^1.1.4",
@@ -49,7 +50,6 @@
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.488.0",
     "react": "^19.1.0",
-    "react-audio-spectrum": "^0.1.5",
     "react-day-picker": "9.6.6",
     "react-dom": "^19.1.0",
     "react-h5-audio-player": "^3.10.0",

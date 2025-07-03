@@ -4,8 +4,9 @@ import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
+  const isProd = mode === 'production'
+
   const plugins = [
     TanStackRouterVite({
       target: 'react',
@@ -13,18 +14,17 @@ export default defineConfig(({ mode }) => {
     }),
     react(),
     tailwindcss(),
-  ];
+  ]
 
-  // Solo agregar obfuscator en producción si está disponible
-  if (mode === 'production') {
+  if (isProd) {
     try {
-      const obfuscatorModule = require('vite-plugin-obfuscator');
-      const obfuscatorPlugin = obfuscatorModule.default || obfuscatorModule;
+      const obfuscatorModule = require('vite-plugin-obfuscator')
+      const obfuscatorPlugin = obfuscatorModule.default || obfuscatorModule
       if (typeof obfuscatorPlugin === 'function') {
-        plugins.push(obfuscatorPlugin());
+        plugins.push(obfuscatorPlugin())
       }
-    } catch (error) {
-      console.warn('vite-plugin-obfuscator no encontrado, omitiendo...');
+    } catch {
+      console.warn('vite-plugin-obfuscator no encontrado, omitiendo...')
     }
   }
 
@@ -36,6 +36,11 @@ export default defineConfig(({ mode }) => {
         '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
       },
     },
-    // Proxy removido - ahora usamos URLs directas con CORS configurado
-  };
+    // Aquí añadimos ESBuild para eliminar console.* y debugger en prod
+    esbuild: isProd
+      ? {
+          drop: ['console', 'debugger'],
+        }
+      : undefined,
+  }
 })

@@ -7,18 +7,18 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
-import { 
-    Select, 
-    SelectContent, 
-    SelectItem, 
-    SelectTrigger, 
-    SelectValue 
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
 } from '@/components/ui/select'
-import { 
-    IconPlayerPlay, 
-    IconSearch, 
-    IconLoader2, 
-    IconFilter 
+import {
+    IconPlayerPlay,
+    IconSearch,
+    IconLoader2,
+    IconFilter
 } from '@tabler/icons-react'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
@@ -45,7 +45,7 @@ export default function Browse() {
     const [, setIsLoadingGenre] = useState(false)
     const { play, player } = useMiniPlayer()
     const inputRef = useRef<HTMLInputElement>(null)
-    
+
     // Get genre from URL search params
     const urlParams = new URLSearchParams(window.location.search)
     const genreCanonicalName = urlParams.get('genre') || undefined
@@ -83,7 +83,7 @@ export default function Browse() {
 
     // Create search terms from genre data - try different strategies
     const [searchStrategy, setSearchStrategy] = useState<'name' | 'aliases' | 'searchTerms'>('name')
-    
+
     const genreSearchTerms = genreData ? (() => {
         switch (searchStrategy) {
             case 'name':
@@ -96,7 +96,7 @@ export default function Browse() {
                 return genreData.name
         }
     })() : undefined
-    
+
     // Debug: log search terms (remove in production)
     useEffect(() => {
         // Debug logging removed for production
@@ -174,6 +174,10 @@ export default function Browse() {
         { value: 'recent', label: 'Recently Added' },
     ]
 
+    useEffect(() => {
+      window.scrollTo(0, 0)
+    }, [])
+
     return (
         <div className="min-h-screen bg-background">
             {/* Header */}
@@ -183,7 +187,7 @@ export default function Browse() {
                     <Link to="/" className="flex items-center space-x-2 select-none">
                         <h1 className="text-xl font-bold tracking-widest font-[Orbitron]">Hörgen</h1>
                     </Link>
-                    
+
                     {/* Navigation */}
                     <nav className="ml-8 flex items-center space-x-1">
                         <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
@@ -196,12 +200,12 @@ export default function Browse() {
                             <Link to="/you/library">Library</Link>
                         </Button>
                     </nav>
-                    
+
                     {/* Search */}
                     <div className="ml-8 flex-1 max-w-md relative">
                         <div className="relative">
-                            <IconSearch 
-                                className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" 
+                            <IconSearch
+                                className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
                             />
                             <Input
                                 ref={inputRef}
@@ -222,8 +226,8 @@ export default function Browse() {
                             </SelectTrigger>
                             <SelectContent>
                                 {strategyOptions.map((option) => (
-                                    <SelectItem 
-                                        key={option.value} 
+                                    <SelectItem
+                                        key={option.value}
                                         value={option.value}
                                     >
                                         {option.label}
@@ -232,7 +236,7 @@ export default function Browse() {
                             </SelectContent>
                         </Select>
                     </div>
-        
+
                     {/* User Actions */}
                     <div className="ml-6 flex items-center space-x-4">
                         <ThemeSwitch />
@@ -250,15 +254,15 @@ export default function Browse() {
                             {genreData ? `${genreData.name} Stations` : 'World Signals'}
                         </h1>
                         <p className="text-muted-foreground">
-                            {genreData 
-                                ? `Discover ${genreData.name} stations from around the world` 
+                            {genreData
+                                ? `Discover ${genreData.name} stations from around the world`
                                 : 'Authentic sounds, Real stations. Broadcast beyond borders.'
                             }
                         </p>
                         {genreData && (
                             <div className="flex items-center gap-2 mt-4">
-                                <Button 
-                                    variant="outline" 
+                                <Button
+                                    variant="outline"
                                     size="sm"
                                     onClick={() => {
                                         window.history.pushState({}, '', '/browse')
@@ -310,7 +314,7 @@ export default function Browse() {
                             {debouncedSearchTerm && ` for "${debouncedSearchTerm}"`}
                         </p>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {allStations.map((station, index) => (
                         <div
@@ -343,7 +347,7 @@ export default function Browse() {
                                         />
                                     )}
                                 </Link>
-                                
+
                                 {/* Live indicator */}
                                 <div className="absolute top-3 left-3 flex items-center gap-2">
                                     <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
@@ -351,7 +355,7 @@ export default function Browse() {
                                             LIVE
                                         </span>
                                     </div>
-                                    
+
                                     {/* Play button */}
                                     <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Button
@@ -362,7 +366,7 @@ export default function Browse() {
                                             <IconPlayerPlay className="h-4 w-4 text-[#111]" />
                                         </Button>
                                     </div>
-                                    
+
                                     {/* Stats */}
                                     <div className="absolute bottom-3 left-3 text-white">
                                     <div className="text-sm font-medium">
@@ -377,24 +381,24 @@ export default function Browse() {
                                 <h3 className="font-semibold text-base leading-tight group-hover:text-primary transition-colors truncate">
                                     {station.name}
                                 </h3>
-                                
+
                                 <p className="text-sm text-muted-foreground">
                                     {station.country}
                                     {station.language && ` • ${station.language}`}
                                 </p>
-                                
+
                                 <div className="flex items-center gap-2 flex-wrap">
                                     <Badge variant="secondary" className="text-xs !rounded-none">
                                         {station.codec} {station.bitrate}kbps
                                     </Badge>
-                                    
+
                                     {station.votes > 0 && (
                                         <Badge variant="outline" className="text-xs !rounded-none">
                                             {station.votes} votes
                                         </Badge>
                                     )}
                                 </div>
-                                
+
                                 {station.tags && (
                                 <div className="flex items-center gap-1 flex-wrap">
                                     {station.tags.split(',').slice(0, 2).map((tag, tagIndex) => (
@@ -421,13 +425,13 @@ export default function Browse() {
                         Loading more stations...
                         </div>
                     )}
-                    
+
                     {hasNextPage && !isFetchingNextPage && (
                         <Button onClick={debouncedFetchNextPage} variant="outline" size="lg">
                         Load More Stations
                         </Button>
                     )}
-                    
+
                     {!hasNextPage && allStations.length > 0 && (
                         <p className="text-muted-foreground">
                         You've reached the end of the stations list
@@ -442,18 +446,18 @@ export default function Browse() {
                     <div className="text-center py-12">
                         <div className="max-w-md mx-auto">
                             <h3 className="text-lg font-semibold mb-2">
-                                {genreCanonicalName 
+                                {genreCanonicalName
                                     ? `No ${genreData?.name || genreCanonicalName} stations found`
-                                    : debouncedSearchTerm 
-                                        ? 'No stations found' 
+                                    : debouncedSearchTerm
+                                        ? 'No stations found'
                                         : 'No stations available'
                                 }
                             </h3>
                             <p className="text-muted-foreground mb-4">
-                                {genreCanonicalName 
+                                {genreCanonicalName
                                     ? `We couldn't find any ${genreData?.name || genreCanonicalName} stations. Try browsing all stations or selecting a different genre.`
-                                    : debouncedSearchTerm 
-                                        ? 'Try adjusting your search terms or browse all stations' 
+                                    : debouncedSearchTerm
+                                        ? 'Try adjusting your search terms or browse all stations'
                                         : 'Try refreshing the page or check your connection'
                                 }
                             </p>
@@ -466,8 +470,8 @@ export default function Browse() {
                                             <p>Available search options:</p>
                                             <div className="flex gap-2 justify-center flex-wrap">
                                                 {searchStrategy !== 'name' && (
-                                                    <Button 
-                                                        size="sm" 
+                                                    <Button
+                                                        size="sm"
                                                         variant="outline"
                                                         onClick={() => setSearchStrategy('name')}
                                                     >
@@ -475,8 +479,8 @@ export default function Browse() {
                                                     </Button>
                                                 )}
                                                 {genreData.aliases.length > 0 && searchStrategy !== 'aliases' && (
-                                                    <Button 
-                                                        size="sm" 
+                                                    <Button
+                                                        size="sm"
                                                         variant="outline"
                                                         onClick={() => setSearchStrategy('aliases')}
                                                     >
@@ -484,8 +488,8 @@ export default function Browse() {
                                                     </Button>
                                                 )}
                                                 {genreData.searchTerms.length > 0 && searchStrategy !== 'searchTerms' && (
-                                                    <Button 
-                                                        size="sm" 
+                                                    <Button
+                                                        size="sm"
                                                         variant="outline"
                                                         onClick={() => setSearchStrategy('searchTerms')}
                                                     >
@@ -499,8 +503,8 @@ export default function Browse() {
                             )}
                             <div className="flex gap-2 justify-center">
                                 {genreCanonicalName && (
-                                    <Button 
-                                        variant="outline" 
+                                    <Button
+                                        variant="outline"
                                         onClick={() => {
                                             window.history.pushState({}, '', '/browse')
                                             window.location.reload()
@@ -510,15 +514,15 @@ export default function Browse() {
                                     </Button>
                                 )}
                                 {debouncedSearchTerm && (
-                                    <Button 
-                                        variant="outline" 
+                                    <Button
+                                        variant="outline"
                                         onClick={() => setSearchTerm('')}
                                     >
                                         Clear Search
                                     </Button>
                                 )}
-                                <Button 
-                                    variant="outline" 
+                                <Button
+                                    variant="outline"
                                     onClick={() => refetch()}
                                 >
                                     Try Again
@@ -528,7 +532,7 @@ export default function Browse() {
                     </div>
                 )}
             </div>
-            
+
             {/* Mini Player */}
             {player && (
                 <MiniPlayer />

@@ -4,7 +4,6 @@ import {
   IconNotification,
   IconPalette,
   IconTool,
-  IconUser,
 } from '@tabler/icons-react'
 import { Separator } from '@/components/ui/separator'
 import { Main } from '@/components/layout/main'

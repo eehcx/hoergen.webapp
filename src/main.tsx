@@ -6,7 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import { useAuth } from './hooks/useAuth'
+import { useAuth } from './hooks'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/authStore'
@@ -62,8 +62,8 @@ const queryClient = new QueryClient({
         if (error.response?.status === 500) {
           toast.error('Internal Server Error!')
           router.navigate({ to: '/500' })
-        }
-        if (error.response?.status === 403) {
+          }
+          if (error.response?.status === 403) {
           // router.navigate("/forbidden", { replace: true });
         }
       }

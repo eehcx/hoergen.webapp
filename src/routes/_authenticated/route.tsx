@@ -5,8 +5,8 @@ import { SearchProvider } from '@/context/search-context'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import SkipToMain from '@/components/skip-to-main'
-import { AuthGuard } from '@/components/auth/authGuard'
-import { useAuth } from '@/hooks/useAuth'
+import { AuthGuard } from '@/core/guard'
+import { useAuth } from '@/hooks'
 
 export const Route = createFileRoute('/_authenticated')({
   component: AuthenticatedLayout,
@@ -24,7 +24,7 @@ function AuthenticatedContent() {
   const { claims } = useAuth()
   const userRole = claims?.role || 'listener'
   const showSidebar = userRole === 'creator' || userRole === 'admin'
-  
+
   const defaultOpen = Cookies.get('sidebar_state') !== 'false'
     return (
     <SearchProvider>

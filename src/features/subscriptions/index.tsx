@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useProducts, useUserSubscription } from "@/hooks/subscriptions";
 // Hooks
-import { useGlobalUserRole } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 // React hooks
 import { useState, useEffect } from 'react';
 // Shadcn UI components
@@ -15,17 +15,15 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 // Components
 import { Footer } from '@/components/footer'
-import { MiniPlayer } from '@/components/mini-player'
-import { useMiniPlayer } from '@/context/mini-player-context'
 // Icons
 import { IconCrown, IconCheck, IconX } from '@tabler/icons-react'
 // Dependencies
 import { Link } from '@tanstack/react-router'
 // Services
 // Firebase SDK
-import { 
-    addDoc, 
-    collection, 
+import {
+    addDoc,
+    collection,
     onSnapshot
 } from 'firebase/firestore';
 import { db, auth } from '@/core/firebase';
@@ -96,36 +94,34 @@ function useCheckoutSession() {
 export default function Subscriptions() {
     // TankStack Router
     const navigate = useNavigate()
-    
+
     // TanStack Query client para invalidar queries
     const queryClient = useQueryClient();
-    
+
     // Estado para mostrar mensaje de éxito
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    
+
     // Checkout session mutation
     const { mutate: createCheckout, isPending: isCreatingCheckout, error: checkoutError } = useCheckoutSession();
-    
+
     // Hooks para obtener datos de suscripciones y productos
-    const { 
-        data: availableProducts, 
+    const {
+        data: availableProducts,
         isLoading: isLoadingProducts,
-        isError: isProductsError 
+        isError: isProductsError
     } = useProducts()
-    
-    const { 
-        data: currentSubscription, 
+
+    const {
+        data: currentSubscription,
         isLoading: isLoadingSubscription,
-        isError: isSubscriptionError 
+        isError: isSubscriptionError
     } = useUserSubscription()
 
-    const { data: userRole, isLoading: isLoadingRole } = useGlobalUserRole();
-
-    // Otros hooks
-    const { player } = useMiniPlayer()
+    // Reemplazar useGlobalUserRole por useAuth
+    const { claims, isLoading: isLoadingAuth } = useAuth();
 
     // Loading combinado: si cualquiera está cargando
-    const isLoading = isLoadingRole || isLoadingProducts || isLoadingSubscription
+    const isLoading = isLoadingAuth || isLoadingProducts || isLoadingSubscription
 
     // Función para manejar el upgrade usando TanStack Query
     const handleUpgrade = (priceId: string) => {
@@ -171,11 +167,12 @@ export default function Subscriptions() {
         }).format(amount / 100); // Stripe amounts are in cents
     }
 
+    // Cambiar getCurrentProduct para usar claims
     const getCurrentProduct = () => {
-        if (!userRole || userRole.plan === 'free') return null;
+        if (!claims || claims.plan === 'free') return null;
         if (!availableProducts) return null;
-        return availableProducts.find(product => 
-            product.subscriptionType === userRole.plan
+        return availableProducts.find(product =>
+            product.subscriptionType === claims.plan
         );
     }
 
@@ -196,7 +193,7 @@ export default function Subscriptions() {
                         <Link to="/" className="flex items-center space-x-2 select-none">
                         <h1 className="text-xl font-bold tracking-widest font-[Orbitron]">Hörgen</h1>
                         </Link>
-                        
+
                         {/* Navigation */}
                         <nav className="ml-8 flex items-center space-x-1">
                             <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
@@ -209,7 +206,7 @@ export default function Subscriptions() {
                                 <Link to="/you/library">Library</Link>
                             </Button>
                         </nav>
-                        
+
                         {/* User Actions */}
                         <div className="ml-auto flex items-center space-x-4">
                             <ThemeSwitch />
@@ -244,23 +241,23 @@ export default function Subscriptions() {
                                     </h3>
                                 </div>
                                 <p className="text-sm text-red-600 dark:text-red-400 mb-4">
-                                    {isProductsError 
-                                        ? "Failed to load subscription plans. Please try again." 
+                                    {isProductsError
+                                        ? "Failed to load subscription plans. Please try again."
                                         : "Failed to load your current subscription. Please try again."
                                     }
                                 </p>
                                 <div className="flex gap-2">
-                                    <Button 
-                                        variant="outline" 
-                                        size="sm" 
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
                                         className="rounded-xs border-red-500/30 hover:bg-red-500/10"
                                         onClick={() => window.location.reload()}
                                     >
                                         Retry
                                     </Button>
-                                    <Button 
-                                        variant="ghost" 
-                                        size="sm" 
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
                                         className="rounded-xs text-red-600 hover:bg-red-500/10"
                                         onClick={() => console.log('Contact support logic')}
                                     >
@@ -285,9 +282,9 @@ export default function Subscriptions() {
                                     Your subscription has been activated successfully. Your plan and features are being updated.
                                 </p>
                                 <div className="flex gap-2">
-                                    <Button 
-                                        variant="outline" 
-                                        size="sm" 
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
                                         className="rounded-xs border-green-500/30 hover:bg-green-500/10"
                                         onClick={() => setShowSuccessMessage(false)}
                                     >
@@ -312,9 +309,9 @@ export default function Subscriptions() {
                                     {checkoutError.message || "Failed to create checkout session. Please try again."}
                                 </p>
                                 <div className="flex gap-2">
-                                    <Button 
-                                        variant="outline" 
-                                        size="sm" 
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
                                         className="rounded-xs border-red-500/30 hover:bg-red-500/10"
                                         onClick={() => window.location.reload()}
                                     >
@@ -336,7 +333,7 @@ export default function Subscriptions() {
                             <div className="h-4 bg-muted rounded w-48"></div>
                         </div>
                         </div>
-                        
+
                         {/* Loading All Plans */}
                         <div className="space-y-6">
                         <div className="h-6 bg-muted rounded animate-pulse w-32"></div>
@@ -357,7 +354,7 @@ export default function Subscriptions() {
                     </div>
                     ) : (
                     <div className="space-y-12">
-                        {/* Current Active Plan */}
+                        {/*
                         {currentSubscription && currentSubscription.plan !== 'free' && currentSubscription.status === 'active' && (
                             (() => {
                                 const currentProduct = getCurrentProduct();
@@ -369,6 +366,7 @@ export default function Subscriptions() {
                                 ) : null;
                             })()
                         )}
+                        */}
 
                         {/* No Active Plan Message */}
                         {(!currentSubscription || currentSubscription.plan === 'free' || currentSubscription.status !== 'active') && (
@@ -385,8 +383,8 @@ export default function Subscriptions() {
                                         <p className="text-muted-foreground mb-6">
                                             You're currently on the free plan. Upgrade to access premium features.
                                         </p>
-                                        <Button 
-                                            className="rounded-xs" 
+                                        <Button
+                                            className="rounded-xs"
                                             disabled={isCreatingCheckout}
                                             onClick={() => handleUpgrade(availableProducts?.[0]?.prices?.[0]?.stripePriceId || '')}
                                         >
@@ -401,7 +399,7 @@ export default function Subscriptions() {
                         {/* Available Plans */}
                         <div className="space-y-6">
                             <h2 className="text-2xl font-bold tracking-tight">Available Plans</h2>
-                            
+
                             {isLoadingProducts ? (
                                 <div className="grid gap-6 md:grid-cols-2">
                                     {[1, 2].map((i) => (
@@ -436,7 +434,7 @@ export default function Subscriptions() {
                                         const features = getFeaturesList(product.features)
                                         const isCurrentPlan = currentSubscription?.plan === product.subscriptionType
                                         const planStatus = isCurrentPlan ? currentSubscription?.status : 'available'
-                                        
+
                                         return (
                                             <Card key={product.id} className="bg-muted/20 rounded-xs p-6 border-0">
                                                 <div className="space-y-4">
@@ -467,13 +465,13 @@ export default function Subscriptions() {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    
+
                                                     <p className="text-sm text-muted-foreground">
                                                         {product.description}
                                                     </p>
-                                                    
+
                                                     <Separator />
-                                                    
+
                                                     <div className="space-y-2">
                                                         {features.slice(0, 3).map((feature, index) => (
                                                             <div key={index} className="flex items-center gap-2 text-sm">
@@ -487,7 +485,7 @@ export default function Subscriptions() {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    
+
                                                     <div className="flex gap-2 pt-2">
                                                         {isCurrentPlan && planStatus === 'active' ? (
                                                             <>
@@ -499,9 +497,9 @@ export default function Subscriptions() {
                                                                 </Button>
                                                             </>
                                                         ) : (
-                                                            <Button 
-                                                                variant="outline" 
-                                                                size="sm" 
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
                                                                 className="rounded-xs flex-1"
                                                                 disabled={isCreatingCheckout}
                                                                 onClick={() => handleUpgrade(primaryPrice?.stripePriceId || '')}
@@ -519,7 +517,7 @@ export default function Subscriptions() {
                         </div>
 
                         {/* Payment History - Commented out for now */}
-                        {/* 
+                        {/*
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-2xl font-bold tracking-tight">Payment History</h2>
@@ -528,7 +526,7 @@ export default function Subscriptions() {
                                     View All
                                 </Button>
                             </div>
-                            
+
                             <div className="space-y-3">
                                 {paymentHistory.map((payment) => (
                                     <div key={payment.id} className="flex items-center justify-between p-4 bg-muted/20 rounded-xs hover:bg-muted/30 transition-colors">
@@ -543,7 +541,7 @@ export default function Subscriptions() {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="flex items-center gap-3">
                                             <div className="text-right">
                                                 <div className="font-semibold">${payment.amount}</div>
@@ -567,7 +565,7 @@ export default function Subscriptions() {
                             Explore our premium plans and get access to exclusive underground radio features, broadcasting tools, and more.
                             </p>
                             <div className="flex justify-center gap-4">
-                            <Button 
+                            <Button
                                 className="rounded-xs"
                                 disabled={isCreatingCheckout}
                                 onClick={() => handleUpgrade(availableProducts?.[0]?.prices?.[0]?.stripePriceId || '')}
@@ -584,16 +582,9 @@ export default function Subscriptions() {
                     )}
                 </div>
                 </main>
-                
+
                 <Footer />
-                {player && (
-                <MiniPlayer
-                    streamUrl={player.streamUrl}
-                    stationName={player.stationName}
-                    stationCover={player.stationCover}
-                    isPlaying={player.isPlaying}
-                />
-                )}
+                {/* MiniPlayer eliminado de esta página */}
             </div>
         </>
     )

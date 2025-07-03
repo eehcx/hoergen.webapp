@@ -2,14 +2,23 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { User } from 'firebase/auth'
+import { UserRole, PlanType } from '@/core/types'
 
 interface AuthState {
   user: User | null;
-  claims: { plan?: string; role?: string } | null;
+  claims: {
+    plan?: PlanType;
+    role?: UserRole
+  } | null;
   isLoading: boolean;
   isInitialized: boolean;
   setUser: (user: User | null) => void;
-  setClaims: (claims: { plan?: string; role?: string } | null) => void;
+  setClaims: (
+    claims: {
+      plan?: PlanType;
+      role?: UserRole
+    } | null
+  ) => void;
   setLoading: (isLoading: boolean) => void;
   setInitialized: (isInitialized: boolean) => void;
 }
@@ -28,46 +37,10 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ 
+      partialize: (state) => ({
         claims: state.claims,
-        isInitialized: state.isInitialized 
+        isInitialized: state.isInitialized
       }),
     }
   )
 );
-
-/*
-
-export const useAuthStore = create<AuthState>()((set) => {
-  const cookieState = Cookies.get(ACCESS_TOKEN)
-  const initToken = cookieState ? JSON.parse(cookieState) : ''
-  return {
-    auth: {
-      user: null,
-      setUser: (user) =>
-        set((state) => ({ ...state, auth: { ...state.auth, user } })),
-      accessToken: initToken,
-      setAccessToken: (accessToken) =>
-        set((state) => {
-          Cookies.set(ACCESS_TOKEN, JSON.stringify(accessToken))
-          return { ...state, auth: { ...state.auth, accessToken } }
-        }),
-      resetAccessToken: () =>
-        set((state) => {
-          Cookies.remove(ACCESS_TOKEN)
-          return { ...state, auth: { ...state.auth, accessToken: '' } }
-        }),
-      reset: () =>
-        set((state) => {
-          Cookies.remove(ACCESS_TOKEN)
-          return {
-            ...state,
-            auth: { ...state.auth, user: null, accessToken: '' },
-          }
-        }),
-    },
-  }
-})
-*/
-
-// export const useAuth = () => useAuthStore((state) => state.auth)

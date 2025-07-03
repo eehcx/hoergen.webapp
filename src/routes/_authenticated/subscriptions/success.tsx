@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 import { UserService } from '@/core/services/users/user.service';
 import { createFileRoute } from '@tanstack/react-router';
 

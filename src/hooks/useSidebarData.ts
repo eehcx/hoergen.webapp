@@ -1,22 +1,22 @@
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks'
 import { type SidebarData } from '../components/layout/types'
 import { getNavGroupsByRole } from '../components/layout/data/role-based-sidebar-data'
 import { sidebarData as fallbackData } from '../components/layout/data/sidebar-data'
 
 export function useSidebarData(): SidebarData {
     const { claims, isLoading } = useAuth()
-    
+
     // If loading for too long, use default data but keep trying
     const userRole = (!isLoading && claims?.role) ? claims.role : 'listener'
-    
-    console.log('useSidebarData:', { 
-        isLoading, 
-        userRole, 
-        claims: claims?.role || 'no claims' 
+
+    console.log('useSidebarData:', {
+        isLoading,
+        userRole,
+        claims: claims?.role || 'no claims'
     })
-    
+
     const navGroups = getNavGroupsByRole(userRole)
-    
+
     return {
         // Teams se mantienen estáticos por ahora
         teams: [

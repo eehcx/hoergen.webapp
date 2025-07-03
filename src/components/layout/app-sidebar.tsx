@@ -8,7 +8,7 @@ import {
 import { NavGroup } from '@/components/layout/nav-group'
 import { NavUser } from '@/components/layout/nav-user'
 // Auth - Reintegrando gradualmente
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks'
 // Hooks
 import { useSidebarData } from '@/hooks/useSidebarData'
 
@@ -16,9 +16,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Reintegrando useAuth gradualmente con fallbacks seguros
   const { user, isLoading: authLoading } = useAuth()
   const sidebarData = useSidebarData()
-  
+
   // Debug logging
-  console.log('AppSidebar render:', { 
+  console.log('AppSidebar render:', {
     user: user?.displayName || 'No user',
     authLoading,
     sidebarData: {
@@ -32,7 +32,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     email: user?.email || 'No email disponible',
     avatar: user?.photoURL || '/avatars/default.jpg',
   }
-  
+
   return (
     <Sidebar collapsible='icon' variant='floating' {...props}>      <SidebarHeader>
         {/* <TeamSwitcher teams={sidebarData.teams} /> */}
