@@ -1,0 +1,35 @@
+{
+    "appId": "com.eehcx.hoergen",
+    "productName": "Hoergen",
+    "directories": {
+        "buildResources": "resources",
+        "output": "release"
+    },
+    "files": [
+        "electron-dist/**/*",
+        "dist/**/*"
+    ],
+    "extraResources": [
+        {
+            "from": "dist",
+            "to": "app/dist"
+        }
+    ],
+    "npmRebuild": false,
+    "asar": true,
+    "compression": "maximum",
+    "linux": {
+        "target": "AppImage",
+        "icon": "resources/icon.png",
+        "category": "AudioVideo",
+        "desktop": {
+            "Name": "Hoergen",
+            "Comment": "Radio client for underground electronic music",
+            "Type": "Application",
+            "Categories": "AudioVideo;Audio;Player;Music;",
+            "Terminal": false,
+            "StartupWMClass": "Hoergen"
+        },
+        "artifactName": "Hoergen-${version}-${arch}.AppImage"
+    }
+} 
