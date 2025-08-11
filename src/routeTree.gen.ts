@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as I18nDemoRouteImport } from './routes/i18n-demo'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedSlugNameRouteImport } from './routes/_authenticated/$slugName'
@@ -49,6 +50,11 @@ import { Route as AuthenticatedAdminGenresIndexRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminFeedbackIndexRouteImport } from './routes/_authenticated/admin/feedback/index'
 import { Route as AuthenticatedAdminCountriesIndexRouteImport } from './routes/_authenticated/admin/countries/index'
 
+const I18nDemoRoute = I18nDemoRouteImport.update({
+  id: '/i18n-demo',
+  path: '/i18n-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -266,6 +272,7 @@ const AuthenticatedAdminCountriesIndexRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/i18n-demo': typeof I18nDemoRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
@@ -306,6 +313,7 @@ export interface FileRoutesByFullPath {
   '/you/library': typeof AuthenticatedYouLibraryIndexRoute
 }
 export interface FileRoutesByTo {
+  '/i18n-demo': typeof I18nDemoRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
@@ -346,6 +354,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/i18n-demo': typeof I18nDemoRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
@@ -388,6 +397,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/i18n-demo'
     | '/admin'
     | '/settings'
     | '/forgot-password'
@@ -428,6 +438,7 @@ export interface FileRouteTypes {
     | '/you/library'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/i18n-demo'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
@@ -467,6 +478,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/i18n-demo'
     | '/_authenticated/admin'
     | '/_authenticated/settings'
     | '/(auth)/forgot-password'
@@ -509,6 +521,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  I18nDemoRoute: typeof I18nDemoRoute
   authForgotPasswordRoute: typeof authForgotPasswordRoute
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
@@ -523,6 +536,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/i18n-demo': {
+      id: '/i18n-demo'
+      path: '/i18n-demo'
+      fullPath: '/i18n-demo'
+      preLoaderRoute: typeof I18nDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -895,6 +915,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  I18nDemoRoute: I18nDemoRoute,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
