@@ -1,0 +1,99 @@
+{
+  "common": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "radio": "Radio",
+    "browse": "Browse", 
+    "library": "Library",
+    "createRadio": "Create Radio",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up", 
+    "signOut": "Sign Out",
+    "forgotPassword": "Forgot password?",
+    "emailPlaceholder": "you@hoergen.com",
+    "passwordPlaceholder": "********",
+    "orContinueWith": "Or continue with",
+    "google": "Google",
+    "loginSuccess": "Login successful",
+    "loginError": "Login error",
+    "googleLoginSuccess": "Google login successful", 
+    "googleLoginError": "Google login error",
+    "userNotFound": "User not found",
+    "wrongPassword": "Incorrect password",
+    "tooManyRequests": "Too many failed attempts. Try again later",
+    "invalidCredentials": "Invalid credentials",
+    "popupClosedByUser": "Window closed. Try again",
+    "operationCancelled": "Operation cancelled",
+    "accountExistsWithDifferentCredential": "An account with this email already exists using another login method",
+    "popupBlocked": "Popup window blocked by browser",
+    "unauthorizedDomain": "This domain is not authorized for authentication operations",
+    "userNotRegistered": "This email is not registered. Please sign up first or contact an administrator."
+  },
+  "forms": {
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Invalid email address",
+      "passwordTooShort": "Password must be at least 7 characters long",
+      "pleaseEnterEmail": "Please enter your email",
+      "pleaseEnterPassword": "Please enter your password"
+    }
+  },
+  "commands": {
+    "searchPlaceholder": "Type a command or search...",
+    "noResultsFound": "No results found.",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark", 
+      "system": "System"
+    }
+  },
+  "pages": {
+    "comingSoon": {
+      "title": "Coming Soon 👀",
+      "description": "This page has not been created yet.",
+      "stayTuned": "Stay tuned though!"
+    },
+    "translationExample": {
+      "title": "Translation Example",
+      "currentLanguage": "Current language",
+      "switchLanguage": "Switch Language"
+    }
+  },
+  "search": {
+    "placeholder": "Search radio stations around the world...",
+    "searchRadioStations": "Search radio stations around the world..."
+  },
+  "player": {
+    "live": "LIVE"
+  },
+  "footer": {
+    "language": "English",
+    "home": "Home",
+    "copyright": "Copyright © 2025 Hörgen Radio. All rights reserved.",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy", 
+    "feedback": "Feedback"
+  },
+  "placeholders": {
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "searchStations": "Search stations..."
+  }
+}

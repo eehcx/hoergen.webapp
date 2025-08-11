@@ -58,7 +58,6 @@
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.2",
-
     "@ferrucc-io/emoji-picker": "^0.0.45",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-alert-dialog": "^1.1.7",
@@ -92,6 +91,9 @@
     "date-fns": "^4.1.0",
     "firebase": "^11.8.1",
     "helmet": "^8.1.0",
+    "i18next": "^25.3.4",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
     "input-otp": "^1.4.2",
     "js-cookie": "^3.0.5",
     "lodash.debounce": "^4.0.8",
@@ -101,6 +103,7 @@
     "react-dom": "^19.1.0",
     "react-h5-audio-player": "^3.10.0",
     "react-hook-form": "^7.55.0",
+    "react-i18next": "^15.6.1",
     "react-top-loading-bar": "^3.0.2",
     "recharts": "^2.15.2",
     "sonner": "^2.0.3",
@@ -111,7 +114,6 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-
     "@eslint/js": "^9.24.0",
     "@faker-js/faker": "^9.7.0",
     "@tanstack/eslint-plugin-query": "^5.73.3",

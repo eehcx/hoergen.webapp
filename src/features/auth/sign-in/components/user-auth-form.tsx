@@ -7,6 +7,7 @@ import { IconBrandGoogle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { signIn, signInWithGoogle } from '@/lib/auth'
+import { useTranslation } from 'react-i18next'
 
 // UI components
 import { Button } from '@/components/ui/button'
@@ -23,29 +24,30 @@ import { PasswordInput } from '@/components/password-input'
 
 type UserAuthFormProps = HTMLAttributes<HTMLFormElement>
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Please enter your email' })
-    .email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(1, {
-      message: 'Please enter your password',
-    })
-    .min(7, {
-      message: 'Password must be at least 7 characters long',
-    }),
-})
-
-type FormValues = z.infer<typeof formSchema>
-
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   //const { redirect = '/' } = useSearch({ strict: false })
   const search = useSearch({ strict: false }) as { redirect?: string }
   const redirect = search.redirect ?? '/'
+
+  const formSchema = z.object({
+    email: z
+      .string()
+      .min(1, { message: t('forms.validation.pleaseEnterEmail') })
+      .email({ message: t('forms.validation.invalidEmail') }),
+    password: z
+      .string()
+      .min(1, {
+        message: t('forms.validation.pleaseEnterPassword'),
+      })
+      .min(7, {
+        message: t('forms.validation.passwordTooShort'),
+      }),
+  })
+
+  type FormValues = z.infer<typeof formSchema>
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,30 +62,30 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     
     try {
       await signIn(values.email, values.password)
-      toast.success('Login successful')
+      toast.success(t('auth.loginSuccess'))
       
       // Navigate to redirect route or dashboard by default
       navigate({ to: redirect as string })
     } catch (error: any) {
       // Manejar errores específicos
-      let errorMessage = 'Login error'
+      let errorMessage = t('auth.loginError')
       
       // Capturar errores comunes de Firebase
       switch (error.code) {
         case 'auth/user-not-found':
-          errorMessage = 'Usuario no encontrado'
+          errorMessage = t('auth.userNotFound')
           break
         case 'auth/wrong-password':
-          errorMessage = 'Contraseña incorrecta'
+          errorMessage = t('auth.wrongPassword')
           break
         case 'auth/too-many-requests':
-          errorMessage = 'Demasiados intentos fallidos. Intenta más tarde'
+          errorMessage = t('auth.tooManyRequests')
           break
         case 'auth/invalid-credential':
-          errorMessage = 'Credenciales inválidas'
+          errorMessage = t('auth.invalidCredentials')
           break
         default:
-          errorMessage = error.message || 'Login error'
+          errorMessage = error.message || t('auth.loginError')
       }
       
       toast.error(errorMessage)
@@ -97,42 +99,42 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     try {
       await signInWithGoogle();
-      toast.success('Google login successful');
+      toast.success(t('auth.googleLoginSuccess'));
       navigate({ to: redirect as string });
     } catch (error: any) {
-      let errorMessage = 'Google login error';
+      let errorMessage = t('auth.googleLoginError');
 
       // Manejar errores específicos de Firebase
       switch (error.code || error.name) {
         // Errores específicos de Google Auth
         case 'auth/popup-closed-by-user':
-          errorMessage = 'Ventana cerrada. Intenta de nuevo'
+          errorMessage = t('auth.popupClosedByUser')
           break
         case 'auth/cancelled-popup-request':
-          errorMessage = 'Operation cancelled'
+          errorMessage = t('auth.operationCancelled')
           break
         case 'auth/account-exists-with-different-credential':
-          errorMessage = 'An account with this email already exists using another login method'
+          errorMessage = t('auth.accountExistsWithDifferentCredential')
           break
         case 'auth/popup-blocked':
-          errorMessage = 'Ventana emergente bloqueada por el navegador'
+          errorMessage = t('auth.popupBlocked')
           break
         case 'auth/unauthorized-domain':
-          errorMessage = 'This domain is not authorized for authentication operations'
+          errorMessage = t('auth.unauthorizedDomain')
           break
         case 'auth/user-not-registered':
-          errorMessage = 'This email is not registered. Please sign up first or contact an administrator.'
+          errorMessage = t('auth.userNotRegistered')
           break
         
         // Errores generales que también aplican a Google
         case 'auth/too-many-requests':
-          errorMessage = 'Demasiados intentos fallidos. Intenta más tarde'
+          errorMessage = t('auth.tooManyRequests')
           break
         case 'auth/invalid-credential':
-          errorMessage = 'Credenciales inválidas'
+          errorMessage = t('auth.invalidCredentials')
           break
         default:
-          errorMessage = error.message || 'Google login error'
+          errorMessage = error.message || t('auth.googleLoginError')
       }
 
       toast.error(errorMessage);
@@ -156,8 +158,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>              <FormControl>
-                <Input placeholder='you@hoergen.com' className='placeholder:font-[Orbitron] placeholder:tracking-wide' {...field} />
+              <FormLabel>{t('common.email')}</FormLabel>
+              <FormControl>
+                <Input placeholder={t('auth.emailPlaceholder')} className='placeholder:font-[Orbitron] placeholder:tracking-wide' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -168,22 +171,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           name='password'
           render={({ field }) => (
             <FormItem className='relative'>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('common.password')}</FormLabel>
               <FormControl>
-                <PasswordInput placeholder='********' {...field} />
+                <PasswordInput placeholder={t('auth.passwordPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
               <Link
                 to='/forgot-password'
                 className='text-muted-foreground absolute -top-0.5 right-0 text-sm font-medium hover:opacity-75'
               >
-                Forgot password?
+                {t('auth.forgotPassword')}
               </Link>
             </FormItem>
           )}
         />
         <Button className='mt-2' disabled={isLoading}>
-          Login
+          {t('common.login')}
         </Button>
 
         <div className='relative my-2'>
@@ -192,14 +195,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
           <div className='relative flex justify-center text-xs uppercase'>
             <span className='bg-background text-muted-foreground px-2'>
-              Or continue with
+              {t('auth.orContinueWith')}
             </span>
           </div>
         </div>
 
         <div className='grid grid-cols-1'>
           <Button variant='outline' type='button' disabled={isLoading} onClick={handleGoogleSignIn}>
-            <IconBrandGoogle className='h-4 w-4' /> Google
+            <IconBrandGoogle className='h-4 w-4' /> {t('auth.google')}
           </Button>
         </div>
       </form>

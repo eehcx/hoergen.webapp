@@ -16,6 +16,8 @@ import { FontProvider } from './context/font-context'
 import { ThemeProvider } from './context/theme-context'
 import { HelmetProvider } from '@dr.pogodin/react-helmet'
 import './index.css'
+// Import i18n configuration
+import './lib/i18n'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
 import { MiniPlayerProvider } from '@/context/mini-player-context'

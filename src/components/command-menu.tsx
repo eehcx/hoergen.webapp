@@ -9,6 +9,7 @@ import {
 import { useSearch } from '@/context/search-context'
 import { useTheme } from '@/context/theme-context'
 import { useAuth } from '@/hooks'
+import { useTranslation } from 'react-i18next'
 import {
   CommandDialog,
   CommandEmpty,
@@ -26,6 +27,7 @@ export function CommandMenu() {
   const { setTheme } = useTheme()
   const { open, setOpen } = useSearch()
   const { claims } = useAuth()
+  const { t } = useTranslation()
 
   const role = claims?.role || 'listener'
   const navGroups = getNavGroupsByRole(role)
@@ -40,10 +42,10 @@ export function CommandMenu() {
 
   return (
     <CommandDialog modal open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder='Type a command or search...' />
+      <CommandInput placeholder={t('commands.searchPlaceholder')} />
       <CommandList>
         <ScrollArea type='hover' className='h-72 pr-1'>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>{t('commands.noResultsFound')}</CommandEmpty>
           {navGroups.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items.map((navItem, i) => {
@@ -83,15 +85,15 @@ export function CommandMenu() {
           <CommandSeparator />
           <CommandGroup heading='Theme'>
             <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
-              <IconSun /> <span>Light</span>
+              <IconSun /> <span>{t('commands.theme.light')}</span>
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
               <IconMoon className='scale-90' />
-              <span>Dark</span>
+              <span>{t('commands.theme.dark')}</span>
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
               <IconDeviceLaptop />
-              <span>System</span>
+              <span>{t('commands.theme.system')}</span>
             </CommandItem>
           </CommandGroup>
         </ScrollArea>
