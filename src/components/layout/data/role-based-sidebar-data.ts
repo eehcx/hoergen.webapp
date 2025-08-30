@@ -16,13 +16,13 @@ import {
 } from '@tabler/icons-react'
 import { type NavGroup } from '../types'
 
-export function getNavGroupsByRole(role: string): NavGroup[] {
+export function getNavGroupsByRole(role: string, t: (key: string) => string): NavGroup[] {
     const baseGroups: NavGroup[] = [
         {
-            title: 'Overview',
+            title: t('sidebar.overview'),
             items: [
                 {
-                    title: 'Home',
+                    title: t('sidebar.home'),
                     url: '/admin',
                     icon: IconLayoutDashboard,
                 }
@@ -33,15 +33,15 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
     // Para admins
     if (role === 'admin') {
         baseGroups.push({
-            title: 'Content',
+            title: t('sidebar.content'),
             items: [
                 {
-                    title: 'Stations',
+                    title: t('sidebar.stations'),
                     url: '/admin/stations',
                     icon: IconRadio,
                 },
                 {
-                    title: 'Genres',
+                    title: t('sidebar.genres'),
                     url: '/admin/genres',
                     icon: IconMusic,
                 }
@@ -49,15 +49,15 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
         })
 
         baseGroups.push({
-            title: 'Community',
+            title: t('sidebar.community'),
             items: [
                 {
-                    title: 'Users',
+                    title: t('sidebar.users'),
                     url: '/admin/users',
                     icon: IconUsers,
                 },
                 {
-                    title: 'Moderation',
+                    title: t('sidebar.moderation'),
                     url: '/creator',
                     icon: IconShieldLock,
                 }
@@ -65,10 +65,10 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
         })
 
         baseGroups.push({
-            title: 'Monetization',
+            title: t('sidebar.monetization'),
             items: [
                 {
-                    title: 'Subscriptions',
+                    title: t('sidebar.subscriptions'),
                     url: '/admin/subscriptions',
                     icon: IconCreditCard,
                 }
@@ -76,15 +76,15 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
         })
 
         baseGroups.push({
-            title: 'Reports & Feedback',
+            title: t('sidebar.reportsAndFeedback'),
             items: [
                 {
-                    title: 'Reports',
+                    title: t('sidebar.reports'),
                     url: '/admin/reports',
                     icon: IconFlag,
                 },
                 {
-                    title: 'Feedback',
+                    title: t('sidebar.feedback'),
                     url: '/admin/feedback',
                     icon: IconStars,
                 }
@@ -93,15 +93,15 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
 
         // Settings de admin (avanzados)
         baseGroups.push({
-            title: 'System',
+            title: t('sidebar.system'),
             items: [
                 {
-                    title: 'Countries',
+                    title: t('sidebar.countries'),
                     url: '/admin/countries',
                     icon: IconWorld,
                 },
                 {
-                    title: 'Settings',
+                    title: t('sidebar.settings'),
                     url: '/settings/account',
                     icon: IconSettings,
                 }
@@ -112,15 +112,15 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
     // Para creators (futuro)
     if (role === 'creator') {
         baseGroups.push({
-            title: 'Creator Tools',
+            title: t('sidebar.creatorTools'),
             items: [
                 {
-                    title: 'My Stations',
+                    title: t('sidebar.myStations'),
                     url: '/creator/stations',
                     icon: IconRadio,
                 },
                 {
-                    title: 'Analytics',
+                    title: t('sidebar.analytics'),
                     url: '/creator/analytics',
                     icon: IconChartBar,
                 },
@@ -129,15 +129,15 @@ export function getNavGroupsByRole(role: string): NavGroup[] {
 
         // Settings básicos para creators
         baseGroups.push({
-            title: 'Settings',
+            title: t('sidebar.settings'),
             items: [
                 {
-                    title: 'Profile',
+                    title: t('sidebar.profile'),
                     url: '/user-settings',
                     icon: IconUserCog,
                 },
                 {
-                    title: 'Preferences',
+                    title: t('sidebar.preferences'),
                     url: '/user-settings/preferences',
                     icon: IconHeadphones,
                 },

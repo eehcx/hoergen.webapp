@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import type { ResponseStationDto, UpdateStationDto } from "@/core/types/station.types"
+import { useStaticTranslation } from "@/hooks/useTranslation"
 
 interface EditStationFormProps {
     station: ResponseStationDto
@@ -14,6 +15,8 @@ interface EditStationFormProps {
 }
 
 export function EditStationForm({ station, onSubmit, onCancel, isLoading = false }: EditStationFormProps) {
+    const { t } = useStaticTranslation();
+    
     const [formData, setFormData] = useState<UpdateStationDto>({
         name: station.name,
         streamUrl: station.streamUrl,
@@ -30,17 +33,17 @@ export function EditStationForm({ station, onSubmit, onCancel, isLoading = false
         const newErrors: Record<string, string> = {}
 
         if (!formData.name?.trim()) {
-            newErrors.name = "Station name is required"
+            newErrors.name = t('creatorComponents.stationNameRequired')
         }
 
         if (!formData.streamUrl?.trim()) {
-            newErrors.streamUrl = "Stream URL is required"
+            newErrors.streamUrl = t('creatorComponents.streamUrlRequired')
         } else {
             // Basic URL validation
             try {
                 new URL(formData.streamUrl)
             } catch {
-                newErrors.streamUrl = "Please enter a valid URL"
+                newErrors.streamUrl = t('creatorComponents.invalidUrl')
             }
         }
 
@@ -73,20 +76,20 @@ export function EditStationForm({ station, onSubmit, onCancel, isLoading = false
     return (
         <>
             <DialogHeader>
-                <DialogTitle>Edit Station</DialogTitle>
+                <DialogTitle>{t('creatorComponents.editStation')}</DialogTitle>
                 <DialogDescription>
-                    Update the information for your radio station.
+                    {t('creatorComponents.updateStationInfo')}
                 </DialogDescription>
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="name">Station Name *</Label>
+                    <Label htmlFor="name">{t('creatorComponents.stationName')}</Label>
                     <Input
                         id="name"
                         value={formData.name || ""}
                         onChange={(e) => handleInputChange("name", e.target.value)}
-                        placeholder="Enter station name"
+                        placeholder={t('creatorComponents.stationNamePlaceholder')}
                         className={errors.name ? "border-destructive" : ""}
                     />
                     {errors.name && (
@@ -95,12 +98,12 @@ export function EditStationForm({ station, onSubmit, onCancel, isLoading = false
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="streamUrl">Stream URL *</Label>
+                    <Label htmlFor="streamUrl">{t('creatorComponents.streamUrl')}</Label>
                     <Input
                         id="streamUrl"
                         value={formData.streamUrl || ""}
                         onChange={(e) => handleInputChange("streamUrl", e.target.value)}
-                        placeholder="https://example.com/stream"
+                        placeholder={t('creatorComponents.streamUrlPlaceholder')}
                         className={errors.streamUrl ? "border-destructive" : ""}
                     />
                     {errors.streamUrl && (
@@ -109,33 +112,33 @@ export function EditStationForm({ station, onSubmit, onCancel, isLoading = false
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="description">Description</Label>
+                    <Label htmlFor="description">{t('creatorComponents.description')}</Label>
                     <Textarea
                         id="description"
                         value={formData.description || ""}
                         onChange={(e) => handleInputChange("description", e.target.value)}
-                        placeholder="Describe your radio station..."
+                        placeholder={t('creatorComponents.descriptionPlaceholder')}
                         rows={3}
                     />
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="liveInfo">Live Information</Label>
+                    <Label htmlFor="liveInfo">{t('creatorComponents.liveInfo')}</Label>
                     <Input
                         id="liveInfo"
                         value={formData.liveInfo || ""}
                         onChange={(e) => handleInputChange("liveInfo", e.target.value)}
-                        placeholder="Currently playing information"
+                        placeholder={t('creatorComponents.liveInfoPlaceholder')}
                     />
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="coverImage">Cover Image URL</Label>
+                    <Label htmlFor="coverImage">{t('creatorComponents.coverImage')}</Label>
                     <Input
                         id="coverImage"
-                        value={formData.coverImage || ""}
+ value={formData.coverImage || ""}
                         onChange={(e) => handleInputChange("coverImage", e.target.value)}
-                        placeholder="https://example.com/image.jpg"
+                        placeholder={t('creatorComponents.coverImagePlaceholder')}
                     />
                 </div>
 
@@ -146,13 +149,13 @@ export function EditStationForm({ station, onSubmit, onCancel, isLoading = false
                         onClick={onCancel}
                         disabled={isLoading}
                     >
-                        Cancel
+                        {t('creatorComponents.cancel')}
                     </Button>
                     <Button 
                         type="submit" 
                         disabled={isLoading}
                     >
-                        {isLoading ? "Saving..." : "Save Changes"}
+                        {isLoading ? t('creatorComponents.saving') : t('creatorComponents.saveChanges')}
                     </Button>
                 </div>
             </form>

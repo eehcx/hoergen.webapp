@@ -21,6 +21,7 @@ import {
   useRemoveModerators,
   useMultipleUsersData,
 } from '../hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 interface ManageModeratorsModalProps {
   station: ResponseStationDto
@@ -33,6 +34,8 @@ export function ManageModeratorsModal({
   open,
   onOpenChange,
 }: ManageModeratorsModalProps) {
+  const { t } = useStaticTranslation();
+  
   const [newModeratorEmail, setNewModeratorEmail] = useState('')
   const [isAddingModerator, setIsAddingModerator] = useState(false)
 
@@ -44,7 +47,7 @@ export function ManageModeratorsModal({
 
   const addModerators = useAddModerators(
     (data) => {
-      toast.success('Moderator added successfully')
+      toast.success(t('creatorComponents.moderatorAddedSuccessfully'))
       setNewModeratorEmail('')
       setIsAddingModerator(false)
 
@@ -54,7 +57,7 @@ export function ManageModeratorsModal({
       }
     },
     (error) => {
-      toast.error('Failed to add moderator')
+      toast.error(t('creatorComponents.failedToAddModerator'))
       console.error('Error adding moderator:', error)
       setIsAddingModerator(false)
 
@@ -65,7 +68,7 @@ export function ManageModeratorsModal({
 
   const removeModerators = useRemoveModerators(
     (data) => {
-      toast.success('Moderator removed successfully')
+      toast.success(t('creatorComponents.moderatorRemovedSuccessfully'))
 
       // Limpiar estado de "removiendo" y actualizar lista optimista
       setRemovingModerators(new Set())
@@ -74,7 +77,7 @@ export function ManageModeratorsModal({
       }
     },
     (error) => {
-      toast.error('Failed to remove moderator')
+      toast.error(t('creatorComponents.failedToRemoveModerator'))
       console.error('Error removing moderator:', error)
 
       // Revertir estado optimista en caso de error
@@ -136,12 +139,12 @@ export function ManageModeratorsModal({
 
   const handleAddModerator = async () => {
     if (!newModeratorEmail.trim()) {
-      toast.error('Please enter a valid email address')
+      toast.error(t('creatorComponents.pleaseEnterValidEmail'))
       return
     }
 
     if (!station || !station.id) {
-      toast.error('Station information is not available')
+      toast.error(t('creatorComponents.stationInfoNotAvailable'))
       return
     }
 
@@ -151,14 +154,14 @@ export function ManageModeratorsModal({
       // Validar formato de email básico
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(newModeratorEmail.trim())) {
-        toast.error('Please enter a valid email address')
+        toast.error(t('creatorComponents.pleaseEnterValidEmail'))
         setIsAddingModerator(false)
         return
       }
 
       // Verificar si el email ya está en la lista de moderadores
       if (currentModerators.includes(newModeratorEmail.trim())) {
-        toast.error('This user is already a moderator')
+        toast.error(t('creatorComponents.userAlreadyModerator'))
         setIsAddingModerator(false)
         return
       }
@@ -174,7 +177,7 @@ export function ManageModeratorsModal({
       })
     } catch (error) {
       console.error('Error in handleAddModerator:', error)
-      toast.error('An error occurred while adding the moderator')
+      toast.error(t('creatorComponents.errorOccurredAddingModerator'))
       setIsAddingModerator(false)
     }
   }
@@ -182,7 +185,7 @@ export function ManageModeratorsModal({
   const handleRemoveModerator = (moderatorId: string) => {
     if (!station || !station.id) {
       console.error('Cannot remove moderator: station or station.id is missing')
-      toast.error('Station information is not available')
+      toast.error(t('creatorComponents.stationInfoNotAvailable'))
       return
     }
 
@@ -205,11 +208,10 @@ export function ManageModeratorsModal({
         <DialogHeader>
           <DialogTitle className='flex items-center gap-2 text-xl'>
             <IconUser size={24} />
-            Manage Moderators
+            {t('creatorComponents.manageModeratorsTitle')}
           </DialogTitle>
           <DialogDescription>
-            Add or remove moderators for "{station.name}". Moderators can help
-            manage the station's content and community.
+            {t('creatorComponents.manageModeratorsDescription').replace('{stationName}', station.name)}
           </DialogDescription>
         </DialogHeader>
 
@@ -227,7 +229,7 @@ export function ManageModeratorsModal({
               <div className='flex-1'>
                 <Input
                   type='email'
-                  placeholder='Enter email address'
+                  placeholder={t('creatorComponents.enterEmailAddress')}
                   value={newModeratorEmail}
                   onChange={(e) => setNewModeratorEmail(e.target.value)}
                   onKeyDown={(e) => {
@@ -244,13 +246,12 @@ export function ManageModeratorsModal({
                 disabled={isLoading || !newModeratorEmail.trim()}
                 className='rounded-none'
               >
-                {isAddingModerator ? 'Adding...' : 'Add'}
+                {isAddingModerator ? t('creatorComponents.adding') : t('creatorComponents.add')}
               </Button>
             </div>
 
             <p className='text-muted-foreground text-sm'>
-              Enter the email address of the user you want to add as a
-              moderator.
+              {t('creatorComponents.enterModeratorEmail')}
             </p>
           </div>
 
@@ -259,20 +260,18 @@ export function ManageModeratorsModal({
           {/* Current Moderators Section */}
           <div className='space-y-4'>
             <div className='flex items-center justify-between'>
-              <h3 className='font-semibold'>Current Moderators</h3>
+              <h3 className='font-semibold'>{t('creatorComponents.currentModerators')}</h3>
               <Badge variant='secondary' className='rounded-none'>
-                {currentModerators.length} moderator
-                {currentModerators.length !== 1 ? 's' : ''}
+                {currentModerators.length} {currentModerators.length !== 1 ? t('creatorComponents.moderators') : t('creatorComponents.moderator')}
               </Badge>
             </div>
 
             {!currentModerators || currentModerators.length === 0 ? (
               <div className='text-muted-foreground py-8 text-center'>
                 <IconUser size={48} className='mx-auto mb-4 opacity-50' />
-                <p className='text-lg font-medium'>No moderators yet</p>
+                <p className='text-lg font-medium'>{t('creatorComponents.noModeratorsYet')}</p>
                 <p className='text-sm'>
-                  Add moderators to help manage your station's content and
-                  community.
+                  {t('creatorComponents.noModeratorsDescription')}
                 </p>
               </div>
             ) : (
@@ -329,7 +328,7 @@ export function ManageModeratorsModal({
             className='rounded-none'
             disabled={isLoading}
           >
-            Close
+            {t('creatorComponents.close')}
           </Button>
         </div>
       </DialogContent>

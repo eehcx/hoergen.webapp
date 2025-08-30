@@ -7,12 +7,14 @@ import { Footer } from '@/components/footer'
 import type { ResponseStationDto } from '@/core/types/station.types'
 import { stationService } from '@/core/services'
 import Station from '@/features/station'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export const Route = createFileRoute('/_authenticated/s/$stationSlug')({
   component: StationPage,
 })
 
 function StationPage() {
+  const { t } = useStaticTranslation();
   const { stationSlug } = useParams({ strict: false })
   const search = useSearch({ strict: false }) as Partial<ResponseStationDto>
   const [station, setStation] = useState<ResponseStationDto | null>(null)
@@ -24,11 +26,11 @@ function StationPage() {
     } else if (stationSlug) {
       stationService.getStationById(stationSlug)
         .then(setStation)
-        .catch(() => setError('No se encontró la estación'))
+        .catch(() => setError(t('station.stationNotFound')))
     } else {
-      setError('ID de estación no válido')
+      setError(t('station.invalidStationId'))
     }
-  }, [stationSlug, search])
+  }, [stationSlug, search, t])
 
   if (error) {
     return (
@@ -43,7 +45,7 @@ function StationPage() {
     return (
       <>
         <HeaderNavbar sticky />
-        <div className="p-8 text-center">Cargando información de la estación...</div>
+        <div className="p-8 text-center">{t('station.loadingStationInfo')}</div>
       </>
     )
   }
@@ -52,7 +54,7 @@ function StationPage() {
     <>
       <Helmet>
         <title>{station.name} - Hoergen</title>
-        <meta name="description" content={station.description || 'Listen your favorite radio station on Hoergen'} />
+        <meta name="description" content={station.description || t('station.defaultDescription')} />
         <link rel="canonical" href={`/s/${stationSlug}`} />
       </Helmet>
       <HeaderNavbar sticky />

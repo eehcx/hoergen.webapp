@@ -73,6 +73,21 @@ export class RadioBrowserService {
     }
 
     /**
+     * Advanced search stations with parameters
+     */
+    async advancedSearchStations(searchParams: string, limit: number = 10): Promise<RadioBrowserStation[]> {
+        const encodedParams = encodeURIComponent(searchParams)
+        return this.fetchFromRadioBrowser<RadioBrowserStation[]>(`/stations/search?name=${encodedParams}&limit=${limit}&order=clickcount&reverse=true&offset=0`)
+    }
+
+    /**
+     * Search stations by country code
+     */
+    async searchStationsByCountryCode(countrycode: string, limit: number = 10): Promise<RadioBrowserStation[]> {
+        return this.fetchFromRadioBrowser<RadioBrowserStation[]>(`/stations/search?countrycode=${countrycode.toUpperCase()}&limit=${limit}&order=clickcount&reverse=true&offset=0`)
+    }
+
+    /**
      * Get popular stations with good quality
      */
     async getPopularStations(limit: number = 10): Promise<RadioBrowserStation[]> {

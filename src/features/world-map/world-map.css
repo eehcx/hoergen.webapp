@@ -1,0 +1,298 @@
+/* Estilos personalizados para el globo terráqueo mundial */
+
+/* Contenedor del globo */
+.globe-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los puntos del globo - solo puntos sin números */
+.globe-point {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.globe-point:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+}
+
+/* Labels de los puntos */
+.globe-point-label {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Estilos para el modal de detalles con glassmorphism */
+.country-modal {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Estilos para los marcadores de estaciones */
+.station-marker {
+  transition: all 0.2s ease;
+}
+
+.station-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Estilos para el panel lateral */
+.sidebar-panel {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.dark .sidebar-panel {
+  background: rgba(31, 41, 55, 0.8);
+}
+
+/* Estilos para las estadísticas */
+.stats-card {
+  transition: all 0.2s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el header del mapa */
+.map-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+}
+
+.dark .map-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+}
+
+/* Estilos para los badges de países */
+.country-badge {
+  transition: all 0.2s ease;
+}
+
+.country-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos para el loading */
+.loading-container {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+  min-height: 100vh;
+}
+
+.dark .loading-container {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+}
+
+/* Estilos para el modal glassmorphism */
+.glassmorphism-modal {
+  backdrop-filter: blur(40px);
+  background: rgba(0, 0, 0, 0.15);
+  border: none;
+  box-shadow: none;
+}
+
+.dark .glassmorphism-modal {
+  background: rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+/* Estilos para las tarjetas de estaciones dentro del modal */
+.station-card {
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.dark .station-card {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.station-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.dark .station-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Estilos para los cards de estaciones con estilo Spotify */
+.spotify-style-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.spotify-style-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.01) 50%,
+    transparent 100%
+  );
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spotify-style-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.spotify-style-card:hover::before {
+  opacity: 1;
+}
+
+/* Efectos adicionales para estilo Spotify */
+.spotify-style-card:hover img,
+.spotify-style-card:hover .bg-gradient-to-br {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.dark .glassmorphism-station-card {
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .glassmorphism-station-card:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos para el grid responsivo */
+.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+    gap: 1.5rem;
+  }
+}
+
+/* Animaciones para los elementos internos */
+.glassmorphism-station-card:hover img,
+.glassmorphism-station-card:hover .bg-gradient-to-br {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Efecto de brillo en hover */
+.spotify-style-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.spotify-style-card:hover::after {
+  left: 100%;
+}
+
+/* Estilos para el header minimalista */
+.minimal-header {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .minimal-header {
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos del header ahora manejados completamente con Tailwind CSS */
+
+/* Estilos para el globo que ocupa todo el espacio */
+.fullscreen-globe {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding-top: 0; /* Sin padding para ocupar toda la pantalla */
+}
+
+/* Estilos para el backdrop del modal */
+.backdrop-blur-40 {
+  backdrop-filter: blur(40px);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.dark .backdrop-blur-40 {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Animaciones suaves para los puntos */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.globe-point {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.globe-point:hover {
+  animation: none;
+}

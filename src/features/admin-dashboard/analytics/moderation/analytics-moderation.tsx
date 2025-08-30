@@ -7,26 +7,28 @@ import {
 } from '@/components/ui/card'
 import {
   ModerationScoresOverview,
-  MessageStatesDistribution,
+  //MessageStatesDistribution,
 } from './components'
 import { useChatsPlatformAnalytics } from './hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export function AnalyticsModeration() {
   const { data: analytics, isLoading } = useChatsPlatformAnalytics()
+  const { t } = useStaticTranslation()
 
   const getSafetyGrade = (toxicityScore: number) => {
     if (toxicityScore < 0.3)
-      return { grade: 'A', color: '#10b981', label: 'Excellent' }
+      return { grade: 'A', color: '#10b981', label: t('analytics.moderation.excellent') }
     if (toxicityScore < 0.5)
-      return { grade: 'B', color: '#f59e0b', label: 'Good' }
+      return { grade: 'B', color: '#f59e0b', label: t('analytics.moderation.good') }
     if (toxicityScore < 0.7)
-      return { grade: 'C', color: '#ef4444', label: 'Fair' }
-    return { grade: 'D', color: '#dc2626', label: 'Poor' }
+      return { grade: 'C', color: '#ef4444', label: t('analytics.moderation.fair') }
+    return { grade: 'D', color: '#dc2626', label: t('analytics.moderation.poor') }
   }
 
   const safetyInfo = analytics?.averageScores?.TOXICITY
     ? getSafetyGrade(analytics.averageScores.TOXICITY)
-    : { grade: 'N/A', color: '#6b7280', label: 'Unknown' }
+    : { grade: 'N/A', color: '#6b7280', label: t('analytics.moderation.unknown') }
 
   return (
     <>
@@ -35,7 +37,7 @@ export function AnalyticsModeration() {
         <Card className='rounded-none'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>
-              Total Messages
+              {t('analytics.moderation.totalMessages')}
             </CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -57,7 +59,7 @@ export function AnalyticsModeration() {
                 : (analytics?.totalMessages?.toLocaleString() ?? '0')}
             </div>
             <p className='text-muted-foreground text-xs'>
-              Across {analytics?.totalChats ?? 0} total chats
+              {t('analytics.moderation.acrossTotalChats').replace('{count}', (analytics?.totalChats ?? 0).toString())}
             </p>
           </CardContent>
         </Card>
@@ -65,7 +67,7 @@ export function AnalyticsModeration() {
         <Card className='rounded-none'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>
-              Moderation Coverage
+              {t('analytics.moderation.moderationCoverage')}
             </CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -87,14 +89,14 @@ export function AnalyticsModeration() {
                 : `${analytics?.percentageWithModeration?.toFixed(1) ?? '0'}%`}
             </div>
             <p className='text-muted-foreground text-xs'>
-              {analytics?.messagesWithModeration ?? 0} messages scanned
+              {t('analytics.moderation.messagesScanned').replace('{count}', (analytics?.messagesWithModeration ?? 0).toString())}
             </p>
           </CardContent>
         </Card>
 
         <Card className='rounded-none'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Safety Grade</CardTitle>
+            <CardTitle className='text-sm font-medium'>{t('analytics.moderation.safetyGrade')}</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -116,14 +118,14 @@ export function AnalyticsModeration() {
               {isLoading ? '...' : safetyInfo.grade}
             </div>
             <p className='text-muted-foreground text-xs'>
-              {isLoading ? '...' : safetyInfo.label} safety rating
+              {t('analytics.moderation.safetyRating').replace('{grade}', isLoading ? '...' : safetyInfo.label)}
             </p>
           </CardContent>
         </Card>
 
         <Card className='rounded-none'>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Active Chats</CardTitle>
+            <CardTitle className='text-sm font-medium'>{t('analytics.moderation.activeChats')}</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -144,20 +146,19 @@ export function AnalyticsModeration() {
               {isLoading ? '...' : (analytics?.chatsWithMessages ?? '0')}
             </div>
             <p className='text-muted-foreground text-xs'>
-              {analytics?.averageMessagesPerChat?.toFixed(1) ?? '0'} avg
-              messages per chat
+              {t('analytics.moderation.messagesPerChat').replace('{count}', analytics?.averageMessagesPerChat?.toFixed(1) ?? '0')}
             </p>
           </CardContent>
         </Card>
       </div>
 
       {/* Charts Section */}
-      <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
-        <Card className='col-span-1 rounded-none lg:col-span-4'>
+      <div className='grid grid-cols-1 gap-4'>
+        <Card className='col-span-1 rounded-none'>
           <CardHeader>
-            <CardTitle>Moderation Scores</CardTitle>
+            <CardTitle>{t('analytics.moderation.moderationScores')}</CardTitle>
             <CardDescription>
-              Average toxicity scores across all chat messages
+              {t('analytics.moderation.averageToxicityScores')}
             </CardDescription>
           </CardHeader>
           <CardContent className='pl-2'>
@@ -165,52 +166,54 @@ export function AnalyticsModeration() {
           </CardContent>
         </Card>
 
+        {/* 
         <Card className='col-span-1 rounded-none lg:col-span-3'>
           <CardHeader>
-            <CardTitle>Message Status Distribution</CardTitle>
+            <CardTitle>{t('analytics.moderation.messageStatusDistribution')}</CardTitle>
             <CardDescription>
-              Current state of all moderated messages
+              {t('analytics.moderation.currentStateModeratedMessages')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <MessageStatesDistribution />
           </CardContent>
         </Card>
+        */}
       </div>
 
       {/* Additional Statistics
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
         <Card className='rounded-none'>
           <CardHeader>
-            <CardTitle className='text-lg'>System Actions</CardTitle>
+            <CardTitle className='text-lg'>{t('analytics.moderation.systemActions')}</CardTitle>
           </CardHeader>
           <CardContent className='space-y-4'>
             <div className='flex items-center justify-between rounded-lg border p-3'>
               <div>
-                <p className='font-medium'>Messages flagged by system</p>
+                <p className='font-medium'>{t('analytics.moderation.messagesFlaggedBySystem')}</p>
                 <p className='text-muted-foreground text-sm'>
-                  Automatically detected issues
+                  {t('analytics.moderation.automaticallyDetectedIssues')}
                 </p>
               </div>
               <div className='text-right'>
                 <p className='text-2xl font-bold text-red-500'>
                   {isLoading ? '...' : (analytics?.flaggedBySystemCount ?? '0')}
                 </p>
-                <p className='text-muted-foreground text-xs'>flags</p>
+                <p className='text-muted-foreground text-xs'>{t('analytics.moderation.flags')}</p>
               </div>
             </div>
             <div className='flex items-center justify-between rounded-lg border p-3'>
               <div>
-                <p className='font-medium'>Human reviewed</p>
+                <p className='font-medium'>{t('analytics.moderation.humanReviewed')}</p>
                 <p className='text-muted-foreground text-sm'>
-                  Manually reviewed messages
+                  {t('analytics.moderation.manuallyReviewedMessages')}
                 </p>
               </div>
               <div className='text-right'>
                 <p className='text-2xl font-bold text-blue-500'>
                   {isLoading ? '...' : (analytics?.reviewedCount ?? '0')}
                 </p>
-                <p className='text-muted-foreground text-xs'>reviews</p>
+                <p className='text-muted-foreground text-xs'>{t('analytics.moderation.reviews')}</p>
               </div>
             </div>
           </CardContent>
@@ -218,7 +221,7 @@ export function AnalyticsModeration() {
 
         <Card className='rounded-none'>
           <CardHeader>
-            <CardTitle className='text-lg'>Message States Breakdown</CardTitle>
+            <CardTitle className='text-lg'>{t('analytics.moderation.messageStatesBreakdown')}</CardTitle>
           </CardHeader>
           <CardContent className='space-y-3'>
             {Object.entries(analytics?.stateDistribution ?? {}).map(

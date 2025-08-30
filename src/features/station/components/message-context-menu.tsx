@@ -2,6 +2,7 @@ import React from 'react'
 import { IconTrash, IconTrashX, IconDotsVertical } from '@tabler/icons-react'
 import type { ModerationResult } from '@/core/types/chat.types'
 import { useIsElectron } from '@/hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -37,6 +38,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
   onClearChat,
   children,
 }) => {
+  const { t } = useStaticTranslation()
   const isElectron = useIsElectron()
 
   // Formatear el porcentaje para mostrar
@@ -59,11 +61,11 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
         <>
           <DropdownMenuLabel className='px-2 py-1.5'>
             <div className='text-muted-foreground mb-1.5 text-xs font-semibold'>
-              Moderation Analysis
+              {t('messageContextMenu.moderationAnalysis')}
             </div>
             <div className='grid grid-cols-1 gap-0.5 text-xs'>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Toxicity:</span>
+                <span className='text-xs'>{t('messageContextMenu.toxicity')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.TOXICITY)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -72,7 +74,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Insult:</span>
+                <span className='text-xs'>{t('messageContextMenu.insult')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.INSULT)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -81,7 +83,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Profanity:</span>
+                <span className='text-xs'>{t('messageContextMenu.profanity')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.PROFANITY)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -90,7 +92,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Threat:</span>
+                <span className='text-xs'>{t('messageContextMenu.threat')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.THREAT)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -99,7 +101,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Identity:</span>
+                <span className='text-xs'>{t('messageContextMenu.identity')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.IDENTITY_ATTACK)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -108,7 +110,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Severe:</span>
+                <span className='text-xs'>{t('messageContextMenu.severe')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.SEVERE_TOXICITY)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -131,11 +133,11 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
         <>
           <ContextMenuLabel className='px-2 py-1.5'>
             <div className='text-muted-foreground mb-1.5 text-xs font-semibold'>
-              Moderation Analysis
+              {t('messageContextMenu.moderationAnalysis')}
             </div>
             <div className='grid grid-cols-1 gap-0.5 text-xs'>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Toxicity:</span>
+                <span className='text-xs'>{t('messageContextMenu.toxicity')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.TOXICITY)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -144,7 +146,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Insult:</span>
+                <span className='text-xs'>{t('messageContextMenu.insult')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.INSULT)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -153,7 +155,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Profanity:</span>
+                <span className='text-xs'>{t('messageContextMenu.profanity')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.PROFANITY)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -162,7 +164,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Threat:</span>
+                <span className='text-xs'>{t('messageContextMenu.threat')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.THREAT)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -171,7 +173,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Identity:</span>
+                <span className='text-xs'>{t('messageContextMenu.identity')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.IDENTITY_ATTACK)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -180,7 +182,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 </Badge>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-xs'>Severe:</span>
+                <span className='text-xs'>{t('messageContextMenu.severe')}:</span>
                 <Badge
                   variant={getBadgeVariant(moderationResult.SEVERE_TOXICITY)}
                   className='h-4 px-1.5 py-0 text-xs'
@@ -221,7 +223,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                 {/* Header con información del mensaje */}
                 <DropdownMenuLabel className='border-border border-b px-2 py-1.5'>
                   <div className='text-muted-foreground mb-1 text-xs font-semibold'>
-                    Message Preview
+                    {t('messageContextMenu.messagePreview')}
                   </div>
                   <div className='text-foreground max-w-[200px] truncate text-sm'>
                     "
@@ -237,7 +239,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
 
                 {/* Actions */}
                 <DropdownMenuLabel className='text-muted-foreground px-2 py-1 text-xs font-semibold'>
-                  Message Actions
+                  {t('messageContextMenu.messageActions')}
                 </DropdownMenuLabel>
 
                 <DropdownMenuItem
@@ -245,13 +247,13 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                   className='text-destructive flex cursor-pointer items-center gap-2 rounded-none'
                 >
                   <IconTrash size={16} />
-                  Delete this message
+                  {t('messageContextMenu.deleteThisMessage')}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
 
                 <DropdownMenuLabel className='text-muted-foreground px-2 py-1 text-xs font-semibold'>
-                  Chat Actions
+                  {t('messageContextMenu.chatActions')}
                 </DropdownMenuLabel>
 
                 <DropdownMenuItem
@@ -259,7 +261,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
                   className='text-destructive flex cursor-pointer items-center gap-2 rounded-none'
                 >
                   <IconTrashX size={16} />
-                  Clear entire chat
+                  {t('messageContextMenu.clearEntireChat')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -273,7 +275,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
             {/* Header con información del mensaje */}
             <ContextMenuLabel className='border-border border-b px-2 py-1.5'>
               <div className='text-muted-foreground mb-1 text-xs font-semibold'>
-                Message Preview
+                {t('messageContextMenu.messagePreview')}
               </div>
               <div className='text-foreground max-w-[200px] truncate text-sm'>
                 "{message.length > 35 ? message.slice(0, 35) + '...' : message}"
@@ -285,7 +287,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
 
             {/* Actions */}
             <ContextMenuLabel className='text-muted-foreground px-2 py-1 text-xs font-semibold'>
-              Message Actions
+              {t('messageContextMenu.messageActions')}
             </ContextMenuLabel>
 
             <ContextMenuItem
@@ -293,13 +295,13 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
               className='text-destructive flex cursor-pointer items-center gap-2 rounded-none'
             >
               <IconTrash size={16} />
-              Delete this message
+              {t('messageContextMenu.deleteThisMessage')}
             </ContextMenuItem>
 
             <ContextMenuSeparator />
 
             <ContextMenuLabel className='text-muted-foreground px-2 py-1 text-xs font-semibold'>
-              Chat Actions
+              {t('messageContextMenu.chatActions')}
             </ContextMenuLabel>
 
             <ContextMenuItem
@@ -307,7 +309,7 @@ export const MessageContextMenu: React.FC<MessageContextMenuProps> = ({
               className='text-destructive flex cursor-pointer items-center gap-2 rounded-none'
             >
               <IconTrashX size={16} />
-              Clear entire chat
+              {t('messageContextMenu.clearEntireChat')}
             </ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>

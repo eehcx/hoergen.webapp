@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 interface StationActionsMenuProps {
   station: ResponseStationDto
@@ -27,6 +28,8 @@ export function StationActionsMenu({
   onDelete,
   onManageModerators,
 }: StationActionsMenuProps) {
+  const { t } = useStaticTranslation();
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -40,7 +43,7 @@ export function StationActionsMenu({
           onClick={() => onEdit(station)}
         >
           <IconEdit size={16} />
-          Edit
+          {t('creatorComponents.edit')}
         </DropdownMenuItem>
         {onManageModerators && (
           <>
@@ -50,7 +53,7 @@ export function StationActionsMenu({
               onClick={() => onManageModerators(station)}
             >
               <IconUsers size={16} />
-              Manage Moderators
+              {t('creatorComponents.manageModerators')}
             </DropdownMenuItem>
           </>
         )}
@@ -61,7 +64,7 @@ export function StationActionsMenu({
           onClick={() => onDelete(station)}
         >
           <IconTrash size={16} />
-          Delete
+          {t('creatorComponents.delete')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

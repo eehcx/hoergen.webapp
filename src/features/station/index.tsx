@@ -42,6 +42,7 @@ import {
   useRemoveFavorite,
   useFavoriteIds,
 } from '@/hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 import { EmojiPicker } from '@ferrucc-io/emoji-picker'
 // External libraries
 import ColorThief from 'colorthief'
@@ -68,6 +69,7 @@ const chatService = ChatService.getInstance()
 const reportService = ReportService.getInstance()
 
 export default function Station({ station }: { station: ResponseStationDto }) {
+  const { t } = useStaticTranslation()
   // Función para ajustar colores según el tema
   const adjustColorForTheme = (
     r: number,
@@ -212,8 +214,8 @@ export default function Station({ station }: { station: ResponseStationDto }) {
       })
       await queryClient.invalidateQueries({ queryKey: ['station', station.id] })
 
-      // Limpiar estado optimista después de la sincronización exitosa
-      setTimeout(() => setOptimisticFavoriteState(null), 1000)
+      // No limpiar el estado optimista automáticamente - dejar que el efecto lo maneje
+      // cuando los datos reales se actualicen correctamente
     } catch (error) {
       // Revertir cambio optimista en caso de error
       setOptimisticFavoriteState({
@@ -228,28 +230,37 @@ export default function Station({ station }: { station: ResponseStationDto }) {
     }
   }
 
-  // Limpiar estado optimista cuando cambien los datos reales del servidor
+  // Efecto para sincronizar estado optimista con datos reales
   useEffect(() => {
     if (optimisticFavoriteState && !isFavoriteLoading) {
       const realIsFavorited = !!(
         favoriteIds && favoriteIds.includes(station.id)
       )
-      const realCount = station.favoritesCount
 
-      // Si los datos reales coinciden con el estado optimista, limpiar
-      if (
-        optimisticFavoriteState.isFavorited === realIsFavorited &&
-        Math.abs(optimisticFavoriteState.count - realCount) <= 1
-      ) {
-        setOptimisticFavoriteState(null)
+      // Solo limpiar si el estado real de favoritos coincide con el optimista
+      if (optimisticFavoriteState.isFavorited === realIsFavorited) {
+        // Para el conteo, mantener el estado optimista si es mayor que el real
+        // Esto asegura que la suma persista visualmente
+        const shouldKeepOptimisticCount = 
+          optimisticFavoriteState.isFavorited && 
+          optimisticFavoriteState.count > station.favoritesCount
+
+        if (!shouldKeepOptimisticCount) {
+          // Solo limpiar después de más tiempo para asegurar propagación
+          const timeoutId = setTimeout(() => {
+            setOptimisticFavoriteState(null)
+          }, 3000)
+          
+          return () => clearTimeout(timeoutId)
+        }
       }
     }
   }, [
     favoriteIds,
-    station.favoritesCount,
     optimisticFavoriteState,
     isFavoriteLoading,
     station.id,
+    station.favoritesCount,
   ])
 
   // Function to toggle message visibility
@@ -267,6 +278,32 @@ export default function Station({ station }: { station: ResponseStationDto }) {
 
   const ownerId = station?.ownerId
   const stationuuid = station?.id
+  
+  // Debug: verificar permisos al cargar el componente
+  useEffect(() => {
+    console.log('Station component permissions debug:', {
+      hasRoleAdmin: hasRole('admin'),
+      hasRoleCreator: hasRole('creator'),
+      hasRoleModerator: hasRole('moderator'),
+      hasAnyRoleAdminCreator: hasAnyRole(['admin', 'creator']),
+      user: user?.uid,
+      ownerId,
+      stationModerators: station.moderators
+    });
+  }, [hasRole, hasAnyRole, user?.uid, ownerId, station.moderators]);
+  
+  // Debug: verificar permisos al cargar el componente
+  useEffect(() => {
+    console.log('Station component permissions debug:', {
+      hasRoleAdmin: hasRole('admin'),
+      hasRoleCreator: hasRole('creator'),
+      hasRoleModerator: hasRole('moderator'),
+      hasAnyRoleAdminCreator: hasAnyRole(['admin', 'creator']),
+      user: user?.uid,
+      ownerId,
+      stationModerators: station.moderators
+    });
+  }, [hasRole, hasAnyRole, user?.uid, ownerId, station.moderators]);
 
   const onMessagesUpdate = useCallback((msgs: any) => setChatMessages(msgs), [])
 
@@ -357,24 +394,23 @@ export default function Station({ station }: { station: ResponseStationDto }) {
   useEffect(() => {
     if (!miniPlayerAudioRef) return
     const onError = (e: any) => {
-      let msg = 'Error desconocido.'
+              let msg = t('common.error')
       if (e?.target?.error) {
         switch (e.target.error.code) {
           case 1:
-            msg = 'Playback aborted.'
+            msg = t('stationPage.playbackAborted')
             break
           case 2:
-            msg = 'Network error: Could not load the stream.'
+            msg = t('stationPage.networkError')
             break
           case 3:
-            msg = 'Unsupported stream format.'
+            msg = t('stationPage.unsupportedFormat')
             break
           case 4:
-            msg =
-              'Stream cannot be played (possibly geo-restricted or offline).'
+            msg = t('stationPage.streamCannotBePlayed')
             break
           default:
-            msg = 'Unknown playback error.'
+            msg = t('stationPage.unknownPlaybackError')
         }
       } else if (e?.message) {
         msg = e.message
@@ -457,7 +493,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
     if (popup) {
       popup.focus()
     } else {
-      alert('Please deactivate your popup blocker for open the chat')
+      alert(t('stationPage.chatPopupBlockerWarning'))
     }
   }
 
@@ -589,16 +625,16 @@ export default function Station({ station }: { station: ResponseStationDto }) {
     try {
       // Confirmar la acción con el usuario
       const confirmed = window.confirm(
-        'Are you sure you want to clear the entire chat? This action cannot be undone.'
+        t('chatWindow.clearChatConfirm')
       )
       if (!confirmed) return
 
       await chatService.clearChat(chatId)
       setChatMessages([]) // Limpiar mensajes localmente
-      toast.success('Chat cleared successfully')
+      toast.success(t('chatWindow.chatClearedSuccess'))
     } catch (error) {
       console.error('Error clearing chat:', error)
-      toast.error('Failed to clear chat')
+              toast.error(t('chatWindow.chatClearFailed'))
     }
   }
 
@@ -613,7 +649,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
             <div className='flex-1 overflow-x-hidden'>
               <div className='flex h-14 w-full items-center border-t border-b border-zinc-200 dark:border-zinc-800'>
                 {isLoadingEvents ? (
-                  <span className='px-4 text-zinc-400'>Loading events...</span>
+                  <span className='px-4 text-zinc-400'>{t('stationPage.loadingEvents')}</span>
                 ) : events && events.length > 0 ? (
                   <div className='animate-marquee flex h-full w-full items-center gap-8 whitespace-nowrap'>
                     {[...events, ...events].map((ev, idx) => {
@@ -624,6 +660,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
 
                       return (hasAnyRole(['admin', 'creator']) &&
                         user?.uid === ownerId) ||
+                        (hasRole('admin') && user?.uid !== ownerId) ||
                         (hasRole('creator') && user?.uid === ownerId) ||
                         (hasRole('moderator') && isStationModerator) ? (
                         <EventContextMenu
@@ -706,7 +743,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                   </div>
                 ) : (
                   <span className='px-4 text-zinc-400'>
-                    No events for this station.
+                    {t('stationPage.noEventsForStation')}
                   </span>
                 )}
                 <style>{`
@@ -726,50 +763,53 @@ export default function Station({ station }: { station: ResponseStationDto }) {
             </div>
 
             {/* Botón de crear evento fijo a la derecha */}
-            {hasAnyRole(['admin', 'creator']) && user?.uid === ownerId && (
+            {(hasAnyRole(['admin', 'creator']) && user?.uid === ownerId) ||
+              (hasRole('admin') && user?.uid !== ownerId) ? (
               <button
                 className='hover:text-primary ml-4 flex items-center justify-center gap-1 rounded-xs bg-transparent px-2 py-1 text-sm font-medium text-zinc-500 transition-colors'
                 style={{ borderRadius: 0 }}
                 onClick={() => setShowEventModal(true)}
-                title='Create event and updates for this station'
-                aria-label='Create event and updates for this station'
+                title={t('stationPage.createEventAndUpdates')}
+                aria-label={t('stationPage.createEventAndUpdates')}
               >
                 <IconCirclePlus size={18} className='inline-block' />
-                Add event
+                {t('stationPage.addEvent')}
               </button>
-            )}
+            ) : null}
           </div>
 
+          {/* Renderizar modales para usuarios con permisos */}
           {(hasAnyRole(['admin', 'creator']) && user?.uid === ownerId) ||
+            (hasRole('admin') && user?.uid !== ownerId) ||
             (hasRole('moderator') &&
               station.moderators &&
-              station.moderators.includes(user?.uid || '') && (
-                <>
-                  {/* Modal para crear evento, all in English and rect styles */}
-                  <CreateEventDialog
-                    open={showEventModal}
-                    onOpenChange={setShowEventModal}
-                    form={eventForm}
-                    setForm={setEventForm as any}
-                    onSubmit={() => createEvent(eventForm)}
-                    isPending={isCreatingEvent}
-                    isError={isCreateEventError}
-                  />
-                  {/* Modal para editar evento */}
-                  <EditEventDialog
-                    open={showEditModal}
-                    onOpenChange={setShowEditModal}
-                    form={editForm}
-                    setForm={setEditForm}
-                    onSubmit={async () => {
-                      await handleEditEvent()
-                      refetch()
-                    }}
-                    isPending={isEditing}
-                    isError={isEditError}
-                  />
-                </>
-              ))}
+              station.moderators.includes(user?.uid || '')) ? (
+            <>
+              {/* Modal para crear evento, all in English and rect styles */}
+              <CreateEventDialog
+                open={showEventModal}
+                onOpenChange={setShowEventModal}
+                form={eventForm}
+                setForm={setEventForm as any}
+                onSubmit={() => createEvent(eventForm)}
+                isPending={isCreatingEvent}
+                isError={isCreateEventError}
+              />
+              {/* Modal para editar evento */}
+              <EditEventDialog
+                open={showEditModal}
+                onOpenChange={setShowEditModal}
+                form={editForm}
+                setForm={setEditForm}
+                onSubmit={async () => {
+                  await handleEditEvent()
+                  refetch()
+                }}
+                isPending={isEditing}
+                isError={isEditError}
+              />
+            </>
+          ) : null}
 
           {/* Report Dialog - Available for all authenticated users */}
           {user && (
@@ -894,7 +934,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                     }
                   }}
                   className='rounded-full bg-white/20 p-3 text-white transition-colors hover:bg-white/30'
-                  aria-label={isCurrentStationPlaying ? 'Pausar' : 'Reproducir'}
+                  aria-label={isCurrentStationPlaying ? t('stationPage.pause') : t('stationPage.play')}
                 >
                   {isCurrentStationPlaying ? (
                     <IconPlayerPause size={22} fill='#fff' />
@@ -934,10 +974,10 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                       </Badge>
                     ))
                   ) : (
-                    <Badge variant='outline'>Cargando géneros...</Badge>
+                    <Badge variant='outline'>{t('stationPage.loadingGenres')}</Badge>
                   )
                 ) : (
-                  <Badge variant='outline'>Sin género</Badge>
+                                      <Badge variant='outline'>{t('stationPage.noGenre')}</Badge>
                 )}
               </div>
             </div>
@@ -967,7 +1007,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                     navigator.clipboard
                       .writeText(url)
                       .then(() => {
-                        toast.success('Link copied to clipboard!')
+                        toast.success(t('stationPage.linkCopiedToClipboard'))
                       })
                       .catch(() => {
                         // Fallback para navegadores más antiguos
@@ -978,14 +1018,14 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                           textArea.select()
                           document.execCommand('copy')
                           document.body.removeChild(textArea)
-                          toast.success('Link copied to clipboard!')
+                          toast.success(t('stationPage.linkCopiedToClipboard'))
                         } catch (_error) {
-                          toast.error('Failed to copy link')
+                          toast.error(t('stationPage.failedToCopyLink'))
                         }
                       })
                   }}
-                  aria-label='Share station link'
-                  title='Copy link to clipboard'
+                  aria-label={t('stationPage.shareStationLink')}
+                  title={t('stationPage.copyLinkToClipboard')}
                 >
                   <IconLink className='h-4 w-4' />
                 </button>
@@ -1007,10 +1047,10 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                     } ${isFavoriteLoading ? 'pointer-events-none opacity-60' : ''}`}
                     onClick={handleFavoriteToggle}
                     aria-label={
-                      isFavorited ? 'Remove from favorites' : 'Add to favorites'
+                      isFavorited ? t('stationPage.removeFromFavorites') : t('stationPage.addToFavorites')
                     }
                     title={
-                      isFavorited ? 'Remove from favorites' : 'Add to favorites'
+                      isFavorited ? t('stationPage.removeFromFavorites') : t('stationPage.addToFavorites')
                     }
                     style={
                       isFavorited
@@ -1038,29 +1078,44 @@ export default function Station({ station }: { station: ResponseStationDto }) {
         <div className='flex items-center justify-between border-b border-zinc-200 p-2.5 dark:border-zinc-800'>
           {hasAnyRole(['listener', 'pro']) && <div />}
 
-          {(hasAnyRole(['creator', 'admin']) && user?.uid === ownerId) ||
-            (hasRole('moderator') &&
-              station.moderators &&
-              station.moderators.includes(user?.uid || '') && (
-                <button
-                  className='hover:bg-accent rounded-sm p-1'
-                  onClick={openChatPopup}
-                  title='Open chat in a new window'
-                  aria-label='Open chat in a new window'
-                >
-                  <IconMaximize size={22} />
-                </button>
-              ))}
+          {/* Botón para abrir chat en popup - disponible para propietarios, moderadores y administradores */}
+          {(() => {
+            // Lógica simplificada: mostrar botón para admin, creator o moderadores de la estación
+            const isAdmin = hasRole('admin');
+            const isCreator = hasRole('creator');
+            const isModerator = hasRole('moderator') && station.moderators?.includes(user?.uid || '');
+            
+            const shouldShowButton = isAdmin || isCreator || isModerator;
+            
+            console.log('Chat popup button debug:', {
+              isAdmin,
+              isCreator,
+              isModerator,
+              shouldShowButton,
+              userId: user?.uid,
+              ownerId,
+              stationModerators: station.moderators
+            });
+            
+            return shouldShowButton ? (
+              <button
+                className='hover:bg-accent rounded-sm p-1'
+                onClick={openChatPopup}
+                title={t('stationPage.openChatInNewWindow')}
+                aria-label={t('stationPage.openChatInNewWindow')}
+              >
+                <IconMaximize size={22} />
+              </button>
+            ) : null;
+          })()}
 
-          {hasRole('admin') && user?.uid !== ownerId && <div />}
-
-          <h2 className='text-sm font-bold tracking-tight'>Stream chat</h2>
+          <h2 className='text-sm font-bold tracking-tight'>{t('stationPage.streamChat')}</h2>
 
           {hasAnyRole(['listener', 'pro', 'moderator']) && (
             <button
               className='hover:bg-accent rounded-sm p-1'
-              title='Make a report'
-              aria-label='Make a report'
+              title={t('stationPage.makeReport')}
+              aria-label={t('stationPage.makeReport')}
               onClick={() => setShowReportModal(true)}
             >
               <IconFlag size={22} />
@@ -1068,7 +1123,12 @@ export default function Station({ station }: { station: ResponseStationDto }) {
           )}
 
           {hasAnyRole(['creator', 'admin']) && user?.uid === ownerId && (
-            <Link to='/creator' className='hover:bg-accent rounded-sm p-1'>
+            <Link 
+              to='/creator' 
+              className='hover:bg-accent rounded-sm p-1'
+              title={t('stationPage.goToCreatorDashboard')}
+              aria-label={t('stationPage.goToCreatorDashboard')}
+            >
               <IconLayoutDashboard size={22} />
             </Link>
           )}
@@ -1121,8 +1181,8 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                             className='hover:bg-muted/70 absolute top-0 right-0 ml-2 rounded-md p-1 opacity-70 transition-all duration-200 hover:opacity-100'
                             title={
                               isRevealed
-                                ? 'Hide toxic content'
-                                : 'Show potentially toxic content'
+                                ? t('stationPage.hideToxicContent')
+                                : t('stationPage.showToxicContent')
                             }
                             style={{ transform: 'translateY(-2px)' }}
                           >
@@ -1164,7 +1224,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                   <h3 className='font-inter mb-1.5 font-medium text-zinc-700 dark:text-zinc-400'>
                     {station.name}
                   </h3>
-                  <span>Welcome! Kick things off with a hello.</span>
+                  <span>{t('stationPage.welcomeMessage')}</span>
                 </div>
               )}
             </>
@@ -1178,7 +1238,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
             type='text'
             aria-label='Chat input'
             className='focus:ring-primary/30 mb-2 w-full rounded-xs border border-zinc-300 bg-white px-3 py-2 text-sm focus:ring-2 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800'
-            placeholder='Send a message...'
+            placeholder={t('stationPage.sendMessage')}
             ref={inputRef}
             value={chatInput}
             onChange={(e) => setChatInput(e.target.value)}
@@ -1203,8 +1263,8 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                     className='hover:bg-accent rounded-full p-1'
                     ref={emojiButtonRef}
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    aria-label='Insert emoji'
-                    title='Insert emoji'
+                    aria-label={t('stationPage.insertEmoji')}
+                    title={t('stationPage.insertEmoji')}
                   >
                     <IconMoodSmile size={22} />
                   </button>
@@ -1222,7 +1282,7 @@ export default function Station({ station }: { station: ResponseStationDto }) {
                       >
                         <EmojiPicker.Header className='p-2 pb-0'>
                           <EmojiPicker.Input
-                            placeholder='Search emoji'
+                            placeholder={t('stationPage.searchEmoji')}
                             className='focus:ring-primary/50 w-full rounded border px-2 py-1 text-sm focus:ring-1 focus:outline-none'
                           />
                         </EmojiPicker.Header>
@@ -1236,13 +1296,13 @@ export default function Station({ station }: { station: ResponseStationDto }) {
               )}
             </div>
             <div className='flex items-center gap-2'>
-              <Button
-                size='sm'
-                onClick={handleSend}
-                className='h-8 rounded-xs px-4 text-sm'
-              >
-                Chat
-              </Button>
+                              <Button
+                  size='sm'
+                  onClick={handleSend}
+                  className='h-8 rounded-xs px-4 text-sm'
+                >
+                  {t('stationPage.chat')}
+                </Button>
             </div>
           </div>
         </div>

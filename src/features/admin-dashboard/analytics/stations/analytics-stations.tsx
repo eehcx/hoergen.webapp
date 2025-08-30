@@ -3,6 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis } from 'recharts'
 import { useEffect, useMemo, useState } from 'react'
 import { CountryService } from '@/core/services/countries/country.service'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 // Helper para mostrar bandera por ISO code
 function getFlagEmoji(countryCode: string) {
@@ -53,6 +54,7 @@ interface StationByGenre {
 export function AnalyticsStations() {
     const { data: general, isLoading: loadingGeneral } = useGeneralStations()
     const { data: topStations, isLoading: loadingTop } = useTopStations(5)
+    const { t } = useStaticTranslation()
 
     // Estado para los nombres de país
     const [, setCountryNames] = useState<Record<string, string>>({}) //countryNames
@@ -101,7 +103,7 @@ export function AnalyticsStations() {
         <div className="grid gap-6 lg:grid-cols-2">
             {/* PieChart: Estaciones por país */}
             <div className="bg-background rounded-md p-4 shadow">
-                <h3 className="font-semibold mb-2">Stations by Country</h3>
+                <h3 className="font-semibold mb-2">{t('analytics.stations.stationsByCountry')}</h3>
                 <ResponsiveContainer width="100%" height={250}>
                     {loadingGeneral ? (
                         <Skeleton className="w-full h-40 rounded-full" />
@@ -129,7 +131,7 @@ export function AnalyticsStations() {
 
             {/* BarChart: Estaciones por género */}
             <div className="bg-background rounded-md p-4 shadow">
-                <h3 className="font-semibold mb-2">Stations by Genre</h3>
+                <h3 className="font-semibold mb-2">{t('analytics.stations.stationsByGenre')}</h3>
                 <ResponsiveContainer width="100%" height={250}>
                     {loadingGeneral ? (
                         <Skeleton className="w-full h-40 rounded-md" />
@@ -166,7 +168,7 @@ export function AnalyticsStations() {
 
             {/* Top Stations List */}
             <div className="lg:col-span-2 bg-background rounded-md p-4 shadow">
-                <h3 className="font-semibold mb-2">Top Stations</h3>
+                <h3 className="font-semibold mb-2">{t('analytics.stations.topStations')}</h3>
                 {loadingTop ? (
                     <Skeleton className="w-full h-20 rounded-md" />
                 ) : (

@@ -12,6 +12,7 @@ import { getFlagEmojiFromIsoCode } from '@/utils/flagUtils'
 import React from 'react'
 import { useMiniPlayer } from '@/context/mini-player-context'
 import { slugify } from '@/utils'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 function useCountryName(isoCode?: string) {
     const [name, setName] = React.useState<string | null>(null)
@@ -25,6 +26,7 @@ function useCountryName(isoCode?: string) {
 }
 
 export default function Favorites() {
+    const { t } = useStaticTranslation();
     const { user } = useAuthStore()
     const { data: favorites, isLoading } = useFavorites(user?.uid || '')
     const [genreFilter, setGenreFilter] = React.useState<string | null>(null)
@@ -69,7 +71,7 @@ export default function Favorites() {
     }
 
     if (!favorites || favorites.length === 0) {
-        return <div className="text-center py-8 text-muted-foreground">No favorites found.</div>
+        return <div className="text-center py-8 text-muted-foreground">{t('favorites.noFavoritesFound')}</div>
     }
 
     return (
@@ -78,10 +80,10 @@ export default function Favorites() {
             <div className="flex flex-wrap gap-2 mb-4">
                 <Select value={genreFilter || '__all__'} onValueChange={v => setGenreFilter(v === '__all__' ? null : v)}>
                     <SelectTrigger className="min-w-[140px]">
-                        <SelectValue placeholder="All genres" />
+                        <SelectValue placeholder={t('favorites.allGenres')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="__all__">All genres</SelectItem>
+                        <SelectItem value="__all__">{t('favorites.allGenres')}</SelectItem>
                         {allGenreIds.map(id => (
                             <GenreNameSelectItem key={id} id={id} />
                         ))}
@@ -89,10 +91,10 @@ export default function Favorites() {
                 </Select>
                 <Select value={countryFilter || '__all__'} onValueChange={v => setCountryFilter(v === '__all__' ? null : v)}>
                     <SelectTrigger className="min-w-[140px]">
-                        <SelectValue placeholder="All countries" />
+                        <SelectValue placeholder={t('favorites.allCountries')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="__all__">All countries</SelectItem>
+                        <SelectItem value="__all__">{t('favorites.allCountries')}</SelectItem>
                         {allCountries.map(id => (
                             <CountryNameSelectItem key={id} id={id} />
                         ))}

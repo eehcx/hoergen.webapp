@@ -12,6 +12,7 @@ export { ReportService } from './reports'
 export { CountryService } from './countries'
 export { HistoryService } from './history'
 export { RadioBrowserService } from './radio-browser'
+export { CountryCoordinatesService } from './country-coordinates.service'
 
 // Import classes for instances
 import { GenreService } from './genres'
@@ -25,6 +26,7 @@ import { CountryService } from './countries'
 import { CustomerService } from './customers'
 import { HistoryService } from './history'
 import { RadioBrowserService } from './radio-browser'
+import { CountryCoordinatesService } from './country-coordinates.service'
 
 // Service instances (ready to use)
 export const genreService = GenreService.getInstance()
@@ -38,3 +40,4 @@ export const countryService = CountryService.getInstance()
 export const historyService = HistoryService.getInstance()
 export const customerService = CustomerService.getInstance()
 export const radioBrowserService = RadioBrowserService.getInstance()
+export const countryCoordinatesService = CountryCoordinatesService.getInstance()

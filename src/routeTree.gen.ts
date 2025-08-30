@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorldMapRouteImport } from './routes/world-map'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as WorldwideIndexRouteImport } from './routes/worldwide/index'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedSlugNameRouteImport } from './routes/_authenticated/$slugName'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
@@ -33,6 +35,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedSubscriptionsSuccessRouteImport } from './routes/_authenticated/subscriptions/success'
 import { Route as AuthenticatedSubscriptionsCancelRouteImport } from './routes/_authenticated/subscriptions/cancel'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
+import { Route as AuthenticatedSettingsLanguageRouteImport } from './routes/_authenticated/settings/language'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
@@ -49,8 +52,18 @@ import { Route as AuthenticatedAdminGenresIndexRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminFeedbackIndexRouteImport } from './routes/_authenticated/admin/feedback/index'
 import { Route as AuthenticatedAdminCountriesIndexRouteImport } from './routes/_authenticated/admin/countries/index'
 
+const WorldMapRoute = WorldMapRouteImport.update({
+  id: '/world-map',
+  path: '/world-map',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorldwideIndexRoute = WorldwideIndexRouteImport.update({
+  id: '/worldwide/',
+  path: '/worldwide/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
@@ -176,6 +189,12 @@ const AuthenticatedSettingsNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedSettingsLanguageRoute =
+  AuthenticatedSettingsLanguageRouteImport.update({
+    id: '/language',
+    path: '/language',
+    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+  } as any)
 const AuthenticatedSettingsDisplayRoute =
   AuthenticatedSettingsDisplayRouteImport.update({
     id: '/display',
@@ -266,6 +285,7 @@ const AuthenticatedAdminCountriesIndexRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/world-map': typeof WorldMapRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
@@ -280,11 +300,13 @@ export interface FileRoutesByFullPath {
   '/503': typeof errors503Route
   '/$slugName': typeof AuthenticatedSlugNameRoute
   '/': typeof AuthenticatedIndexRoute
+  '/worldwide': typeof WorldwideIndexRoute
   '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
   '/s/chat-popup': typeof AuthenticatedSChatPopupRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
+  '/settings/language': typeof AuthenticatedSettingsLanguageRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
   '/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
@@ -306,6 +328,7 @@ export interface FileRoutesByFullPath {
   '/you/library': typeof AuthenticatedYouLibraryIndexRoute
 }
 export interface FileRoutesByTo {
+  '/world-map': typeof WorldMapRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
@@ -318,11 +341,13 @@ export interface FileRoutesByTo {
   '/503': typeof errors503Route
   '/$slugName': typeof AuthenticatedSlugNameRoute
   '/': typeof AuthenticatedIndexRoute
+  '/worldwide': typeof WorldwideIndexRoute
   '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
   '/s/chat-popup': typeof AuthenticatedSChatPopupRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
+  '/settings/language': typeof AuthenticatedSettingsLanguageRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
   '/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
@@ -346,6 +371,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/world-map': typeof WorldMapRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
@@ -360,11 +386,13 @@ export interface FileRoutesById {
   '/(errors)/503': typeof errors503Route
   '/_authenticated/$slugName': typeof AuthenticatedSlugNameRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/worldwide/': typeof WorldwideIndexRoute
   '/_authenticated/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
   '/_authenticated/s/chat-popup': typeof AuthenticatedSChatPopupRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
+  '/_authenticated/settings/language': typeof AuthenticatedSettingsLanguageRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_authenticated/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
   '/_authenticated/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
@@ -388,6 +416,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/world-map'
     | '/admin'
     | '/settings'
     | '/forgot-password'
@@ -402,11 +431,13 @@ export interface FileRouteTypes {
     | '/503'
     | '/$slugName'
     | '/'
+    | '/worldwide'
     | '/s/$stationSlug'
     | '/s/chat-popup'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
+    | '/settings/language'
     | '/settings/notifications'
     | '/subscriptions/cancel'
     | '/subscriptions/success'
@@ -428,6 +459,7 @@ export interface FileRouteTypes {
     | '/you/library'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/world-map'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
@@ -440,11 +472,13 @@ export interface FileRouteTypes {
     | '/503'
     | '/$slugName'
     | '/'
+    | '/worldwide'
     | '/s/$stationSlug'
     | '/s/chat-popup'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
+    | '/settings/language'
     | '/settings/notifications'
     | '/subscriptions/cancel'
     | '/subscriptions/success'
@@ -467,6 +501,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/world-map'
     | '/_authenticated/admin'
     | '/_authenticated/settings'
     | '/(auth)/forgot-password'
@@ -481,11 +516,13 @@ export interface FileRouteTypes {
     | '/(errors)/503'
     | '/_authenticated/$slugName'
     | '/_authenticated/'
+    | '/worldwide/'
     | '/_authenticated/s/$stationSlug'
     | '/_authenticated/s/chat-popup'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
+    | '/_authenticated/settings/language'
     | '/_authenticated/settings/notifications'
     | '/_authenticated/subscriptions/cancel'
     | '/_authenticated/subscriptions/success'
@@ -509,6 +546,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  WorldMapRoute: typeof WorldMapRoute
   authForgotPasswordRoute: typeof authForgotPasswordRoute
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
@@ -519,15 +557,30 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  WorldwideIndexRoute: typeof WorldwideIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/world-map': {
+      id: '/world-map'
+      path: '/world-map'
+      fullPath: '/world-map'
+      preLoaderRoute: typeof WorldMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/worldwide/': {
+      id: '/worldwide/'
+      path: '/worldwide'
+      fullPath: '/worldwide'
+      preLoaderRoute: typeof WorldwideIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/': {
@@ -691,6 +744,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/settings/language': {
+      id: '/_authenticated/settings/language'
+      path: '/language'
+      fullPath: '/settings/language'
+      preLoaderRoute: typeof AuthenticatedSettingsLanguageRouteImport
+      parentRoute: typeof AuthenticatedSettingsRouteRoute
+    }
     '/_authenticated/settings/display': {
       id: '/_authenticated/settings/display'
       path: '/display'
@@ -836,6 +896,7 @@ interface AuthenticatedSettingsRouteRouteChildren {
   AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
   AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
   AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute
+  AuthenticatedSettingsLanguageRoute: typeof AuthenticatedSettingsLanguageRoute
   AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
@@ -845,6 +906,7 @@ const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteCh
     AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
     AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
     AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
+    AuthenticatedSettingsLanguageRoute: AuthenticatedSettingsLanguageRoute,
     AuthenticatedSettingsNotificationsRoute:
       AuthenticatedSettingsNotificationsRoute,
     AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
@@ -895,6 +957,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  WorldMapRoute: WorldMapRoute,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
@@ -905,6 +968,7 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  WorldwideIndexRoute: WorldwideIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

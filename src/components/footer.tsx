@@ -1,6 +1,9 @@
 import { DividerVerticalIcon } from "@radix-ui/react-icons"
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export function Footer() {
+    const { t } = useStaticTranslation();
+    
     return (
         <footer className="border-t bg-background">
             <div className="container mx-auto px-6 py-8">
@@ -8,29 +11,29 @@ export function Footer() {
                 <div className="mb-6">
                     <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                         <a href="https://www.hoergen.com" className="text-muted-foreground hover:text-foreground transition-colors">
-                            Home
+                            {t('footer.home')}
                         </a>                        <DividerVerticalIcon className="h-4 w-4" />
-                        <span className="select-none">English</span>
+                        <span className="select-none">{t('footer.language')}</span>
                     </div>
                 </div>
 
                 {/* Copyright */}
                 <div className="mb-4">
                 <p className="text-sm text-muted-foreground">
-                    Copyright © 2025 Hörgen Radio. All rights reserved.
+                    {t('footer.copyright')}
                 </p>
                 </div>
 
                 {/* Links */}
                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
                     <a href="https://www.hoergen.com/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                        Terms of Service
+                        {t('footer.termsOfService')}
                     </a>
                     <a href="https://www.hoergen.com/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                        Privacy Policy
+                        {t('footer.privacyPolicy')}
                     </a>
                     <a href="https://www.hoergen.com/feedback" className="text-muted-foreground hover:text-foreground transition-colors">
-                        Feedback
+                        {t('footer.feedback')}
                     </a>
                 </div>
             </div>

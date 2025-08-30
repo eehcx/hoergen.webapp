@@ -11,6 +11,13 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 //import { Textarea } from '@/components/ui/textarea'
 import { useCountriesContext } from '../context/countries-context'
 import { CountryService } from '@/core/services/countries/country.service'
@@ -163,13 +170,22 @@ export function CountriesActionDialog() {
             </div>
             <div className='space-y-2'>
               <Label htmlFor='continent'>Continent *</Label>
-              <Input
-                id='continent'
+              <Select
                 value={formData.continent}
-                onChange={(e) => setFormData({ ...formData, continent: e.target.value })}
-                placeholder='America'
+                onValueChange={(value) => setFormData({ ...formData, continent: value })}
                 required
-              />
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a continent" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="America">America</SelectItem>
+                  <SelectItem value="Europe">Europe</SelectItem>
+                  <SelectItem value="Asia">Asia</SelectItem>
+                  <SelectItem value="Oceania">Oceania</SelectItem>
+                  <SelectItem value="Africa">Africa</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

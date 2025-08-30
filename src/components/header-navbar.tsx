@@ -8,11 +8,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 // Hooks
 import { usePermissions } from '@/hooks/auth/usePermissions'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
     const router = useRouter();
     const currentPath = router.state.location.pathname;
     const { canCreateStation } = usePermissions();
+    const { t } = useStaticTranslation();
     
     // Helper para saber si la ruta está activa
     const isActive = (path: string) => currentPath === path;
@@ -35,7 +37,7 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
                         asChild
                         className={`font-medium text-sm h-9 px-4 rounded-xs${isActive("/") ? ' text-white dark:text-[#111]' : ''}`}
                     >
-                        <Link to="/">Radio</Link>
+                        <Link to="/">{t('navigation.radio')}</Link>
                     </Button>
                     <Button
                         variant={isActive("/browse") ? "default" : "ghost"}
@@ -43,7 +45,7 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
                         asChild
                         className={`font-medium text-sm h-9 px-4 rounded-xs${isActive("/browse") ? ' text-white dark:text-[#111]' : ''}`}
                     >
-                        <Link to="/browse">Browse</Link>
+                        <Link to="/browse">{t('navigation.browse')}</Link>
                     </Button>
                     <Button
                         variant={isActive("/you/library") ? "default" : "ghost"}
@@ -51,8 +53,9 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
                         asChild
                         className={`font-medium text-sm h-9 px-4 rounded-xs${isActive("/you/library") ? ' text-white dark:text-[#111]' : ''}`}
                     >
-                        <Link to="/you/library">Library</Link>
+                        <Link to="/you/library">{t('navigation.library')}</Link>
                     </Button>
+
                 </nav>
                 
                 {/* Search */}
@@ -61,7 +64,7 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
                     <IconSearch className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
                         type="search"
-                        placeholder="Search radio stations around the world..."
+                        placeholder={t('navigation.searchPlaceholder')}
                         className="pl-12 h-11 bg-muted/50 border-0 rounded-xs focus-visible:ring-2 focus-visible:ring-primary/30 text-sm"
                         onFocus={() => {
                             if (currentPath !== '/browse') {
@@ -84,7 +87,7 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
                         >
                             <Link to="/s/new" className="flex items-center gap-2">
                                 <IconPlus className="h-4 w-4" />
-                                <span className="hidden sm:inline">Create Radio</span>
+                                <span className="hidden sm:inline">{t('navigation.createRadio')}</span>
                             </Link>
                         </Button>
                     )}

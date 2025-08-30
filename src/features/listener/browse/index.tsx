@@ -37,8 +37,10 @@ import {
     slugify 
 } from '@/utils'
 import { withImageProxy } from '@/lib/utils/image'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export default function Browse() {
+    const { t } = useStaticTranslation();
     const [searchTerm, setSearchTerm] = useState('')
     const [strategy, setStrategy] = useState<RadioBrowserInfiniteParams['strategy']>('top-voted')
     const [selectedCountry, setSelectedCountry] = useState<string>('all')
@@ -178,9 +180,9 @@ export default function Browse() {
 
     // Strategy options
     const strategyOptions = [
-        { value: 'top-voted', label: 'Top Voted' },
-        { value: 'most-clicked', label: 'Most Popular' },
-        { value: 'recent', label: 'Recently Added' },
+        { value: 'top-voted', label: t('browse.topVoted') },
+        { value: 'most-clicked', label: t('browse.mostPopular') },
+        { value: 'recent', label: t('browse.recentlyAdded') },
     ]
 
     useEffect(() => {
@@ -200,13 +202,13 @@ export default function Browse() {
                     {/* Navigation */}
                     <nav className="ml-8 flex items-center space-x-1">
                         <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
-                            <Link to="/">Radio</Link>
+                            <Link to="/">{t('navigation.radio')}</Link>
                         </Button>
                         <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs bg-primary text-primary-foreground">
-                            <Link to="/browse">Browse</Link>
+                            <Link to="/browse">{t('navigation.browse')}</Link>
                         </Button>
                         <Button variant="ghost" size="sm" className="font-medium text-sm h-9 px-4 rounded-xs">
-                            <Link to="/you/library">Library</Link>
+                            <Link to="/you/library">{t('navigation.library')}</Link>
                         </Button>
                     </nav>
 
@@ -219,7 +221,7 @@ export default function Browse() {
                             <Input
                                 ref={inputRef}
                                 type="search"
-                                placeholder="Search radio stations around the world..."
+                                placeholder={t('browse.searchPlaceholder')}
                                 className="pl-12 h-11 bg-muted/50 border-0 rounded-xs focus-visible:ring-2 focus-visible:ring-primary/30 text-sm"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -231,7 +233,7 @@ export default function Browse() {
                         <Select value={strategy} onValueChange={(value) => setStrategy(value as RadioBrowserInfiniteParams['strategy'])}>
                             <SelectTrigger className="w-full sm:w-48 rounded-xs">
                                 <IconFilter className="h-4 w-4 mr-2" />
-                                <SelectValue placeholder="Sort by" />
+                                <SelectValue placeholder={t('browse.sortBy')} />
                             </SelectTrigger>
                             <SelectContent>
                                 {strategyOptions.map((option) => (
@@ -260,12 +262,12 @@ export default function Browse() {
                 <div className="space-y-6 mb-8">
                     <div className="space-y-2">
                         <h1 className="text-3xl font-bold tracking-tight">
-                            {genreData ? `${genreData.name} Stations` : 'World Signals'}
+                            {genreData ? t('browse.genreStations').replace('{genre}', genreData.name) : t('browse.worldSignals')}
                         </h1>
                         <p className="text-muted-foreground">
                             {genreData
-                                ? `Discover ${genreData.name} stations from around the world`
-                                : 'Authentic sounds, Real stations. Broadcast beyond borders.'
+                                ? t('browse.discoverGenreStations').replace('{genre}', genreData.name)
+                                : t('browse.authenticSounds')
                             }
                         </p>
                         
@@ -273,21 +275,21 @@ export default function Browse() {
                         {!genreData && (
                             <div className="flex items-center gap-4 mt-4">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-sm font-medium">Filter by country:</span>
+                                    <span className="text-sm font-medium">{t('browse.filterByCountry')}:</span>
                                     <Select 
                                         value={selectedCountry} 
                                         onValueChange={setSelectedCountry}
                                     >
                                         <SelectTrigger className="w-64">
-                                            <SelectValue placeholder="Select a country" />
+                                            <SelectValue placeholder={t('browse.selectCountry')} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="all">
-                                                All Countries
+                                                {t('browse.allCountries')}
                                             </SelectItem>
                                             {isLoadingCountries ? (
                                                 <SelectItem value="loading" disabled>
-                                                    Loading countries...
+                                                    {t('browse.loadingCountries')}
                                                 </SelectItem>
                                             ) : (
                                                 countries.map((country) => (
@@ -306,7 +308,7 @@ export default function Browse() {
                                         size="sm"
                                         onClick={() => setSelectedCountry('all')}
                                     >
-                                        Clear Country Filter
+                                        {t('browse.clearCountryFilter')}
                                     </Button>
                                 )}
                             </div>
@@ -322,10 +324,10 @@ export default function Browse() {
                                         window.location.reload()
                                     }}
                                 >
-                                    Clear Filter
+                                    {t('browse.clearFilter')}
                                 </Button>
                                 <span className="text-sm text-muted-foreground">
-                                    Filtering by: <strong>{genreData.name}</strong>
+                                    {t('browse.filteringBy')}: <strong>{genreData.name}</strong>
                                 </span>
                             </div>
                         )}
@@ -336,10 +338,10 @@ export default function Browse() {
                 {isError && (
                     <div className="text-center py-12">
                         <div className="text-muted-foreground mb-4">
-                            Failed to load stations: {error?.message}
+                            {t('browse.failedToLoadStations')}: {error?.message}
                         </div>
                         <Button onClick={() => refetch()} variant="outline">
-                            Try Again
+                            {t('browse.tryAgain')}
                         </Button>
                     </div>
                 )}
@@ -362,10 +364,10 @@ export default function Browse() {
                 <>
                     <div className="mb-6">
                         <p className="text-sm text-muted-foreground">
-                            Found {allStations.length} stations
-                            {genreData && ` in ${genreData.name}`}
-                            {debouncedSearchTerm && ` for "${debouncedSearchTerm}"`}
-                            {selectedCountry && selectedCountry !== 'all' && ` from ${selectedCountry}`}
+                            {t('browse.foundStations').replace('{count}', allStations.length.toString())}
+                            {genreData && t('browse.inGenre').replace('{genre}', genreData.name)}
+                            {debouncedSearchTerm && t('browse.forSearch').replace('{search}', debouncedSearchTerm)}
+                            {selectedCountry && selectedCountry !== 'all' && t('browse.fromCountry').replace('{country}', selectedCountry)}
                         </p>
                     </div>
 

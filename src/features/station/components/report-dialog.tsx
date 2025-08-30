@@ -1,13 +1,14 @@
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { SelectDropdown } from '@/components/select-dropdown'
 import React, { useState } from 'react';
+import { useStaticTranslation } from '@/hooks/useTranslation';
 
 const REASONS = [
-	'Spam',
-	'Inappropriate content',
-	'Copyright violation',
-	'Abuse or harassment',
-	'Other',
+	'spam',
+	'inappropriateContent',
+	'copyrightViolation',
+	'abuseOrHarassment',
+	'other',
 ];
 
 interface ReportDialogProps {
@@ -38,6 +39,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 	isPending,
 	isError,
 }) => {
+	const { t } = useStaticTranslation();
 	const [step, setStep] = useState(0);
 	const [reason, setReason] = useState('');
 	const [details, setDetails] = useState('');
@@ -61,7 +63,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 					className='px-6 pt-6 pb-2 font-bold text-lg border-b border-zinc-200 dark:border-zinc-800'
 					style={{ borderRadius: 0 }}
 				>
-					Report station
+					{t('reportDialog.reportStation')}
 				</DialogTitle>
 				<form
 					className='flex flex-col gap-3 px-6 py-6'
@@ -85,28 +87,27 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 						<>
 							<div className='mb-4'>
 								<div className='font-semibold text-base mb-2'>
-									Are you sure you want to report{' '}
+									{t('reportDialog.areYouSureReport')}{' '}
 									<span className='font-bold text-primary'>
 										{stationName}
 									</span>
 									?
 								</div>
 								<div className='text-sm text-muted-foreground mb-4'>
-									This action will notify our moderation team. Please
-									select the main reason for your report below.
+									{t('reportDialog.actionWillNotify')}
 								</div>
 								<div className='flex flex-col gap-2'>
 									<label
 										htmlFor='report-reason'
 										className='text-sm font-medium text-zinc-700 dark:text-zinc-200'
 									>
-										Reason for reporting
+										{t('reportDialog.reasonForReporting')}
 									</label>
 									<SelectDropdown
 										value={reason}
 										onValueChange={val => setReason(val as string)}
-										items={REASONS.map(r => ({ label: r, value: r }))}
-										placeholder="Choose a reason for your report"
+										items={REASONS.map(r => ({ label: t(`reportDialog.${r}`), value: r }))}
+										placeholder={t('reportDialog.chooseReason')}
 										className='w-full rounded-xs border border-zinc-300 dark:border-zinc-700 px-2 py-2 bg-white dark:bg-zinc-800 text-sm'
 									/>
 								</div>
@@ -118,7 +119,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									style={{ borderRadius: 0 }}
 									onClick={handleReset}
 								>
-									Cancel
+									{t('reportDialog.cancel')}
 								</button>
 								<button
 									type='button'
@@ -127,7 +128,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									disabled={!reason}
 									onClick={handleNext}
 								>
-									Next
+									{t('reportDialog.next')}
 								</button>
 							</div>
 						</>
@@ -138,12 +139,12 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 								htmlFor='report-details'
 								className='text-sm font-medium text-zinc-700 dark:text-zinc-200'
 							>
-								Additional details (optional)
+								{t('reportDialog.additionalDetails')}
 							</label>
 							<textarea
 								id='report-details'
 								required
-								placeholder='Describe the issue or provide more context...'
+								placeholder={t('reportDialog.describeIssue')}
 								value={details}
 								onChange={(e) => setDetails(e.target.value)}
 								className='rounded-xs border border-zinc-300 dark:border-zinc-700 px-2 py-2 bg-white dark:bg-zinc-800 text-sm min-h-[80px]'
@@ -155,7 +156,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									style={{ borderRadius: 0 }}
 									onClick={handleBack}
 								>
-									Back
+									{t('reportDialog.back')}
 								</button>
 								<button
 									type='button'
@@ -164,7 +165,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									disabled={!details}
 									onClick={handleNext}
 								>
-									Next
+									{t('reportDialog.next')}
 								</button>
 							</div>
 						</>
@@ -173,12 +174,12 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 						<>
 							<div className='mb-4 flex flex-col gap-3'>
 								<div className='font-semibold text-xl mb-2 text-primary'>
-									Report summary
+									{t('reportDialog.reportSummary')}
 								</div>
 								<div className='flex flex-col gap-4 bg-zinc-50 dark:bg-zinc-900 rounded-xs p-6 border border-zinc-200 dark:border-zinc-800'>
 									<div className='flex flex-col gap-1'>
 										<span className='uppercase text-xs font-bold text-zinc-500 dark:text-zinc-400 tracking-wide'>
-											Station
+											{t('reportDialog.station')}
 										</span>
 										<span className='text-lg font-bold text-primary dark:text-primary'>
 											{stationName}
@@ -186,15 +187,15 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									</div>
 									<div className='flex flex-col gap-1'>
 										<span className='uppercase text-xs font-bold text-zinc-500 dark:text-zinc-400 tracking-wide'>
-											Reason
+											{t('reportDialog.reason')}
 										</span>
 										<span className='text-base font-semibold text-zinc-800 dark:text-zinc-100'>
-											{reason}
+											{t(`reportDialog.${reason}`)}
 										</span>
 									</div>
 									<div className='flex flex-col gap-1'>
 										<span className='uppercase text-xs font-bold text-zinc-500 dark:text-zinc-400 tracking-wide'>
-											Details
+											{t('reportDialog.details')}
 										</span>
 										{details ? (
 											<span className='text-base text-zinc-700 dark:text-zinc-300'>
@@ -202,16 +203,16 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 											</span>
 										) : (
 											<span className='italic text-zinc-400'>
-												No additional details provided.
+												{t('reportDialog.noAdditionalDetails')}
 											</span>
 										)}
 									</div>
 									<div className='flex flex-col gap-1'>
 										<span className='uppercase text-xs font-bold text-zinc-500 dark:text-zinc-400 tracking-wide'>
-											Status
+											{t('reportDialog.status')}
 										</span>
 										<span className='inline-block bg-yellow-100 dark:bg-yellow-900 px-3 py-1 rounded-xs text-sm text-yellow-800 dark:text-yellow-200 font-semibold'>
-											Pending review by moderation team
+											{t('reportDialog.pendingReview')}
 										</span>
 									</div>
 								</div>
@@ -223,7 +224,7 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									style={{ borderRadius: 0 }}
 									onClick={handleBack}
 								>
-									Back
+									{t('reportDialog.back')}
 								</button>
 								<button
 									type='submit'
@@ -231,12 +232,12 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
 									style={{ borderRadius: 0 }}
 									disabled={isPending}
 								>
-									{isPending ? 'Reporting...' : 'Submit'}
+									{isPending ? t('reportDialog.reporting') : t('reportDialog.submit')}
 								</button>
 							</div>
 							{isError && (
 								<div className='text-red-500 text-xs mt-1'>
-									Error sending report
+									{t('reportDialog.errorSendingReport')}
 								</div>
 							)}
 						</>

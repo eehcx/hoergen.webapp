@@ -7,10 +7,12 @@ import {
 } from '@/components/ui/card'
 import { Overview, RecentCustomers } from './components'
 import { useSubscriptions, useGeneralCustomers } from './hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export function AnalyticsCustomers() {
     const { data: subscriptions, isLoading: loadingSubscriptions } = useSubscriptions()
     const { data: general, isLoading: loadingGeneralCustomers } = useGeneralCustomers()
+    const { t } = useStaticTranslation()
 
     return (
         <>
@@ -18,7 +20,7 @@ export function AnalyticsCustomers() {
                 <Card className='rounded-none'>
                     <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                         <CardTitle className='text-sm font-medium'>
-                            Total Revenue
+                            {t('analytics.customers.totalRevenue')}
                         </CardTitle>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -45,7 +47,7 @@ export function AnalyticsCustomers() {
                         <p className='text-muted-foreground text-xs'>
                             {loadingSubscriptions
                                 ? '...'
-                                : `Amount in ${subscriptions?.currency ? subscriptions.currency.toUpperCase() : 'MXN'}`
+                                : `${t('analytics.customers.amountIn')} ${subscriptions?.currency ? subscriptions.currency.toUpperCase() : 'MXN'}`
                             }
                         </p>
                     </CardContent>
@@ -53,7 +55,7 @@ export function AnalyticsCustomers() {
                 <Card className='rounded-none'>
                     <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                     <CardTitle className='text-sm font-medium'>
-                        Checkout Sessions
+                        {t('analytics.customers.checkoutSessions')}
                     </CardTitle>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -78,14 +80,14 @@ export function AnalyticsCustomers() {
                             }
                         </div>
                         <p className='text-muted-foreground text-xs'>
-                            Total checkout sessions of all time
+                            {t('analytics.customers.totalCheckoutSessions')}
                         </p>
                     </CardContent>
                 </Card>
                 <Card className='rounded-none'>
                     <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                     <CardTitle className='text-sm font-medium'>
-                        Active Subscriptions
+                        {t('analytics.customers.activeSubscriptions')}
                     </CardTitle>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -110,7 +112,7 @@ export function AnalyticsCustomers() {
                         <p className='text-muted-foreground text-xs'>
                             { loadingSubscriptions
                                 ? '...'
-                                : `${subscriptions?.canceled ?? 0} subscriptions canceled`
+                                : `${subscriptions?.canceled ?? 0} ${t('analytics.customers.subscriptionsCanceled')}`
                             }
                         </p>
                     </CardContent>
@@ -119,7 +121,7 @@ export function AnalyticsCustomers() {
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
                 <Card className='col-span-1 lg:col-span-4 rounded-none'>
                     <CardHeader>
-                        <CardTitle>Subscriptions</CardTitle>
+                        <CardTitle>{t('analytics.customers.subscriptions')}</CardTitle>
                     </CardHeader>
                     <CardContent className='pl-2'>
                         <Overview />
@@ -127,11 +129,11 @@ export function AnalyticsCustomers() {
                 </Card>
                 <Card className='col-span-1 lg:col-span-3 rounded-none'>
                     <CardHeader>
-                        <CardTitle>Recent Customers</CardTitle>
+                        <CardTitle>{t('analytics.customers.recentCustomers')}</CardTitle>
                         <CardDescription>
                             {loadingGeneralCustomers
                                 ? '...'
-                                : `You made ${general?.totalCustomers ?? 0} new customers`
+                                : t('analytics.customers.newCustomers').replace('{count}', (general?.totalCustomers ?? 0).toString())
                             }
                         </CardDescription>
                     </CardHeader>

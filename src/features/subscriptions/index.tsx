@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/hooks';
 import { usePermissions } from '@/hooks/auth/usePermissions';
 import { useProducts, useUserSubscription, useCheckoutSession } from "@/hooks/subscriptions";
+import { useStaticTranslation } from '@/hooks/useTranslation';
 // Toast notifications
 import { toast } from 'sonner';
 // Shadcn UI components
@@ -21,6 +22,8 @@ import { IconCrown, IconCheck, IconX, IconSettings, IconRefresh } from '@tabler/
 import { auth } from '@/core/firebase';
 
 export default function Subscriptions() {
+    const { t } = useStaticTranslation();
+    
     // TanStack Router
     const navigate = useNavigate();
     
@@ -61,14 +64,14 @@ export default function Subscriptions() {
         
         if (!hasShownToast) {
             if (status === 'success' && planParam) {
-                toast.success('Subscription activated!', {
-                    description: `Your ${planParam} plan is now active. Enjoy the new features.`,
+                toast.success(t('subscriptions.activated'), {
+                    description: t('subscriptions.activatedDescription').replace('{plan}', planParam),
                     duration: 8000,
                 });
                 sessionStorage.setItem(`subscription-toast-${status}-${planParam}`, 'true');
             } else if (status === 'error') {
-                toast.error('Subscription error', {
-                    description: 'There was a problem activating your subscription. Contact support if it persists.',
+                toast.error(t('subscriptions.error'), {
+                    description: t('subscriptions.errorDescription'),
                     duration: 10000,
                 });
                 sessionStorage.setItem(`subscription-toast-${status}-${planParam}`, 'true');
@@ -89,24 +92,24 @@ export default function Subscriptions() {
     // Function to handle upgrade using TanStack Query
     const handleUpgrade = (priceId: string, productName: string = '') => {
         if (currentSubscription && currentSubscription.status === 'active' && currentSubscription.plan === productName.toLowerCase()) {
-            toast.info('You are already subscribed to this plan', {
-                description: 'You are already subscribed to this plan. No action needed.',
+            toast.info(t('subscriptions.alreadySubscribed'), {
+                description: t('subscriptions.alreadySubscribedDescription'),
                 duration: 5000,
             });
             return;
         }
 
         if (currentSubscription && currentSubscription.status === 'active') {
-            toast.warning('You have an active subscription', {
-                description: 'You cannot upgrade while you have an active subscription. Please cancel or wait for it to expire.',
+            toast.warning(t('subscriptions.activeSubscription'), {
+                description: t('subscriptions.activeSubscriptionDescription'),
                 duration: 5000,
             });
             return;
         }
 
         if (!auth.currentUser) {
-            toast.error('User must be authenticated', {
-                description: 'Please sign in to manage your subscriptions.',
+            toast.error(t('subscriptions.userMustBeAuthenticated'), {
+                description: t('subscriptions.pleaseSignIn'),
                 duration: 5000,
             });
             // Redirect to sign in page
@@ -162,10 +165,10 @@ export default function Subscriptions() {
                     <div className="py-8">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <h1 className="text-4xl font-bold tracking-tight">Your Subscriptions</h1>
+                                <h1 className="text-4xl font-bold tracking-tight">{t('subscriptions.yourSubscriptions')}</h1>
                             </div>
                             <p className="text-xl text-muted-foreground max-w-3xl">
-                            Manage your subscriptions, billing, and access premium features that amplify your experience listening and creating radio stations.
+                                {t('subscriptions.heroDescription')}
                             </p>
                         </div>
                     </div>
@@ -177,11 +180,11 @@ export default function Subscriptions() {
                                 <div className="flex items-center gap-3 mb-3">
                                     <IconX className="h-5 w-5 text-red-500" />
                                     <h3 className="font-semibold text-red-700 dark:text-red-300">
-                                        Subscription Error
+                                        {t('subscriptions.subscriptionError')}
                                     </h3>
                                 </div>
                                 <p className="text-sm text-red-600 dark:text-red-400 mb-4">
-                                    There was a problem processing your subscription. Your payment may have been processed correctly, but activation failed.
+                                    {t('subscriptions.subscriptionErrorDescription')}
                                 </p>
                                 <div className="flex gap-2">
                                     <Button
@@ -194,7 +197,7 @@ export default function Subscriptions() {
                                             window.location.reload();
                                         }}
                                     >
-                                        Reload
+                                        {t('subscriptions.reload')}
                                     </Button>
                                     <Button
                                         variant="ghost"
@@ -204,7 +207,7 @@ export default function Subscriptions() {
                                             window.open('mailto:support@hoergen.com?subject=Subscription Problem&body=Hi, I had a problem activating my subscription after payment.', '_blank');
                                         }}
                                     >
-                                        Contact Support
+                                        {t('subscriptions.contactSupport')}
                                     </Button>
                                 </div>
                             </div>
@@ -218,13 +221,13 @@ export default function Subscriptions() {
                                 <div className="flex items-center gap-3 mb-3">
                                     <IconX className="h-5 w-5 text-red-500" />
                                     <h3 className="font-semibold text-red-700 dark:text-red-300">
-                                        Error Loading Data
+                                        {t('subscriptions.errorLoadingData')}
                                     </h3>
                                 </div>
                                 <p className="text-sm text-red-600 dark:text-red-400 mb-4">
                                     {isProductsError
-                                        ? "Could not load subscription plans. Please try again."
-                                        : "Could not load your current subscription. Please try again."
+                                        ? t('subscriptions.couldNotLoadPlans')
+                                        : t('subscriptions.couldNotLoadSubscription')
                                     }
                                 </p>
                                 <div className="flex gap-2">
@@ -237,7 +240,7 @@ export default function Subscriptions() {
                                             window.location.reload();
                                         }}
                                     >
-                                        Retry
+                                        {t('subscriptions.retry')}
                                     </Button>
                                     <Button
                                         variant="ghost"
@@ -245,7 +248,7 @@ export default function Subscriptions() {
                                         className="rounded-xs text-red-600 hover:bg-red-500/10"
                                         onClick={() => window.open('mailto:support@hoergen.com?subject=Error loading subscriptions&body=Hi, I have problems loading the subscriptions page.', '_blank')}
                                     >
-                                        Contact Support
+                                        {t('subscriptions.contactSupport')}
                                     </Button>
                                 </div>
                             </div>
@@ -287,7 +290,7 @@ export default function Subscriptions() {
                         {/* No Active Plan Message - Renderizado condicional según permisos */}
                         {(!currentSubscription || currentSubscription.plan === 'free' || currentSubscription.status !== 'active') && (
                             <div className="space-y-6">
-                                <h2 className="text-2xl font-bold tracking-tight">Current Plan</h2>
+                                <h2 className="text-2xl font-bold tracking-tight">{t('subscriptions.currentPlan')}</h2>
                                 <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-muted/20 via-muted/10 to-transparent p-8 border border-muted/20">
                                     <div className="relative z-10 text-center">
                                         <div className="flex items-center justify-center gap-3 mb-4">
@@ -296,14 +299,14 @@ export default function Subscriptions() {
                                             </Badge>
                                         </div>
                                         <h3 className="text-3xl font-bold mb-2">
-                                            {canAccessProFeatures ? (canAccessCreatorFeatures ? 'Creator Plan' : 'Pro Plan') : 'Free Plan'}
+                                            {canAccessProFeatures ? (canAccessCreatorFeatures ? t('subscriptions.creatorPlan') : t('subscriptions.proPlan')) : t('subscriptions.freePlan')}
                                         </h3>
                                         <p className="text-muted-foreground mb-6">
                                             {canAccessProFeatures
                                                 ? (canAccessCreatorFeatures
-                                                    ? 'You have access to all premium features for creators.'
-                                                    : 'You have access to premium listener features.')
-                                                : 'You\'re currently on the free plan. Upgrade to access premium features.'}
+                                                    ? t('subscriptions.creatorPlanDescription')
+                                                    : t('subscriptions.proPlanDescription'))
+                                                : t('subscriptions.freePlanDescription')}
                                         </p>
                                         {!canAccessCreatorFeatures && (
                                             <Button
@@ -312,7 +315,7 @@ export default function Subscriptions() {
                                                 onClick={() => handleUpgrade(availableProducts?.[0]?.prices?.[0]?.id || '', availableProducts?.[0]?.name || '')}
                                             >
                                                 <IconCrown className="h-4 w-4 mr-2" />
-                                                {isCreatingCheckout ? 'Processing...' : 'Upgrade Now'}
+                                                {isCreatingCheckout ? t('subscriptions.processing') : t('subscriptions.upgradeNow')}
                                             </Button>
                                         )}
                                     </div>
@@ -323,7 +326,7 @@ export default function Subscriptions() {
                         {/* Active Subscription Display */}
                         {currentSubscription && currentSubscription.status === 'active' && currentSubscription.plan !== 'free' && (
                             <div className="space-y-6">
-                                <h2 className="text-2xl font-bold tracking-tight">Current Plan</h2>
+                                <h2 className="text-2xl font-bold tracking-tight">{t('subscriptions.currentPlan')}</h2>
                                 <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-green-500/10 via-green-400/5 to-transparent p-8 border border-green-500/20">
                                     {/* Success confetti effect if coming from success */}
                                     {status === 'success' && (
@@ -334,7 +337,7 @@ export default function Subscriptions() {
                                             <div className="flex items-center gap-3">
                                                 <Badge className="rounded-xs bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/30">
                                                     <IconCheck className="h-3 w-3 mr-1" />
-                                                    ACTIVE
+                                                    {t('subscriptions.active')}
                                                 </Badge>
                                                 <Badge variant="outline" className="rounded-xs capitalize">
                                                     {currentSubscription.plan}
@@ -343,7 +346,7 @@ export default function Subscriptions() {
                                             {status === 'success' && (
                                                 <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
                                                     <IconCheck className="h-4 w-4" />
-                                                    <span className="text-sm font-medium">Just activated!</span>
+                                                    <span className="text-sm font-medium">{t('subscriptions.justActivated')}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -351,27 +354,27 @@ export default function Subscriptions() {
                                         <div className="grid md:grid-cols-2 gap-6">
                                             <div>
                                                 <h3 className="text-2xl font-bold mb-2 capitalize">
-                                                    {currentSubscription.plan} Plan
+                                                    {currentSubscription.plan} {t('subscriptions.plan')}
                                                 </h3>
                                                 <p className="text-muted-foreground mb-4">
-                                                    Your subscription is active and working correctly.
+                                                    {t('subscriptions.subscriptionActiveDescription')}
                                                 </p>
                                                 
                                                 {/* Current Features */}
                                                 <div className="space-y-2">
                                                     <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
-                                                        Included features:
+                                                        {t('subscriptions.includedFeatures')}:
                                                     </h4>
                                                     <div className="space-y-1">
                                                         {currentSubscription.plan === 'pro' && (
                                                             <>
                                                                 <div className="flex items-center gap-2 text-sm">
                                                                     <IconCheck className="h-3 w-3 text-green-500" />
-                                                                    <span>Pro features unlocked</span>
+                                                                    <span>{t('subscriptions.proFeaturesUnlocked')}</span>
                                                                 </div>
                                                                 <div className="flex items-center gap-2 text-sm">
                                                                     <IconCheck className="h-3 w-3 text-green-500" />
-                                                                    <span>Unlimited usage</span>
+                                                                    <span>{t('subscriptions.unlimitedUsage')}</span>
                                                                 </div>
                                                             </>
                                                         )}
@@ -379,15 +382,15 @@ export default function Subscriptions() {
                                                             <>
                                                                 <div className="flex items-center gap-2 text-sm">
                                                                     <IconCheck className="h-3 w-3 text-green-500" />
-                                                                    <span>All Pro features</span>
+                                                                    <span>{t('subscriptions.allProFeatures')}</span>
                                                                 </div>
                                                                 <div className="flex items-center gap-2 text-sm">
                                                                     <IconCheck className="h-3 w-3 text-green-500" />
-                                                                    <span>Creator tools</span>
+                                                                    <span>{t('subscriptions.creatorTools')}</span>
                                                                 </div>
                                                                 <div className="flex items-center gap-2 text-sm">
                                                                     <IconCheck className="h-3 w-3 text-green-500" />
-                                                                    <span>Advanced analytics</span>
+                                                                    <span>{t('subscriptions.advancedAnalytics')}</span>
                                                                 </div>
                                                             </>
                                                         )}

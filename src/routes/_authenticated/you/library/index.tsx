@@ -6,21 +6,23 @@ import HeaderNavbar from '@/components/header-navbar';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import React from 'react';
 import { Footer } from '@/components/footer';
+import { useStaticTranslation } from '@/hooks/useTranslation';
 
 export const Route = createFileRoute('/_authenticated/you/library/')({
   component: LibraryPage
 })
 
 function LibraryPage() {
+  const { t } = useStaticTranslation();
   const [tabValue, setTabValue] = React.useState<'favorites' | 'history'>('favorites');
 
   return (
     <>
       <Helmet>
-        <title>Listen your favorite radio stations on Hörgen</title>
+        <title>{t('library.pageTitle')}</title>
         <meta
           name="description"
-          content="Access your favorite stations, history, and subscriptions in one place."
+          content={t('library.pageDescription')}
         />
       </Helmet>
 
@@ -31,10 +33,10 @@ function LibraryPage() {
           {/* Hero Section */}
           <section className="space-y-2">
             <h1 className="text-4xl font-bold tracking-tight">
-              Your Library
+              {t('library.title')}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Access your favorite stations, listening history, and personal collections.
+              {t('library.description')}
             </p>
           </section>
 
@@ -46,10 +48,10 @@ function LibraryPage() {
           >
             <TabsList className="mb-6 rounded-[3px]">
               <TabsTrigger value="favorites" className="flex items-center gap-2 rounded-[3px]">
-                Favorites
+                {t('library.favorites')}
               </TabsTrigger>
               <TabsTrigger value="history" className="flex items-center gap-2 rounded-[3px]">
-                History
+                {t('library.history')}
               </TabsTrigger>
             </TabsList>
 

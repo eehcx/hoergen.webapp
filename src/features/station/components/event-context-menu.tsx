@@ -7,6 +7,7 @@ import {
 } from '@tabler/icons-react'
 import { EventService } from '@/core/services/events/event.service'
 import { useIsElectron } from '@/hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 import { Button } from '@/components/ui/button'
 import {
   ContextMenu,
@@ -42,6 +43,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
   onDeleted,
   children,
 }) => {
+  const { t } = useStaticTranslation()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [confirmText, setConfirmText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
@@ -56,7 +58,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
       setShowDeleteDialog(false)
       onDeleted()
     } catch (_err) {
-      setError('Error deleting event')
+      setError(t('eventContextMenu.errorDeletingEvent'))
     } finally {
       setIsDeleting(false)
     }
@@ -86,7 +88,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
                   className='flex cursor-pointer items-center gap-2 rounded-none'
                 >
                   <IconEdit size={16} />
-                  Edit event
+                  {t('eventContextMenu.editEvent')}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -94,7 +96,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
                   className='text-destructive flex cursor-pointer items-center gap-2 rounded-none'
                 >
                   <IconTrash size={16} />
-                  Delete event
+                  {t('eventContextMenu.deleteEvent')}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -102,7 +104,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
                   className='flex cursor-pointer items-center gap-2 rounded-none'
                 >
                   <IconCirclePlus size={16} />
-                  Add new event
+                  {t('eventContextMenu.addNewEvent')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -118,7 +120,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
               className='flex cursor-pointer items-center gap-2 rounded-none'
             >
               <IconEdit size={16} />
-              Edit event
+              {t('eventContextMenu.editEvent')}
             </ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuItem
@@ -126,7 +128,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
               className='text-destructive flex cursor-pointer items-center gap-2 rounded-none'
             >
               <IconTrash size={16} />
-              Delete event
+              {t('eventContextMenu.deleteEvent')}
             </ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuItem
@@ -134,7 +136,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
               className='flex cursor-pointer items-center gap-2 rounded-none'
             >
               <IconCirclePlus size={16} />
-              Add new event
+              {t('eventContextMenu.addNewEvent')}
             </ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>
@@ -144,7 +146,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
         <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
           <DialogContent className='border-0 p-0' style={{ borderRadius: 0 }}>
             <DialogTitle className='border-border border-b px-6 pt-6 pb-2 text-lg font-bold'>
-              Confirm deletion
+              {t('eventContextMenu.confirmDeletion')}
             </DialogTitle>
             <form
               className='flex flex-col gap-3 px-6 py-6'
@@ -156,9 +158,9 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
               }}
             >
               <div className='mb-2 text-sm'>
-                Type{' '}
-                <span className='text-primary font-bold'>{event.title}</span> to
-                confirm deletion.
+                {t('eventContextMenu.typeToConfirm')}{' '}
+                <span className='text-primary font-bold'>{event.title}</span>{' '}
+                {t('eventContextMenu.toConfirmDeletion')}
               </div>
               <Input
                 required
@@ -175,7 +177,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
                   style={{ borderRadius: 0 }}
                   onClick={() => setShowDeleteDialog(false)}
                 >
-                  Cancel
+                  {t('eventContextMenu.cancel')}
                 </button>
                 <button
                   type='submit'
@@ -183,7 +185,7 @@ export const EventContextMenu: React.FC<EventContextMenuProps> = ({
                   style={{ borderRadius: 0 }}
                   disabled={isDeleting || confirmText !== event.title}
                 >
-                  {isDeleting ? 'Deleting...' : 'Delete'}
+                  {isDeleting ? t('eventContextMenu.deleting') : t('eventContextMenu.delete')}
                 </button>
               </div>
               {error && (

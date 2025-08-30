@@ -1,4 +1,8 @@
-import { useState, useMemo } from 'react'
+import { 
+  useState, 
+  //useEffect, 
+  useMemo 
+} from 'react'
 import { useQueries } from '@tanstack/react-query'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -6,13 +10,19 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { IconPlayerPlay, IconPlayerPause, IconChevronDown } from '@tabler/icons-react'
+import { 
+  IconPlayerPlay, 
+  IconPlayerPause, 
+  //IconChevronDown 
+} from '@tabler/icons-react'
 import { useAuth } from '@/hooks'
 import { useUserHistory } from '@/hooks/history/useHistory'
 import { useGenreNames } from '@/hooks/genres/useGenreNames'
 import { useMiniPlayer } from '@/context/mini-player-context'
 import { StationService } from '@/core/services'
 import type { HistoryResponse, ResponseStationDto } from '@/core/types'
+import { useStaticTranslation } from '@/hooks/useTranslation'
+//import { formatPlayedAt } from '@/utils'
 
 interface HistoryStationItem {
   historyEntry: HistoryResponse
@@ -50,6 +60,7 @@ function GenreNamesDisplay({ station }: { station: ResponseStationDto | null }) 
 }
 
 export default function History() {
+  const { t } = useStaticTranslation()
   const { user } = useAuth()
   const { play, pause, player } = useMiniPlayer()
   const [search, setSearch] = useState('')
@@ -180,24 +191,23 @@ export default function History() {
   })
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <div className="flex items-center gap-2">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center gap-2">
-                <IconChevronDown className="h-4 w-4" />
+              <Button variant="outline" className="rounded-none">
                 Sort by
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => setSort('recent')}>Most Recent</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setSort('az')}>A-Z</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSort('recent')}>{t('history.mostRecent')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSort('az')}>{t('history.az')}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
         <Input 
-          placeholder="Search listening history..." 
+          placeholder={t('history.searchPlaceholder')}
           className="max-w-xs" 
           value={search} 
           onChange={e => setSearch(e.target.value)} 
@@ -206,9 +216,9 @@ export default function History() {
 
       <Card className='rounded-none'>
         <CardHeader>
-          <CardTitle>Listening History</CardTitle>
+          <CardTitle>{t('history.title')}</CardTitle>
           <CardDescription>
-            Stations you've listened to recently
+            {t('history.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -229,11 +239,11 @@ export default function History() {
             </div>
           ) : error ? (
             <div className="text-center py-8 text-destructive">
-              Failed to load listening history. Please try again.
+              {t('history.loadError')}
             </div>
           ) : sortedItems.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              {search ? 'No stations found matching your search.' : 'No listening history found.'}
+              {search ? t('history.noSearchResults') : t('history.noHistory')}
             </div>
           ) : (
             <div className="space-y-4">
@@ -254,7 +264,7 @@ export default function History() {
                     ) : (
                       <>
                         <h4 className="text-sm font-medium leading-none truncate">
-                          {item.station?.name || 'Unknown Station'}
+                          {item.station?.name || t('history.unknownStation')}
                         </h4>
                         <div className="flex items-center gap-2">
                           <GenreNamesDisplay station={item.station} />
@@ -282,7 +292,7 @@ export default function History() {
                       ) : (
                         <IconPlayerPlay className="h-4 w-4 mr-2" fill="currentColor" />
                       )}
-                      {isStationPlaying(item.station) ? 'Pause' : 'Play'}
+                      {isStationPlaying(item.station) ? t('player.pause') : t('player.play')}
                     </Button>
                   </div>
                 </div>
@@ -291,6 +301,6 @@ export default function History() {
           )}
         </CardContent>
       </Card>
-    </>
+    </div>
   )
 }

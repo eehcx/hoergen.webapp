@@ -3,6 +3,7 @@ import { IconMaximize } from '@tabler/icons-react'
 import { MessageResponseDto } from '@/core/types'
 import { useStationChat } from '@/hooks'
 import { useAuth } from '@/hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 import { toast } from 'sonner'
 import { getUserColor } from '@/lib/utils/chatUserHighlight'
 import { usePermissions } from '@/hooks/auth/usePermissions'
@@ -26,6 +27,7 @@ export function ChatWindow({
   stationName,
   readonly = false,
 }: ChatWindowProps) {
+  const { t } = useStaticTranslation()
   const { chatMessages, isLoadingChat, userIdToName, chatId } = useStationChat(
     stationId,
     ownerId
@@ -79,15 +81,15 @@ export function ChatWindow({
 
     try {
       const confirmed = window.confirm(
-        'Are you sure you want to clear the entire chat? This action cannot be undone.'
+        t('chatWindow.clearChatConfirm')
       )
       if (!confirmed) return
 
       await chatService.clearChat(chatId)
-      toast.success('Chat cleared successfully')
+      toast.success(t('chatWindow.chatClearedSuccess'))
     } catch (error) {
       console.error('Error clearing chat:', error)
-      toast.error('Failed to clear chat')
+      toast.error(t('chatWindow.chatClearFailed'))
     }
   }
 
@@ -113,14 +115,14 @@ export function ChatWindow({
       {/* Header */}
       <div className='flex items-center justify-between border-b border-zinc-200 p-3 dark:border-zinc-800'>
         <div className='flex flex-col'>
-          <h2 className='text-sm font-bold tracking-tight'>Stream chat</h2>
+          <h2 className='text-sm font-bold tracking-tight'>{t('chatWindow.streamChat')}</h2>
           <p className='text-muted-foreground text-xs'>{stationName}</p>
         </div>
         {!readonly && (
           <button
             className='hover:bg-accent rounded-sm p-1'
             onClick={() => window.close()}
-            title='Close window'
+            title={t('chatWindow.closeWindow')}
           >
             <IconMaximize size={18} />
           </button>
@@ -191,7 +193,7 @@ export function ChatWindow({
                 <h3 className='mb-1.5 font-medium text-zinc-700 dark:text-zinc-400'>
                   {stationName}
                 </h3>
-                <span>Welcome! Chat activity will appear here.</span>
+                <span>{t('chatWindow.welcome')}</span>
               </div>
             )}
           </>

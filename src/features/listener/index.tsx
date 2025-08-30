@@ -13,6 +13,7 @@ import { Link, useNavigate } from '@tanstack/react-router'
 // Hooks
 import { useRadioBrowserStations } from '@/hooks/radio-browser'
 import { useRoleStations } from './hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 // Services
 import { genreService } from '@/core/services'
 import type { ResponseStationDto, GenreResponseDto, RadioBrowserStation } from '@/core/types'
@@ -24,6 +25,7 @@ import {
 } from '@/utils'
 
 export default function Listener() {
+  const { t } = useStaticTranslation();
   // Navigations
   const navigate = useNavigate()
   // Use TanStack Query for Radio Browser stations
@@ -131,7 +133,7 @@ export default function Listener() {
   };
 
   const handleViewAll = () => {
-    navigate({ to: '/browse' });
+    navigate({ to: '/worldwide' });
   };
 
   return (
@@ -147,12 +149,12 @@ export default function Listener() {
             <div className="py-12">
               <div className="text-center space-y-4 mb-12">
                 <h1 className="text-5xl font-bold tracking-tight">
-                  {userType === 'platform' ? 'Broadcast the Rebellion' : 'Underground Frequencies'}
+                  {userType === 'platform' ? t('listener.broadcastRebellion') : t('listener.undergroundFrequencies')}
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                   {userType === 'platform'
-                    ? 'From Berlin basements to México backstreets — tune into raw, live broadcasts from independent stations defying the mainstream.'
-                    : 'Discover underground radio from around the world. Raw frequencies, unfiltered voices, and authentic sounds from every corner of the globe.'
+                    ? t('listener.broadcastRebellionDescription')
+                    : t('listener.undergroundFrequenciesDescription')
                   }
                 </p>
               </div>
@@ -163,7 +165,7 @@ export default function Listener() {
                   <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-3 h-3 bg-muted rounded-full animate-pulse"></div>
-                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">LOADING...</span>
+                      <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{t('listener.loading')}</span>
                     </div>
                     <div className="h-8 bg-muted rounded animate-pulse mb-2"></div>
                     <div className="h-4 bg-muted rounded animate-pulse mb-1 w-1/3"></div>
@@ -176,7 +178,7 @@ export default function Listener() {
               ) : isError ? (
                 <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-8 mb-8">
                   <div className="relative z-10 text-center">
-                    <p className="text-red-500">Error loading stations</p>
+                    <p className="text-red-500">{t('listener.errorLoadingStations')}</p>
                   </div>
                 </div>
               ) : featuredStation ? (
@@ -184,7 +186,7 @@ export default function Listener() {
                   <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-semibold text-red-600 dark:text-red-400 uppercase tracking-wide">LIVE</span>
+                      <span className="text-sm font-semibold text-red-600 dark:text-red-400 uppercase tracking-wide">{t('listener.live')}</span>
                     </div>
                     <h2 className="text-3xl font-bold mb-2">
                     {featuredStation.name.length > 60
@@ -192,7 +194,7 @@ export default function Listener() {
                       : featuredStation.name}
                     </h2>
                     <p className="text-muted-foreground mb-1">
-                      by {getCreatorName(featuredStation)}
+                      {t('listener.by')} {getCreatorName(featuredStation)}
                     </p>
                     <p className="text-sm text-muted-foreground mb-6">
                       {getDescription(featuredStation)}
@@ -212,11 +214,11 @@ export default function Listener() {
                         }
                         className="flex items-center justify-center text-normal text-white dark:text-zinc-900 h-8 px-5 bg-zinc-900 dark:bg-white"
                       >
-                        Listen Now
+                        {t('listener.listenNow')}
                       </Link>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <span>
-                          {getFavoritesCount(featuredStation)} {isOwnStation(featuredStation) ? 'favorites' : 'votes'}
+                          {getFavoritesCount(featuredStation)} {isOwnStation(featuredStation) ? t('listener.favorites') : t('listener.votes')}
                         </span>
                       </div>
                     </div>
@@ -225,7 +227,7 @@ export default function Listener() {
               ) : (
                 <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-8 mb-8">
                   <div className="relative z-10 text-center">
-                    <p className="text-muted-foreground">No stations available</p>
+                    <p className="text-muted-foreground">{t('listener.noStationsAvailable')}</p>
                   </div>
                 </div>
               )}
@@ -234,14 +236,14 @@ export default function Listener() {
             {/* Live Radio Worldwide */}
             <div className="space-y-8">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold tracking-tight">Worldwide Radio</h2>
+                <h2 className="text-2xl font-bold tracking-tight">{t('listener.worldwideRadio')}</h2>
                 <Button
                   variant="outline"
                   size="sm"
                   className="rounded-xs"
                   onClick={handleViewAll}
                 >
-                  View all
+                  {t('listener.viewAll')}
                 </Button>
               </div>
 
@@ -352,7 +354,7 @@ export default function Listener() {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-muted-foreground">No global stations available</p>
+                  <p className="text-muted-foreground">{t('listener.noGlobalStationsAvailable')}</p>
                 </div>
               )}
             </div>
@@ -360,7 +362,7 @@ export default function Listener() {
             {/* Featured Stations */}
             <div className="my-28">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold tracking-tight">Made for You</h2>
+                <h2 className="text-2xl font-bold tracking-tight">{t('listener.madeForYou')}</h2>
                 {/*<Button variant="outline" size="sm" className="rounded-xs">View more</Button>*/}
               </div>
 
@@ -414,12 +416,12 @@ export default function Listener() {
                             : station.name}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          by {getCreatorName(station)}
+                          {t('listener.by')} {getCreatorName(station)}
                         </p>
                         <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="text-xs rounded-xs">Radio</Badge>
+                          <Badge variant="secondary" className="text-xs rounded-xs">{t('listener.radio')}</Badge>
                           <Badge variant="outline" className="text-xs rounded-xs">
-                            {getFavoritesCount(station)} {isOwnStation(station) ? 'favorites' : 'votes'}
+                            {getFavoritesCount(station)} {isOwnStation(station) ? t('listener.favorites') : t('listener.votes')}
                           </Badge>
                         </div>
                         {getDescription(station) && (
@@ -438,7 +440,7 @@ export default function Listener() {
             <div className="grid gap-12 lg:grid-cols-2">
               {/* Recently Played */}
               <div className="space-y-6">
-                <h3 className="text-xl font-bold">Recently Played</h3>
+                <h3 className="text-xl font-bold">{t('listener.recentlyPlayed')}</h3>
                 <div className="space-y-1">
                   {isLoading ? (
                     // Loading skeleton
@@ -496,7 +498,7 @@ export default function Listener() {
 
               {/* Browse by Genre */}
               <div className="space-y-6">
-                <h3 className="text-xl font-bold">Browse by Genre</h3>
+                <h3 className="text-xl font-bold">{t('listener.browseByGenre')}</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {isLoadingGenres ? (
                     // Loading skeleton for genres

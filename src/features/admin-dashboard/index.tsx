@@ -11,8 +11,38 @@ import {
   AnalyticsStations,
   AnalyticsModeration,
 } from './analytics'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export default function AdminDashboard() {
+  const { t } = useStaticTranslation()
+
+  const topNav = [
+    {
+      title: t('admin.overview'),
+      href: '/admin',
+      isActive: true,
+      disabled: false,
+    },
+    {
+      title: t('admin.radios'),
+      href: '/admin/stations',
+      isActive: false,
+      disabled: false,
+    },
+    {
+      title: t('admin.moderation'),
+      href: '/creator',
+      isActive: false,
+      disabled: false,
+    },
+    {
+      title: t('admin.subscriptions'),
+      href: '/admin/subscriptions',
+      isActive: false,
+      disabled: false,
+    },
+  ]
+
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -28,7 +58,7 @@ export default function AdminDashboard() {
       {/* ===== Main ===== */}
       <Main>
         <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Analytics</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>{t('admin.analytics')}</h1>
         </div>
         <Tabs
           orientation='vertical'
@@ -38,16 +68,16 @@ export default function AdminDashboard() {
           <div className='w-full overflow-x-auto pb-2'>
             <TabsList className='rounded-none'>
               <TabsTrigger value='customers' className='rounded-none'>
-                Customers
+                {t('admin.customers')}
               </TabsTrigger>
               <TabsTrigger value='reports' className='rounded-none'>
-                Reports
+                {t('admin.reports')}
               </TabsTrigger>
               <TabsTrigger value='stations' className='rounded-none'>
-                Stations
+                {t('admin.stations')}
               </TabsTrigger>
               <TabsTrigger value='moderation' className='rounded-none'>
-                Moderation
+                {t('admin.moderation')}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -68,30 +98,3 @@ export default function AdminDashboard() {
     </>
   )
 }
-
-const topNav = [
-  {
-    title: 'Overview',
-    href: '/admin',
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: 'Radios',
-    href: '/admin/stations',
-    isActive: false,
-    disabled: false,
-  },
-  {
-    title: 'Moderation',
-    href: '/creator',
-    isActive: false,
-    disabled: false,
-  },
-  {
-    title: 'Subscriptions',
-    href: '/admin/subscriptions',
-    isActive: false,
-    disabled: false,
-  },
-]

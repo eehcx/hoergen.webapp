@@ -1,6 +1,7 @@
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAnalyticsByStation, useChatAnalytics } from '../hooks/useStations'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export function StationStats({
   stationId,
@@ -9,6 +10,7 @@ export function StationStats({
   stationId: string
   chatId: string | null
 }) {
+  const { t } = useStaticTranslation()
   const { data, isLoading } = useAnalyticsByStation(stationId)
   const { data: chatAnalytics, isLoading: isChatAnalyticsLoading } =
     useChatAnalytics(chatId)
@@ -18,7 +20,7 @@ export function StationStats({
       <Separator className='mb-6' />
       <div className='mb-4'>
         <span className='text-primary dark:text-primary-light text-lg font-bold md:text-xl'>
-          Station Statistics
+          {t('stationStats.title')}
         </span>
       </div>
       {isLoading ? (
@@ -28,7 +30,7 @@ export function StationStats({
           {/* Genre Ranking */}
           <div>
             <div className='text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase'>
-              Genre Ranking
+              {t('stationStats.genreRanking')}
             </div>
             <div
               className='mb-1 text-4xl font-extrabold'
@@ -40,20 +42,20 @@ export function StationStats({
             </div>
             <div className='text-muted-foreground text-xs'>
               {data?.comparison?.stationRank
-                ? 'Current position in genre top'
-                : 'No ranking available'}
+                ? t('stationStats.currentPositionInGenre')
+                : t('stationStats.noRankingAvailable')}
             </div>
           </div>
           {/* Favorites */}
           <div>
             <div className='text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase'>
-              Favorites
+              {t('stationStats.favorites')}
             </div>
             <div className='text-primary dark:text-primary-light mb-1 text-4xl font-extrabold'>
               {data?.favorites ?? 0}
             </div>
             <div className='text-muted-foreground text-xs'>
-              Average favorites in this genre is{' '}
+              {t('stationStats.averageFavoritesInGenre')}{' '}
               <span className='font-semibold'>
                 {data?.comparison?.avgFavoritesInGenre ?? 0}
               </span>
@@ -63,7 +65,7 @@ export function StationStats({
           <div>
             <div className='mb-1 flex items-center'>
               <span className='text-muted-foreground mr-2 text-xs font-semibold tracking-wide uppercase'>
-                Top 3 in Genre
+                {t('stationStats.top3InGenre')}
               </span>
             </div>
             <ul className='space-y-1'>
@@ -84,7 +86,7 @@ export function StationStats({
                     </li>
                   ))
               ) : (
-                <li className='text-muted-foreground text-xs'>No data</li>
+                <li className='text-muted-foreground text-xs'>{t('stationStats.noData')}</li>
               )}
             </ul>
           </div>
@@ -96,13 +98,13 @@ export function StationStats({
         <Separator className='mb-6' />
         <div className='mb-4'>
           <span className='text-primary dark:text-primary-light text-lg font-bold md:text-xl'>
-            Moderation Analytics
+            {t('stationStats.moderationAnalytics')}
           </span>
         </div>
         {!chatId ? (
           <div className='py-8 text-center'>
             <div className='text-muted-foreground text-sm'>
-              No chat analytics available for this station
+              {t('stationStats.noChatAnalyticsAvailable')}
             </div>
           </div>
         ) : isChatAnalyticsLoading ? (
@@ -114,33 +116,33 @@ export function StationStats({
               {/* Total Messages */}
               <div>
                 <div className='text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase'>
-                  Total Messages
+                  {t('stationStats.totalMessages')}
                 </div>
                 <div className='text-primary dark:text-primary-light mb-1 text-4xl font-extrabold'>
                   {chatAnalytics.totalMessages ?? 0}
                 </div>
                 <div className='text-muted-foreground text-xs'>
-                  Messages in chat history
+                  {t('stationStats.messagesInChatHistory')}
                 </div>
               </div>
 
               {/* Moderation Coverage */}
               <div>
                 <div className='text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase'>
-                  Moderation Coverage
+                  {t('stationStats.moderationCoverage')}
                 </div>
                 <div className='mb-1 text-4xl font-extrabold text-blue-500'>
                   {chatAnalytics.percentageWithModeration.toFixed(1) ?? 0}%
                 </div>
                 <div className='text-muted-foreground text-xs'>
-                  {chatAnalytics.messagesWithModeration ?? 0} messages scanned
+                  {chatAnalytics.messagesWithModeration ?? 0} {t('stationStats.messagesScanned')}
                 </div>
               </div>
 
               {/* Toxicity Level */}
               <div>
                 <div className='text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase'>
-                  Safety Score
+                  {t('stationStats.safetyScore')}
                 </div>
                 <div
                   className='mb-1 text-4xl font-extrabold'
@@ -160,7 +162,7 @@ export function StationStats({
                   %
                 </div>
                 <div className='text-muted-foreground text-xs'>
-                  Average safety rating
+                  {t('stationStats.averageSafetyRating')}
                 </div>
               </div>
             </div>
@@ -169,7 +171,7 @@ export function StationStats({
             {chatAnalytics.averageScores && (
               <div className='rounded-xs border p-4'>
                 <div className='text-muted-foreground mb-3 text-sm font-semibold tracking-wide uppercase'>
-                  Detailed Moderation Scores
+                  {t('stationStats.detailedModerationScores')}
                 </div>
                 <div className='grid gap-3 sm:grid-cols-2 md:grid-cols-3'>
                   {Object.entries(chatAnalytics.averageScores).map(
@@ -270,7 +272,7 @@ export function StationStats({
         ) : (
           <div className='py-8 text-center'>
             <div className='text-muted-foreground text-sm'>
-              No chat analytics available for this station
+              {t('stationStats.noChatAnalyticsAvailable')}
             </div>
           </div>
         )}

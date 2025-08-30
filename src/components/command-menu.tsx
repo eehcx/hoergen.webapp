@@ -9,6 +9,7 @@ import {
 import { useSearch } from '@/context/search-context'
 import { useTheme } from '@/context/theme-context'
 import { useAuth } from '@/hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 import {
   CommandDialog,
   CommandEmpty,
@@ -26,9 +27,10 @@ export function CommandMenu() {
   const { setTheme } = useTheme()
   const { open, setOpen } = useSearch()
   const { claims } = useAuth()
+  const { t } = useStaticTranslation()
 
   const role = claims?.role || 'listener'
-  const navGroups = getNavGroupsByRole(role)
+  const navGroups = getNavGroupsByRole(role, t)
 
   const runCommand = React.useCallback(
     (command: () => unknown) => {

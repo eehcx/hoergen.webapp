@@ -11,6 +11,7 @@ import { GenreService } from '@/core/services/genres/genre.service'
 import { CountryService } from '@/core/services/countries/country.service'
 import { ImageUploadService } from '@/core/services/image-upload.service'
 import { useAuth } from '@/hooks'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 // Types
 import { CreateStationDto } from '@/core/types/station.types'
@@ -32,6 +33,7 @@ interface FormData {
 }
 
 export default function NewStation() {
+  const { t } = useStaticTranslation();
   const navigate = useNavigate()
   const { user } = useAuth()
   
@@ -80,8 +82,8 @@ export default function NewStation() {
       return await stationService.createStation(data)
     },
     onSuccess: () => {
-      toast.success('Station Created!', {
-        description: 'Your radio station has been successfully created.',
+      toast.success(t('station.stationCreated'), {
+        description: t('station.stationCreatedDescription'),
         duration: 5000,
       })
       // Redirect to the admin stations page
@@ -89,8 +91,8 @@ export default function NewStation() {
     },
     onError: (error: any) => {
       console.error('Error creating station:', error)
-      toast.error('Creation Failed', {
-        description: error.message || 'Failed to create station. Please try again.',
+      toast.error(t('station.creationFailed'), {
+        description: error.message || t('station.creationFailedDescription'),
         duration: 5000,
       })
     }
@@ -118,7 +120,7 @@ export default function NewStation() {
         const url = await ImageUploadService.getInstance().uploadImage(file)
         setValue('coverImage', url)
         setCoverImageFile(file)
-        toast.success('Cover image uploaded!')
+        toast.success(t('newStation.coverImageUploaded'))
       } catch (err: any) {
         toast.error('Error uploading image: ' + (err?.message || 'Unknown error'))
       }
@@ -129,16 +131,16 @@ export default function NewStation() {
   // Form submission
   const onSubmit = (data: FormData) => {
     if (selectedGenres.length === 0) {
-      toast.error('Genre Required', {
-        description: 'Please select at least one genre for your station.',
+      toast.error(t('newStation.genreRequired'), {
+        description: t('newStation.genreRequiredDescription'),
         duration: 5000,
       })
       return
     }
 
     if (!selectedCountry) {
-      toast.error('Country Required', {
-        description: 'Please select a country for your station.',
+      toast.error(t('newStation.countryRequired'), {
+        description: t('newStation.countryRequiredDescription'),
         duration: 5000,
       })
       return
@@ -165,9 +167,9 @@ export default function NewStation() {
         <div className="w-full max-w-4xl px-6 py-8">
           <div className='mb-6 flex flex-wrap items-center justify-between space-y-2'>
             <div>
-              <h2 className='text-2xl font-bold tracking-tight'>Create Station</h2>
+              <h2 className='text-2xl font-bold tracking-tight'>{t('newStation.title')}</h2>
               <p className='text-muted-foreground'>
-                Build your dream radio station and share your passion for music with the world.
+                {t('newStation.description')}
               </p>
             </div>
           </div>
@@ -177,16 +179,16 @@ export default function NewStation() {
             <Card className="bg-card border border-border rounded-none">
               <div className="p-6 space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold">Basic Information</h3>
+                  <h3 className="text-lg font-semibold">{t('newStation.basicInformation')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Essential details about your radio station.
+                    {t('newStation.basicInformationDescription')}
                   </p>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
                   {/* Station Name */}
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Station Name *</label>
+                    <label className="text-sm font-medium">{t('newStation.stationName')}</label>
                     <input
                       {...register('name', { 
                         required: 'Station name is required',
@@ -194,7 +196,7 @@ export default function NewStation() {
                         maxLength: { value: 50, message: 'Name must be less than 50 characters' }
                       })}
                       className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="Enter your station name"
+                      placeholder={t('newStation.stationNamePlaceholder')}
                     />
                     {errors.name && (
                       <p className="text-sm text-destructive">{errors.name.message}</p>
@@ -203,7 +205,7 @@ export default function NewStation() {
 
                   {/* Stream URL */}
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Stream URL *</label>
+                    <label className="text-sm font-medium">{t('newStation.streamUrl')}</label>
                     <input
                       {...register('streamUrl', { 
                         required: 'Stream URL is required',
@@ -213,20 +215,20 @@ export default function NewStation() {
                         }
                       })}
                       className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="https://stream.example.com/radio"
+                      placeholder={t('newStation.streamUrlPlaceholder')}
                     />
                     {errors.streamUrl && (
                       <p className="text-sm text-destructive">{errors.streamUrl.message}</p>
                     )}
                     <p className="text-xs text-muted-foreground mt-1">
-                      Need a stream URL? Get one free at <a href="https://azuracast.example.com" target="_blank" rel="noopener" className="text-primary hover:underline">AzuraCast</a>.
+                      {t('newStation.streamUrlHelp')} <a href="https://azuracast.example.com" target="_blank" rel="noopener" className="text-primary hover:underline">AzuraCast</a>.
                     </p>
                   </div>
                 </div>
 
                 {/* Country Selection */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Country *</label>
+                  <label className="text-sm font-medium">{t('newStation.country')}</label>
                   {isLoadingCountries ? (
                     <div className="h-10 bg-muted border border-border animate-pulse" />
                   ) : (
@@ -239,7 +241,7 @@ export default function NewStation() {
                       required
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a country" />
+                        <SelectValue placeholder={t('newStation.countryPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
                         {countries.map((country: any) => (
@@ -257,14 +259,14 @@ export default function NewStation() {
 
                 {/* Description */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Description</label>
+                  <label className="text-sm font-medium">{t('newStation.description')}</label>
                   <textarea
                     {...register('description', {
                       maxLength: { value: 500, message: 'Description must be less than 500 characters' }
                     })}
                     rows={4}
                     className="flex min-h-[80px] w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-                    placeholder="Tell us about your station, what makes it special..."
+                    placeholder={t('newStation.descriptionPlaceholder')}
                   />
                   {errors.description && (
                     <p className="text-sm text-destructive">{errors.description.message}</p>
@@ -277,13 +279,13 @@ export default function NewStation() {
                 <div className="grid gap-6 md:grid-cols-2">
                   {/* Live Info */}
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Live Information</label>
+                    <label className="text-sm font-medium">{t('newStation.liveInfo')}</label>
                     <input
                       {...register('liveInfo', {
                         maxLength: { value: 100, message: 'Live info must be less than 100 characters' }
                       })}
                       className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="Now playing, DJ info, or live show details..."
+                      placeholder={t('newStation.liveInfoPlaceholder')}
                     />
                     {errors.liveInfo && (
                       <p className="text-sm text-destructive">{errors.liveInfo.message}</p>
@@ -292,7 +294,7 @@ export default function NewStation() {
 
                   {/* Cover Image Upload */}
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Cover Image *</label>
+                    <label className="text-sm font-medium">{t('newStation.coverImage')}</label>
                     <input
                       type="file"
                       accept="image/*"
@@ -300,7 +302,7 @@ export default function NewStation() {
                       className="flex h-10 w-full border border-input bg-background px-3 py-2 text-sm"
                       disabled={coverImageUploading}
                     />
-                    {coverImageUploading && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                    {coverImageUploading && <p className="text-xs text-muted-foreground">{t('newStation.uploading')}</p>}
                     {watchedValues.coverImage && (
                       <img src={watchedValues.coverImage} alt="Cover Preview" className="mt-2 w-24 h-24 object-cover border" />
                     )}
@@ -318,15 +320,15 @@ export default function NewStation() {
                 <div className="flex items-center gap-3">
                   <IconMusic className="h-5 w-5" />
                   <div>
-                    <h3 className="text-lg font-semibold">Genres</h3>
+                    <h3 className="text-lg font-semibold">{t('newStation.genres')}</h3>
                     <p className="text-sm text-muted-foreground">
-                      Select at least one genre for your station.
+                      {t('newStation.genresDescription')}
                     </p>
                   </div>
                 </div>
                 {/* Genre Selection */}
                 <div className="space-y-4">
-                  <label className="text-sm font-medium">Genres * (Select at least one)</label>
+                  <label className="text-sm font-medium">{t('newStation.genresLabel')}</label>
                   {isLoadingGenres ? (
                     <div className="grid gap-3 md:grid-cols-4">
                       {[...Array(8)].map((_, i) => (
@@ -352,7 +354,7 @@ export default function NewStation() {
                     </div>
                   )}
                   <p className="text-xs text-muted-foreground">
-                    {selectedGenres.length} genre(s) selected
+                    {selectedGenres.length} {t('newStation.genresSelected')}
                   </p>
                 </div>
               </div>
@@ -363,9 +365,9 @@ export default function NewStation() {
               <Card className="bg-card border border-border rounded-none">
                 <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="text-lg font-semibold">Preview</h3>
+                    <h3 className="text-lg font-semibold">{t('newStation.preview')}</h3>
                     <p className="text-sm text-muted-foreground">
-                      See how your station will appear to listeners.
+                      {t('newStation.previewDescription')}
                     </p>
                   </div>
                   <div className="bg-muted/50 p-4 border border-border">
@@ -386,10 +388,10 @@ export default function NewStation() {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-semibold text-lg">
-                          {watchedValues.name || 'Station Name'}
+                          {watchedValues.name || t('newStation.previewStationName')}
                         </h4>
                         <p className="text-sm text-muted-foreground mb-2">
-                          {watchedValues.description || 'Station description will appear here...'}
+                          {watchedValues.description || t('newStation.previewStationDescription')}
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {selectedGenres.slice(0, 3).map(genreId => {
@@ -402,7 +404,7 @@ export default function NewStation() {
                           })}
                           {selectedGenres.length > 3 && (
                             <Badge variant="outline">
-                              +{selectedGenres.length - 3} more
+                              +{selectedGenres.length - 3} {t('newStation.moreGenres')}
                             </Badge>
                           )}
                         </div>
@@ -421,7 +423,7 @@ export default function NewStation() {
                 className="flex-1"
                 onClick={() => navigate({ to: '/' })}
               >
-                Cancel
+                {t('newStation.cancel')}
               </Button>
               <Button
                 type="submit"
@@ -431,12 +433,12 @@ export default function NewStation() {
                 {createStationMutation.isPending ? (
                   <>
                     <div className="animate-pulse h-4 w-4 bg-current mr-2" />
-                    Creating...
+                    {t('newStation.creating')}
                   </>
                 ) : (
                   <>
                     <IconPlus className="h-4 w-4 mr-2" />
-                    Create Station
+                    {t('newStation.createStation')}
                   </>
                 )}
               </Button>
@@ -446,12 +448,12 @@ export default function NewStation() {
             <div className="mt-12 pt-8 border-t border-border">
               <div className="text-center space-y-2">
                 <p className="text-sm text-muted-foreground">
-                  Need help getting started? Check out our{' '}
-                  <a href="#" className="text-primary hover:underline">documentation</a> or{' '}
-                  <a href="#" className="text-primary hover:underline">contact support</a>.
+                  {t('newStation.helpText')}{' '}
+                  <a href="#" className="text-primary hover:underline">{t('newStation.documentation')}</a> {t('newStation.or')}{' '}
+                  <a href="#" className="text-primary hover:underline">{t('newStation.contactSupport')}</a>.
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  By creating a station, you agree to our terms of service and content policy.
+                  {t('newStation.termsAgreement')}
                 </p>
               </div>
             </div>

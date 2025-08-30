@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import React from 'react';
+import { useStaticTranslation } from '@/hooks/useTranslation';
 
 interface EditEventDialogProps {
     open: boolean;
@@ -20,11 +21,14 @@ export const EditEventDialog: React.FC<EditEventDialogProps> = ({
     onSubmit,
     isPending,
     isError,
-}) => (
+}) => {
+    const { t } = useStaticTranslation();
+    
+    return (
     <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className='p-0 border-0 rounded-none' style={{ borderRadius: 0 }}>
             <DialogTitle className='px-6 pt-6 pb-2 font-bold text-lg border-b border-zinc-200 dark:border-zinc-800' style={{ borderRadius: 0 }}>
-                Edit event
+                {t('eventDialogs.editEvent')}
             </DialogTitle>
             <form
                 className='flex flex-col gap-3 px-6 py-6'
@@ -34,11 +38,11 @@ export const EditEventDialog: React.FC<EditEventDialogProps> = ({
                 }}
             >
                 <div className='flex items-center gap-4'>
-                <label htmlFor='event-title' className='w-28 text-sm font-medium text-zinc-700 dark:text-zinc-200'>Title</label>
+                <label htmlFor='event-title' className='w-28 text-sm font-medium text-zinc-700 dark:text-zinc-200'>{t('eventDialogs.title')}</label>
                 <Input
                     id='event-title'
                     required
-                    placeholder='Title'
+                    placeholder={t('eventDialogs.title')}
                     value={form.title}
                     onChange={e => setForm({ ...form, title: e.target.value })}
                     className='flex-1 rounded-none border border-zinc-300 dark:border-zinc-700'
@@ -46,11 +50,11 @@ export const EditEventDialog: React.FC<EditEventDialogProps> = ({
                 />
                 </div>
                 <div className='flex items-center gap-4'>
-                <label htmlFor='event-description' className='w-28 text-sm font-medium text-zinc-700 dark:text-zinc-200'>Description</label>
+                <label htmlFor='event-description' className='w-28 text-sm font-medium text-zinc-700 dark:text-zinc-200'>{t('eventDialogs.description')}</label>
                 <Input
                     id='event-description'
                     required
-                    placeholder='Description'
+                    placeholder={t('eventDialogs.description')}
                     value={form.description}
                     onChange={e => setForm({ ...form, description: e.target.value })}
                     className='flex-1 rounded-none border border-zinc-300 dark:border-zinc-700'
@@ -64,7 +68,7 @@ export const EditEventDialog: React.FC<EditEventDialogProps> = ({
                     style={{ borderRadius: 0 }}
                     onClick={() => onOpenChange(false)}
                 >
-                    Cancel
+                    {t('eventDialogs.cancel')}
                 </button>
                 <button
                     type='submit'
@@ -72,13 +76,14 @@ export const EditEventDialog: React.FC<EditEventDialogProps> = ({
                     style={{ borderRadius: 0 }}
                     disabled={isPending}
                 >
-                    {isPending ? 'Saving...' : 'Save'}
+                    {isPending ? t('eventDialogs.saving') : t('eventDialogs.save')}
                 </button>
                 </div>
                 {isError && (
-                <div className='text-red-500 text-xs mt-1'>Error updating event</div>
+                <div className='text-red-500 text-xs mt-1'>{t('eventDialogs.errorUpdatingEvent')}</div>
                 )}
             </form>
         </DialogContent>
     </Dialog>
-);
+    );
+};

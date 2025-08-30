@@ -9,21 +9,23 @@ import {
 import { Link } from '@tanstack/react-router'
 import AuthLayout from '../auth-layout'
 import { UserAuthForm } from './components/user-auth-form'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 
 export default function SignIn() {
+  const { t } = useStaticTranslation()
+
   return (
     <AuthLayout>
       <Card className='gap-4 rounded-[0.3rem]'>
         <CardHeader>
-          <CardTitle className='text-lg tracking-tight'>Login</CardTitle>
+          <CardTitle className='text-lg tracking-tight'>{t('auth.login')}</CardTitle>
           <CardDescription>
-            Enter your email and password below to <br />
-            log into your account or {' '}
+            {t('auth.enterEmailPassword')} <br />
             <Link
               to='/sign-up'
               className='underline hover:text-white'
             >
-              Sign Up
+              {t('auth.signup')}
             </Link>
           </CardDescription>
         </CardHeader>
@@ -32,23 +34,23 @@ export default function SignIn() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <p className='text-muted-foreground px-8 text-center text-sm'>
-            By clicking login, you agree to our{' '}
+            {t('auth.agreeToTerms')}{' '}
             <a
               target='_blank'
               rel='noopener noreferrer'
               href='https://www.hoergen.com/terms'
               className='hover:text-primary underline underline-offset-4'
             >
-              Terms of Service
+              {t('auth.termsOfService')}
             </a>{' '}
-            and{' '}
+            {t('common.and')}{' '}
             <a
               target='_blank'
               rel='noopener noreferrer'
               href='https://www.hoergen.com/privacy'
               className='hover:text-primary underline underline-offset-4'
             >
-              Privacy Policy
+              {t('auth.privacyPolicy')}
             </a>
             .
           </p>

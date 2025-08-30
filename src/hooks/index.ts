@@ -23,3 +23,6 @@ export {
   useIsElectron,
   useElectronContextMenu,
 } from './useElectron'
+
+// Translation hooks
+export { useTranslation, useStaticTranslation } from './useTranslation'

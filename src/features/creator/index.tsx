@@ -5,6 +5,7 @@ import type { ResponseStationDto } from '@/core/types/station.types'
 import { useAuth } from '@/hooks'
 import { slugify } from '@/utils'
 import { usePermissions } from '@/hooks/auth/usePermissions'
+import { useStaticTranslation } from '@/hooks/useTranslation'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -24,6 +25,7 @@ import {
 } from './hooks'
 
 export default function Creator() {
+  const { t } = useStaticTranslation()
   const { user } = useAuth()
   const { hasRole } = usePermissions()
   const creatorId = user?.uid ?? ''
@@ -90,7 +92,7 @@ export default function Creator() {
               onClick={() => navigate({ to: '/admin' })}
             >
               <IconArrowLeft size={16} />
-              Back to Dashboard
+              {t('creator.backToDashboard')}
             </Button>
           </div>
         )}
@@ -98,10 +100,10 @@ export default function Creator() {
         <div className='mb-10 w-56 max-w-xs min-w-56'>
           <div className='bg-card border-border flex flex-col items-start gap-2 rounded-none border p-3'>
             <span className='text-base font-semibold'>
-              Manage your stations
+              {t('creator.yourStations')}
             </span>
-            <span className='text-muted-foreground text-xs'>
-              With our AzuraCast integration, you can manage your radios.
+            <span className='text-sm text-muted-foreground'>
+              {t('creator.stationsDescription')}
             </span>
             <a
               href='https://www.azuracast.com/'
@@ -109,12 +111,12 @@ export default function Creator() {
               rel='noopener noreferrer'
               className='text-primary mt-2 text-sm font-medium underline'
             >
-              Go to AzuraCast
+              {t('creator.goToAzuraCast')}
             </a>
           </div>
         </div>
 
-        <h3 className='mb-2 font-semibold'>Events</h3>
+        <h3 className='mb-2 font-semibold'>{t('creator.events')}</h3>
         <div className='border-border h-fit w-56 max-w-xs min-w-48 border-r p-4 text-sm'>
           {loadingEvents ? (
             <div className='space-y-2'>
@@ -135,23 +137,23 @@ export default function Creator() {
             </ul>
           ) : (
             <div className='text-muted-foreground'>
-              No events for this station.
+              {t('creator.noEvents')}
             </div>
           )}
         </div>
       </aside>
 
       <main className='max-w-5xl flex-1'>
-        <h1 className='mt-10 mb-6 text-3xl font-bold'>Radio stations</h1>
+        <h1 className='mt-10 mb-6 text-3xl font-bold'>{t('creator.radioStations')}</h1>
         <div className='overflow-x-auto'>
           <table className='w-full border-separate border-spacing-y-2 text-sm'>
             <thead>
               <tr>
-                <th className='py-2 text-left font-semibold'>Cover</th>
-                <th className='py-2 text-left font-semibold'>Name</th>
-                <th className='py-2 text-left font-semibold'>Genres</th>
-                <th className='py-2 text-left font-semibold'>Favorites</th>
-                <th className='py-2 text-left font-semibold'>Actions</th>
+                <th className='py-2 text-left font-semibold'>{t('creator.cover')}</th>
+                <th className='py-2 text-left font-semibold'>{t('creator.name')}</th>
+                <th className='py-2 text-left font-semibold'>{t('creator.genres')}</th>
+                <th className='py-2 text-left font-semibold'>{t('creator.favorites')}</th>
+                <th className='py-2 text-left font-semibold'>{t('creator.actions')}</th>
               </tr>
             </thead>
             <tbody>
