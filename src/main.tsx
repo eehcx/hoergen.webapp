@@ -7,7 +7,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { createHashHistory } from '@tanstack/history'
-import { useAuth } from './hooks'
+import { useAuth } from './presentation/hooks'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/authStore'

@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "@tanstack/react-router";
-import { useAuth } from "@/hooks";
+import { useAuth } from "@/presentation/hooks";
 import { UserRole } from "@/core/types";
 
 interface RoleGuardProps {

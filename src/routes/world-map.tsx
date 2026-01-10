@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Helmet } from "@dr.pogodin/react-helmet"
-import WorldMap from '@/features/world-map'
+import WorldMap from '@/presentation/features/world-map'
 
 export const Route = createFileRoute('/world-map')({
   component: WorldMapPage,

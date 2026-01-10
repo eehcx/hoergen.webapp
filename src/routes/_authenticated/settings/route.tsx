@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import Settings from '@/features/settings'
-import HeaderNavbar from '@/components/header-navbar'
+import Settings from '@/presentation/features/settings'
+import HeaderNavbar from '@/presentation/components/header-navbar'
 
 export const Route = createFileRoute('/_authenticated/settings')({
   component: SettingsLayout,

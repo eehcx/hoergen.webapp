@@ -151,7 +151,10 @@
     "nowPlaying": "Now Playing",
     "nowBroadcasting": "Now Broadcasting",
     "discoverStations": "Discover and listen to your favorite radio stations",
-    "shapeStationCulture": "Shape your station's culture and connect with your audience"
+    "shapeStationCulture": "Shape your station's culture and connect with your audience",
+    "openFrequencies": "Open Frequencies",
+    "openFrequenciesDescription": "Stream underground radio from every continent. No limits.",
+    "browseNodes": "Browse Nodes"
   },
   "admin": {
     "overview": "Overview",

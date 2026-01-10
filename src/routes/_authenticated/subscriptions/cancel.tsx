@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useNavigate } from '@tanstack/react-router';
-import HeaderNavbar from '@/components/header-navbar';
-import { Button } from '@/components/ui/button';
+import HeaderNavbar from '@/presentation/components/header-navbar';
+import { Button } from '@/presentation/components/ui/button';
 import { IconX, IconArrowLeft, IconMail } from '@tabler/icons-react';
 
 export default function SubscriptionCancel() {

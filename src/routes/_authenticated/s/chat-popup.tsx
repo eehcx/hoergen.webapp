@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ChatWindow } from '@/features/station/components/chat-window'
+import { ChatWindow } from '@/presentation/features/station/components/chat-window'
 
 export const Route = createFileRoute('/_authenticated/s/chat-popup')({
   component: ChatPopupPage,

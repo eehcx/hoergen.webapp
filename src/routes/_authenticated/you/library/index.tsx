@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import History from '@/features/listener/history';
-import Favorites from '@/features/listener/favorites';
+import History from '@/presentation/features/listener/history';
+import Favorites from '@/presentation/features/listener/favorites';
 import { Helmet } from "@dr.pogodin/react-helmet";
-import HeaderNavbar from '@/components/header-navbar';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import HeaderNavbar from '@/presentation/components/header-navbar';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/presentation/components/ui/tabs"
 import React from 'react';
-import { Footer } from '@/components/footer';
-import { useStaticTranslation } from '@/hooks/useTranslation';
+import { Footer } from '@/presentation/components/footer';
+import { useStaticTranslation } from '@/presentation/hooks/useTranslation';
 
 export const Route = createFileRoute('/_authenticated/you/library/')({
   component: LibraryPage

@@ -2,12 +2,12 @@ import { useParams, useSearch } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { createFileRoute } from '@tanstack/react-router'
-import HeaderNavbar from '@/components/header-navbar'
-import { Footer } from '@/components/footer'
+import HeaderNavbar from '@/presentation/components/header-navbar'
+import { Footer } from '@/presentation/components/footer'
 import type { ResponseStationDto } from '@/core/types/station.types'
 import { stationService } from '@/core/services'
-import Station from '@/features/station'
-import { useStaticTranslation } from '@/hooks/useTranslation'
+import Station from '@/presentation/features/station'
+import { useStaticTranslation } from '@/presentation/hooks/useTranslation'
 
 export const Route = createFileRoute('/_authenticated/s/$stationSlug')({
   component: StationPage,

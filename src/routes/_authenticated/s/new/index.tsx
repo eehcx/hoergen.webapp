@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { auth } from '@/core/firebase'
-import NewStation from '@/features/station/new'
+import NewStation from '@/presentation/features/station/new'
 
 export const Route = createFileRoute('/_authenticated/s/new/')({
   beforeLoad: async () => {

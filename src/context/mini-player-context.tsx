@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { ResponseStationDto } from '@/core/types'
-import { useAuth } from '@/hooks'
-import { useCreateHistory } from '@/hooks/history/useHistory'
+import { useAuth } from '@/presentation/hooks'
+import { useCreateHistory } from '@/presentation/hooks/history/useHistory'
 
 type PlayerState = {
   station: ResponseStationDto

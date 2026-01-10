@@ -4,11 +4,11 @@ import {
   //useNavigate 
 } from '@tanstack/react-router'
 import { Helmet } from "@dr.pogodin/react-helmet";
-import HeaderNavbar from '@/components/header-navbar'
-import { Footer } from '@/components/footer'
-import { Skeleton } from '@/components/ui/skeleton';
-import { useStationBySlug } from '@/features/station/hooks';
-import Station from '@/features/station'
+import HeaderNavbar from '@/presentation/components/header-navbar'
+import { Footer } from '@/presentation/components/footer'
+import { Skeleton } from '@/presentation/components/ui/skeleton';
+import { useStationBySlug } from '@/presentation/features/station/hooks';
+import Station from '@/presentation/features/station'
 
 export const Route = createFileRoute('/_authenticated/$slugName')({
   component: StationPage,

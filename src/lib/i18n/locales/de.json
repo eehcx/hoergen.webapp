@@ -151,7 +151,10 @@
     "nowPlaying": "Läuft gerade",
     "nowBroadcasting": "Sendet gerade",
     "discoverStations": "Entdecken und hören Sie Ihre Lieblingsradiosender",
-    "shapeStationCulture": "Gestalten Sie die Kultur Ihres Senders und verbinden Sie sich mit Ihrem Publikum"
+    "shapeStationCulture": "Gestalten Sie die Kultur Ihres Senders und verbinden Sie sich mit Ihrem Publikum",
+    "openFrequencies": "Offene Frequenzen",
+    "openFrequenciesDescription": "Streamen Sie Underground-Radio von jedem Kontinent. Keine Grenzen.",
+    "browseNodes": "Knoten Durchsuchen"
   },
   "admin": {
     "overview": "Übersicht",

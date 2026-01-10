@@ -1,12 +1,12 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '@/hooks';
+import { useAuth } from '@/presentation/hooks';
 import { UserService } from '@/core/services/users/user.service';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/presentation/components/ui/button';
 import { IconCheck, IconLoader, IconX } from '@tabler/icons-react';
 import { toast } from 'sonner';
-import HeaderNavbar from '@/components/header-navbar';
+import HeaderNavbar from '@/presentation/components/header-navbar';
 import { useEffect, useState } from 'react';
 
 export default function SubscriptionSuccess() {

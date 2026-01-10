@@ -197,7 +197,10 @@
     "exploreWorld": "Explora el Mundo",
     "discoverNew": "Descubre Nuevas Estaciones",
     "connectWithCreators": "Conéctate con Creadores",
-    "joinCommunity": "Únete a la Comunidad"
+    "joinCommunity": "Únete a la Comunidad",
+    "openFrequencies": "Frecuencias Abiertas",
+    "openFrequenciesDescription": "Transmite radio underground desde cada continente. Sin límites.",
+    "browseNodes": "Explorar Nodos"
   },
   "admin": {
     "overview": "Resumen",

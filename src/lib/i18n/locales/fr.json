@@ -151,7 +151,10 @@
     "nowPlaying": "En cours de lecture",
     "nowBroadcasting": "En cours de diffusion",
     "discoverStations": "Découvrez et écoutez vos stations de radio préférées",
-    "shapeStationCulture": "Formez la culture de votre station et connectez-vous avec votre audience"
+    "shapeStationCulture": "Formez la culture de votre station et connectez-vous avec votre audience",
+    "openFrequencies": "Fréquences Ouvertes",
+    "openFrequenciesDescription": "Diffusez de la radio underground depuis chaque continent. Sans limites.",
+    "browseNodes": "Parcourir les Nœuds"
   },
   "admin": {
     "overview": "Vue d'ensemble",

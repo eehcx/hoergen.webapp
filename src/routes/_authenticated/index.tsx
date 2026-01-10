@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Helmet } from "@dr.pogodin/react-helmet"
-import Listener from "@/features/listener"
-import { useAuth, usePermissions } from "@/hooks"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { useStaticTranslation } from "@/hooks/useTranslation"
+import Listener from "@/presentation/features/listener"
+import { useAuth, usePermissions } from "@/presentation/hooks"
+import { Button } from "@/presentation/components/ui/button"
+import { Alert, AlertTitle, AlertDescription } from "@/presentation/components/ui/alert"
+import { useStaticTranslation } from "@/presentation/hooks/useTranslation"
 
 export const Route = createFileRoute("/_authenticated/")({
   component: HomePage,
@@ -29,11 +29,12 @@ function HomePage() {
             <p className="text-muted-foreground">{t('common.loading')}</p>
           ) : isFree ? (
             <Alert className="mb-4 rounded-xs">
-              <AlertTitle>{t('home.upgradeToPro')}</AlertTitle>
+              <AlertTitle>{t('home.openFrequencies')}</AlertTitle>
               <AlertDescription>
-                {t('home.upgradeDescription')} <br />
+                {t('home.openFrequenciesDescription')} <br />
                 <Button asChild className="mt-2 rounded-none bg-[#26E056] hover:bg-[#1DBB4D]">
-                  <a href="/subscriptions" className="text-zinc-800">{t('home.subscribeNow')}</a>
+                  {/*{t('home.subscribeNow')}*/}
+                  <a href="/worldwide" className="text-zinc-800">{t('home.browseNodes')}</a>
                 </Button>
               </AlertDescription>
             </Alert>

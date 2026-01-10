@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext, Outlet, useLocation } from '@tanstack/react-router'
 
-import { Toaster } from '@/components/ui/sonner'
-import { NavigationProgress } from '@/components/navigation-progress'
-import { MiniPlayer } from '@/components/mini-player'
+import { Toaster } from '@/presentation/components/ui/sonner'
+import { NavigationProgress } from '@/presentation/components/navigation-progress'
+import { MiniPlayer } from '@/presentation/components/mini-player'
 import { useMiniPlayer } from '@/context/mini-player-context'
-import GeneralError from '@/features/errors/general-error'
-import NotFoundError from '@/features/errors/not-found-error'
+import GeneralError from '@/presentation/features/errors/general-error'
+import NotFoundError from '@/presentation/features/errors/not-found-error'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient

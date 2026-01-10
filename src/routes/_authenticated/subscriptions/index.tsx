@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Helmet } from "@dr.pogodin/react-helmet";
-import Subscriptions from "@/features/subscriptions";
+import Subscriptions from "@/presentation/features/subscriptions";
 
 export const Route = createFileRoute('/_authenticated/subscriptions/')({
   component: SubscriptionsPage,
