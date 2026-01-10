@@ -1,5 +1,6 @@
 {
   "common": {
+    "theme": "Тема",
     "loading": "Загрузка...",
     "save": "Сохранить",
     "cancel": "Отмена",
@@ -293,7 +294,7 @@
   "footer": {
     "home": "Главная",
     "language": "Русский",
-    "copyright": "Copyright © 2025 Hörgen Radio. Все права защищены.",
+    "copyright": "Copyright © 2026 Hörgen Radio. Все права защищены.",
     "termsOfService": "Условия использования",
     "privacyPolicy": "Политика конфиденциальности",
     "feedback": "Обратная связь"

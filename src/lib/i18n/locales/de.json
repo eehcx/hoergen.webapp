@@ -1,5 +1,6 @@
 {
   "common": {
+    "theme": "Design",
     "loading": "Laden...",
     "save": "Speichern",
     "cancel": "Abbrechen",

@@ -29,3 +29,5 @@ firebase.json
 
 pnpm-lock.yamlrelease/
 release/
+
+.zed/

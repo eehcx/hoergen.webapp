@@ -1,5 +1,6 @@
 {
   "common": {
+    "theme": "Tema",
     "loading": "Cargando...",
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -301,7 +302,7 @@
   "footer": {
     "home": "Inicio",
     "language": "Español",
-    "copyright": "Copyright © 2025 Hörgen Radio. Todos los derechos reservados.",
+    "copyright": "Copyright © 2026 Hörgen Radio. Todos los derechos reservados.",
     "termsOfService": "Términos de Servicio",
     "privacyPolicy": "Política de Privacidad",
     "feedback": "Comentarios"
