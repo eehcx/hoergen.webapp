@@ -88,6 +88,11 @@
     "searchPlaceholder": "Search radio stations around the world...",
     "createRadio": "Create Radio"
   },
+  "discover": {
+    "openFrequencies": "Open Frequencies",
+    "openFrequenciesDescription": "Sign up to create your own radio station, save favorites, and access premium features. Or explore public stations worldwide.",
+    "browseNodes": "Browse Nodes"
+  },
   "worldMap": {
     "title": "World Map",
     "description": "Explore radio stations around the world",

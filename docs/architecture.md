@@ -326,7 +326,7 @@ División automática del código por rutas:
 
 ```tsx
 // Lazy loading de componentes pesados
-const AdminDashboard = lazy(() => import('./features/admin-dashboard'));
+const AdminDashboard = lazy(() => import('./features/console'));
 const CreatorPanel = lazy(() => import('./features/creator'));
 
 // Suspense para manejar loading

@@ -1,6 +1,6 @@
 import { Link, useRouter } from '@tanstack/react-router'
 // Icons 
-import { IconSearch, IconPlus } from '@tabler/icons-react'
+import { IconSearch, IconPlus, IconLogin, IconUserPlus } from '@tabler/icons-react'
 import { Menu } from 'lucide-react'
 // Shadcn components
 import { ProfileDropdown } from '@/presentation/components/profile-dropdown.tsx'
@@ -12,17 +12,24 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/presentation/components/ui/sheet.tsx'
+import { Separator } from './ui/separator'
+import { 
+  Avatar, 
+  AvatarFallback
+} from '@/presentation/components/ui/avatar.tsx'
 // Hooks
 import { usePermissions } from '@/presentation/hooks/auth/usePermissions.ts'
 import { useStaticTranslation } from '@/presentation/hooks/useTranslation.ts'
 //import { useIsMobile } from '@/hooks/use-mobile'
+import { useAuth } from '@/presentation/hooks'
 
 export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
   const router = useRouter();
   const currentPath = router.state.location.pathname;
   const { canCreateStation } = usePermissions();
   const { t } = useStaticTranslation();
-  //const isMobile = useIsMobile();
+  //const isMobile = useIsMobile();\
+  const { isAuthenticated } = useAuth()
 
   // Helper para saber si la ruta está activa
   const isActive = (path: string) => currentPath === path;
@@ -46,7 +53,7 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
         >
           <h1 className="text-xl font-bold tracking-widest font-[Orbitron]">Hörgen</h1>
           <span className="text-sm font-[Inter] text-zinc-400 hidden md:inline">
-            v0.1.4
+            v0.1.5
           </span>
         </Link>
 
@@ -65,9 +72,25 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
           <SheetContent side="left" className="w-3/4 sm:max-w-sm">
             <div className="flex flex-col h-full">
               {/* Logo en el menú */}
-              <div className="p-4 border-b">
-                <ProfileDropdown />
+              <div className="p-4">
+                {isAuthenticated ? (
+                  <ProfileDropdown />
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <button className="relative h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback>G</AvatarFallback>
+                      </Avatar>
+                    </button>
+                    <div className="flex flex-col">
+                      <p className="font-medium">Guest</p>
+                      <p className="text-xs text-muted-foreground">Explore radio stations</p>
+                    </div>
+                  </div>
+                )}
               </div>
+
+              <Separator />
 
               <nav className="flex-1 p-4">
                 <div className="space-y-2">
@@ -85,7 +108,28 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
                 </div>
               </nav>
 
-              <div className="p-4 border-t space-y-4">
+              <Separator />
+
+              <div className="p-4 space-y-4">
+                {!isAuthenticated && (
+                  <div className="flex flex-col gap-2">
+                    <Button variant="outline" size="lg" asChild className="w-full justify-start">
+                      <Link to="/sign-up" className="flex items-center gap-3">
+                        <IconUserPlus className="h-4 w-4" />
+                        {/*{t('signup')} */}
+                        <span>Sign Up</span>
+                      </Link>
+                    </Button>
+                    <Button variant="default" size="lg" asChild className="w-full justify-start">
+                      <Link to="/sign-in" className="flex items-center gap-3">
+                        <IconLogin className="h-4 w-4" />
+                        {/*{t('login')}*/}
+                        <span>Sign In</span>
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+
                 {canCreateStation && (
                   <Button
                     variant="outline"
@@ -156,7 +200,37 @@ export default function HeaderNavbar({ sticky = false }: { sticky?: boolean }) {
             </Button>
           )}
           <ThemeSwitch />
-          <ProfileDropdown />
+          {isAuthenticated ? (
+            <ProfileDropdown />
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="h-9 px-3 rounded-none"
+              >
+                <Link to="/sign-up" className="flex items-center gap-2">
+                  <IconUserPlus className="h-4 w-4" />
+                  {/*t('signup')}*/}
+                  <span>Sign Up</span>
+                </Link>
+              </Button>
+
+              <Button
+                variant="default"
+                size="sm"
+                asChild
+                className="h-9 px-4 rounded-none"
+              >
+                <Link to="/sign-in" className="flex items-center gap-2">
+                  <IconLogin className="h-4 w-4" />
+                  {/*{t('login')} */}
+                  <span>Sign In</span>
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </header>

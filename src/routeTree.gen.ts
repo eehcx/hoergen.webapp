@@ -9,72 +9,61 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorldMapRouteImport } from './routes/world-map'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as WorldwideIndexRouteImport } from './routes/worldwide/index'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedSlugNameRouteImport } from './routes/_authenticated/$slugName'
+import { Route as protectedRouteRouteImport } from './routes/(protected)/route'
+import { Route as protectedIndexRouteImport } from './routes/(protected)/index'
+import { Route as guestSlugNameRouteImport } from './routes/(guest)/$slugName'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
 import { Route as errors403RouteImport } from './routes/(errors)/403'
 import { Route as errors401RouteImport } from './routes/(errors)/401'
 import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
-import { Route as authSignIn2RouteImport } from './routes/(auth)/sign-in-2'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
-import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
-import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
-import { Route as AuthenticatedYouIndexRouteImport } from './routes/_authenticated/you/index'
-import { Route as AuthenticatedSubscriptionsIndexRouteImport } from './routes/_authenticated/subscriptions/index'
-import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
-import { Route as AuthenticatedCreatorIndexRouteImport } from './routes/_authenticated/creator/index'
-import { Route as AuthenticatedBrowseIndexRouteImport } from './routes/_authenticated/browse/index'
-import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
-import { Route as AuthenticatedSubscriptionsSuccessRouteImport } from './routes/_authenticated/subscriptions/success'
-import { Route as AuthenticatedSubscriptionsCancelRouteImport } from './routes/_authenticated/subscriptions/cancel'
-import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
-import { Route as AuthenticatedSettingsLanguageRouteImport } from './routes/_authenticated/settings/language'
-import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
-import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
-import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
-import { Route as AuthenticatedSChatPopupRouteImport } from './routes/_authenticated/s/chat-popup'
-import { Route as AuthenticatedSStationSlugRouteImport } from './routes/_authenticated/s/$stationSlug'
-import { Route as AuthenticatedYouLibraryIndexRouteImport } from './routes/_authenticated/you/library/index'
-import { Route as AuthenticatedSNewIndexRouteImport } from './routes/_authenticated/s/new/index'
-import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
-import { Route as AuthenticatedAdminSubscriptionsIndexRouteImport } from './routes/_authenticated/admin/subscriptions/index'
-import { Route as AuthenticatedAdminStationsIndexRouteImport } from './routes/_authenticated/admin/stations/index'
-import { Route as AuthenticatedAdminReportsIndexRouteImport } from './routes/_authenticated/admin/reports/index'
-import { Route as AuthenticatedAdminModerationIndexRouteImport } from './routes/_authenticated/admin/moderation/index'
-import { Route as AuthenticatedAdminGenresIndexRouteImport } from './routes/_authenticated/admin/genres/index'
-import { Route as AuthenticatedAdminFeedbackIndexRouteImport } from './routes/_authenticated/admin/feedback/index'
-import { Route as AuthenticatedAdminCountriesIndexRouteImport } from './routes/_authenticated/admin/countries/index'
+import { Route as protectedSettingsRouteRouteImport } from './routes/(protected)/settings/route'
+import { Route as protectedAdminRouteRouteImport } from './routes/(protected)/admin/route'
+import { Route as protectedYouIndexRouteImport } from './routes/(protected)/you/index'
+import { Route as protectedSubscriptionsIndexRouteImport } from './routes/(protected)/subscriptions/index'
+import { Route as protectedSettingsIndexRouteImport } from './routes/(protected)/settings/index'
+import { Route as protectedCreatorIndexRouteImport } from './routes/(protected)/creator/index'
+import { Route as protectedAdminIndexRouteImport } from './routes/(protected)/admin/index'
+import { Route as guestWorldwideIndexRouteImport } from './routes/(guest)/worldwide/index'
+import { Route as guestDiscoverIndexRouteImport } from './routes/(guest)/discover/index'
+import { Route as guestBrowseIndexRouteImport } from './routes/(guest)/browse/index'
+import { Route as protectedSubscriptionsSuccessRouteImport } from './routes/(protected)/subscriptions/success'
+import { Route as protectedSubscriptionsCancelRouteImport } from './routes/(protected)/subscriptions/cancel'
+import { Route as protectedSettingsNotificationsRouteImport } from './routes/(protected)/settings/notifications'
+import { Route as protectedSettingsLanguageRouteImport } from './routes/(protected)/settings/language'
+import { Route as protectedSettingsDisplayRouteImport } from './routes/(protected)/settings/display'
+import { Route as protectedSettingsAppearanceRouteImport } from './routes/(protected)/settings/appearance'
+import { Route as protectedSettingsAccountRouteImport } from './routes/(protected)/settings/account'
+import { Route as guestSChatPopupRouteImport } from './routes/(guest)/s/chat-popup'
+import { Route as guestSStationSlugRouteImport } from './routes/(guest)/s/$stationSlug'
+import { Route as protectedYouLibraryIndexRouteImport } from './routes/(protected)/you/library/index'
+import { Route as protectedAdminUsersIndexRouteImport } from './routes/(protected)/admin/users/index'
+import { Route as protectedAdminSubscriptionsIndexRouteImport } from './routes/(protected)/admin/subscriptions/index'
+import { Route as protectedAdminStationsIndexRouteImport } from './routes/(protected)/admin/stations/index'
+import { Route as protectedAdminReportsIndexRouteImport } from './routes/(protected)/admin/reports/index'
+import { Route as protectedAdminModerationIndexRouteImport } from './routes/(protected)/admin/moderation/index'
+import { Route as protectedAdminGenresIndexRouteImport } from './routes/(protected)/admin/genres/index'
+import { Route as protectedAdminFeedbackIndexRouteImport } from './routes/(protected)/admin/feedback/index'
+import { Route as protectedAdminCountriesIndexRouteImport } from './routes/(protected)/admin/countries/index'
+import { Route as guestSNewIndexRouteImport } from './routes/(guest)/s/new/index'
 
-const WorldMapRoute = WorldMapRouteImport.update({
-  id: '/world-map',
-  path: '/world-map',
+const protectedRouteRoute = protectedRouteRouteImport.update({
+  id: '/(protected)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const WorldwideIndexRoute = WorldwideIndexRouteImport.update({
-  id: '/worldwide/',
-  path: '/worldwide/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+const protectedIndexRoute = protectedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => protectedRouteRoute,
 } as any)
-const AuthenticatedSlugNameRoute = AuthenticatedSlugNameRouteImport.update({
-  id: '/$slugName',
+const guestSlugNameRoute = guestSlugNameRouteImport.update({
+  id: '/(guest)/$slugName',
   path: '/$slugName',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 const errors503Route = errors503RouteImport.update({
   id: '/(errors)/503',
@@ -106,11 +95,6 @@ const authSignUpRoute = authSignUpRouteImport.update({
   path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
-const authSignIn2Route = authSignIn2RouteImport.update({
-  id: '/(auth)/sign-in-2',
-  path: '/sign-in-2',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const authSignInRoute = authSignInRouteImport.update({
   id: '/(auth)/sign-in',
   path: '/sign-in',
@@ -126,303 +110,303 @@ const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsRouteRoute =
-  AuthenticatedSettingsRouteRouteImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+const protectedSettingsRouteRoute = protectedSettingsRouteRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => protectedRouteRoute,
+} as any)
+const protectedAdminRouteRoute = protectedAdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => protectedRouteRoute,
 } as any)
-const AuthenticatedYouIndexRoute = AuthenticatedYouIndexRouteImport.update({
+const protectedYouIndexRoute = protectedYouIndexRouteImport.update({
   id: '/you/',
   path: '/you/',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => protectedRouteRoute,
 } as any)
-const AuthenticatedSubscriptionsIndexRoute =
-  AuthenticatedSubscriptionsIndexRouteImport.update({
+const protectedSubscriptionsIndexRoute =
+  protectedSubscriptionsIndexRouteImport.update({
     id: '/subscriptions/',
     path: '/subscriptions/',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    getParentRoute: () => protectedRouteRoute,
   } as any)
-const AuthenticatedSettingsIndexRoute =
-  AuthenticatedSettingsIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
-  } as any)
-const AuthenticatedCreatorIndexRoute =
-  AuthenticatedCreatorIndexRouteImport.update({
-    id: '/creator/',
-    path: '/creator/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrowseIndexRoute =
-  AuthenticatedBrowseIndexRouteImport.update({
-    id: '/browse/',
-    path: '/browse/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+const protectedSettingsIndexRoute = protectedSettingsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
+  getParentRoute: () => protectedSettingsRouteRoute,
 } as any)
-const AuthenticatedSubscriptionsSuccessRoute =
-  AuthenticatedSubscriptionsSuccessRouteImport.update({
+const protectedCreatorIndexRoute = protectedCreatorIndexRouteImport.update({
+  id: '/creator/',
+  path: '/creator/',
+  getParentRoute: () => protectedRouteRoute,
+} as any)
+const protectedAdminIndexRoute = protectedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => protectedAdminRouteRoute,
+} as any)
+const guestWorldwideIndexRoute = guestWorldwideIndexRouteImport.update({
+  id: '/(guest)/worldwide/',
+  path: '/worldwide/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const guestDiscoverIndexRoute = guestDiscoverIndexRouteImport.update({
+  id: '/(guest)/discover/',
+  path: '/discover/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const guestBrowseIndexRoute = guestBrowseIndexRouteImport.update({
+  id: '/(guest)/browse/',
+  path: '/browse/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const protectedSubscriptionsSuccessRoute =
+  protectedSubscriptionsSuccessRouteImport.update({
     id: '/subscriptions/success',
     path: '/subscriptions/success',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    getParentRoute: () => protectedRouteRoute,
   } as any)
-const AuthenticatedSubscriptionsCancelRoute =
-  AuthenticatedSubscriptionsCancelRouteImport.update({
+const protectedSubscriptionsCancelRoute =
+  protectedSubscriptionsCancelRouteImport.update({
     id: '/subscriptions/cancel',
     path: '/subscriptions/cancel',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    getParentRoute: () => protectedRouteRoute,
   } as any)
-const AuthenticatedSettingsNotificationsRoute =
-  AuthenticatedSettingsNotificationsRouteImport.update({
+const protectedSettingsNotificationsRoute =
+  protectedSettingsNotificationsRouteImport.update({
     id: '/notifications',
     path: '/notifications',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+    getParentRoute: () => protectedSettingsRouteRoute,
   } as any)
-const AuthenticatedSettingsLanguageRoute =
-  AuthenticatedSettingsLanguageRouteImport.update({
+const protectedSettingsLanguageRoute =
+  protectedSettingsLanguageRouteImport.update({
     id: '/language',
     path: '/language',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+    getParentRoute: () => protectedSettingsRouteRoute,
   } as any)
-const AuthenticatedSettingsDisplayRoute =
-  AuthenticatedSettingsDisplayRouteImport.update({
+const protectedSettingsDisplayRoute =
+  protectedSettingsDisplayRouteImport.update({
     id: '/display',
     path: '/display',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+    getParentRoute: () => protectedSettingsRouteRoute,
   } as any)
-const AuthenticatedSettingsAppearanceRoute =
-  AuthenticatedSettingsAppearanceRouteImport.update({
+const protectedSettingsAppearanceRoute =
+  protectedSettingsAppearanceRouteImport.update({
     id: '/appearance',
     path: '/appearance',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+    getParentRoute: () => protectedSettingsRouteRoute,
   } as any)
-const AuthenticatedSettingsAccountRoute =
-  AuthenticatedSettingsAccountRouteImport.update({
+const protectedSettingsAccountRoute =
+  protectedSettingsAccountRouteImport.update({
     id: '/account',
     path: '/account',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+    getParentRoute: () => protectedSettingsRouteRoute,
   } as any)
-const AuthenticatedSChatPopupRoute = AuthenticatedSChatPopupRouteImport.update({
-  id: '/s/chat-popup',
+const guestSChatPopupRoute = guestSChatPopupRouteImport.update({
+  id: '/(guest)/s/chat-popup',
   path: '/s/chat-popup',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSStationSlugRoute =
-  AuthenticatedSStationSlugRouteImport.update({
-    id: '/s/$stationSlug',
-    path: '/s/$stationSlug',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedYouLibraryIndexRoute =
-  AuthenticatedYouLibraryIndexRouteImport.update({
+const guestSStationSlugRoute = guestSStationSlugRouteImport.update({
+  id: '/(guest)/s/$stationSlug',
+  path: '/s/$stationSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const protectedYouLibraryIndexRoute =
+  protectedYouLibraryIndexRouteImport.update({
     id: '/you/library/',
     path: '/you/library/',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    getParentRoute: () => protectedRouteRoute,
   } as any)
-const AuthenticatedSNewIndexRoute = AuthenticatedSNewIndexRouteImport.update({
-  id: '/s/new/',
-  path: '/s/new/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminUsersIndexRoute =
-  AuthenticatedAdminUsersIndexRouteImport.update({
+const protectedAdminUsersIndexRoute =
+  protectedAdminUsersIndexRouteImport.update({
     id: '/users/',
     path: '/users/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminSubscriptionsIndexRoute =
-  AuthenticatedAdminSubscriptionsIndexRouteImport.update({
+const protectedAdminSubscriptionsIndexRoute =
+  protectedAdminSubscriptionsIndexRouteImport.update({
     id: '/subscriptions/',
     path: '/subscriptions/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminStationsIndexRoute =
-  AuthenticatedAdminStationsIndexRouteImport.update({
+const protectedAdminStationsIndexRoute =
+  protectedAdminStationsIndexRouteImport.update({
     id: '/stations/',
     path: '/stations/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminReportsIndexRoute =
-  AuthenticatedAdminReportsIndexRouteImport.update({
+const protectedAdminReportsIndexRoute =
+  protectedAdminReportsIndexRouteImport.update({
     id: '/reports/',
     path: '/reports/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminModerationIndexRoute =
-  AuthenticatedAdminModerationIndexRouteImport.update({
+const protectedAdminModerationIndexRoute =
+  protectedAdminModerationIndexRouteImport.update({
     id: '/moderation/',
     path: '/moderation/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminGenresIndexRoute =
-  AuthenticatedAdminGenresIndexRouteImport.update({
+const protectedAdminGenresIndexRoute =
+  protectedAdminGenresIndexRouteImport.update({
     id: '/genres/',
     path: '/genres/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminFeedbackIndexRoute =
-  AuthenticatedAdminFeedbackIndexRouteImport.update({
+const protectedAdminFeedbackIndexRoute =
+  protectedAdminFeedbackIndexRouteImport.update({
     id: '/feedback/',
     path: '/feedback/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminCountriesIndexRoute =
-  AuthenticatedAdminCountriesIndexRouteImport.update({
+const protectedAdminCountriesIndexRoute =
+  protectedAdminCountriesIndexRouteImport.update({
     id: '/countries/',
     path: '/countries/',
-    getParentRoute: () => AuthenticatedAdminRouteRoute,
+    getParentRoute: () => protectedAdminRouteRoute,
   } as any)
+const guestSNewIndexRoute = guestSNewIndexRouteImport.update({
+  id: '/(guest)/s/new/',
+  path: '/s/new/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/world-map': typeof WorldMapRoute
-  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
+  '/admin': typeof protectedAdminRouteRouteWithChildren
+  '/settings': typeof protectedSettingsRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
-  '/sign-in-2': typeof authSignIn2Route
   '/sign-up': typeof authSignUpRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/$slugName': typeof AuthenticatedSlugNameRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/worldwide': typeof WorldwideIndexRoute
-  '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
-  '/s/chat-popup': typeof AuthenticatedSChatPopupRoute
-  '/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
-  '/settings/display': typeof AuthenticatedSettingsDisplayRoute
-  '/settings/language': typeof AuthenticatedSettingsLanguageRoute
-  '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
-  '/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
-  '/admin/': typeof AuthenticatedAdminIndexRoute
-  '/browse': typeof AuthenticatedBrowseIndexRoute
-  '/creator': typeof AuthenticatedCreatorIndexRoute
-  '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
-  '/you': typeof AuthenticatedYouIndexRoute
-  '/admin/countries': typeof AuthenticatedAdminCountriesIndexRoute
-  '/admin/feedback': typeof AuthenticatedAdminFeedbackIndexRoute
-  '/admin/genres': typeof AuthenticatedAdminGenresIndexRoute
-  '/admin/moderation': typeof AuthenticatedAdminModerationIndexRoute
-  '/admin/reports': typeof AuthenticatedAdminReportsIndexRoute
-  '/admin/stations': typeof AuthenticatedAdminStationsIndexRoute
-  '/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsIndexRoute
-  '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
-  '/s/new': typeof AuthenticatedSNewIndexRoute
-  '/you/library': typeof AuthenticatedYouLibraryIndexRoute
+  '/$slugName': typeof guestSlugNameRoute
+  '/': typeof protectedIndexRoute
+  '/s/$stationSlug': typeof guestSStationSlugRoute
+  '/s/chat-popup': typeof guestSChatPopupRoute
+  '/settings/account': typeof protectedSettingsAccountRoute
+  '/settings/appearance': typeof protectedSettingsAppearanceRoute
+  '/settings/display': typeof protectedSettingsDisplayRoute
+  '/settings/language': typeof protectedSettingsLanguageRoute
+  '/settings/notifications': typeof protectedSettingsNotificationsRoute
+  '/subscriptions/cancel': typeof protectedSubscriptionsCancelRoute
+  '/subscriptions/success': typeof protectedSubscriptionsSuccessRoute
+  '/browse': typeof guestBrowseIndexRoute
+  '/discover': typeof guestDiscoverIndexRoute
+  '/worldwide': typeof guestWorldwideIndexRoute
+  '/admin/': typeof protectedAdminIndexRoute
+  '/creator': typeof protectedCreatorIndexRoute
+  '/settings/': typeof protectedSettingsIndexRoute
+  '/subscriptions': typeof protectedSubscriptionsIndexRoute
+  '/you': typeof protectedYouIndexRoute
+  '/s/new': typeof guestSNewIndexRoute
+  '/admin/countries': typeof protectedAdminCountriesIndexRoute
+  '/admin/feedback': typeof protectedAdminFeedbackIndexRoute
+  '/admin/genres': typeof protectedAdminGenresIndexRoute
+  '/admin/moderation': typeof protectedAdminModerationIndexRoute
+  '/admin/reports': typeof protectedAdminReportsIndexRoute
+  '/admin/stations': typeof protectedAdminStationsIndexRoute
+  '/admin/subscriptions': typeof protectedAdminSubscriptionsIndexRoute
+  '/admin/users': typeof protectedAdminUsersIndexRoute
+  '/you/library': typeof protectedYouLibraryIndexRoute
 }
 export interface FileRoutesByTo {
-  '/world-map': typeof WorldMapRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
-  '/sign-in-2': typeof authSignIn2Route
   '/sign-up': typeof authSignUpRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/$slugName': typeof AuthenticatedSlugNameRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/worldwide': typeof WorldwideIndexRoute
-  '/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
-  '/s/chat-popup': typeof AuthenticatedSChatPopupRoute
-  '/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
-  '/settings/display': typeof AuthenticatedSettingsDisplayRoute
-  '/settings/language': typeof AuthenticatedSettingsLanguageRoute
-  '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
-  '/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
-  '/admin': typeof AuthenticatedAdminIndexRoute
-  '/browse': typeof AuthenticatedBrowseIndexRoute
-  '/creator': typeof AuthenticatedCreatorIndexRoute
-  '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
-  '/you': typeof AuthenticatedYouIndexRoute
-  '/admin/countries': typeof AuthenticatedAdminCountriesIndexRoute
-  '/admin/feedback': typeof AuthenticatedAdminFeedbackIndexRoute
-  '/admin/genres': typeof AuthenticatedAdminGenresIndexRoute
-  '/admin/moderation': typeof AuthenticatedAdminModerationIndexRoute
-  '/admin/reports': typeof AuthenticatedAdminReportsIndexRoute
-  '/admin/stations': typeof AuthenticatedAdminStationsIndexRoute
-  '/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsIndexRoute
-  '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
-  '/s/new': typeof AuthenticatedSNewIndexRoute
-  '/you/library': typeof AuthenticatedYouLibraryIndexRoute
+  '/$slugName': typeof guestSlugNameRoute
+  '/': typeof protectedIndexRoute
+  '/s/$stationSlug': typeof guestSStationSlugRoute
+  '/s/chat-popup': typeof guestSChatPopupRoute
+  '/settings/account': typeof protectedSettingsAccountRoute
+  '/settings/appearance': typeof protectedSettingsAppearanceRoute
+  '/settings/display': typeof protectedSettingsDisplayRoute
+  '/settings/language': typeof protectedSettingsLanguageRoute
+  '/settings/notifications': typeof protectedSettingsNotificationsRoute
+  '/subscriptions/cancel': typeof protectedSubscriptionsCancelRoute
+  '/subscriptions/success': typeof protectedSubscriptionsSuccessRoute
+  '/browse': typeof guestBrowseIndexRoute
+  '/discover': typeof guestDiscoverIndexRoute
+  '/worldwide': typeof guestWorldwideIndexRoute
+  '/admin': typeof protectedAdminIndexRoute
+  '/creator': typeof protectedCreatorIndexRoute
+  '/settings': typeof protectedSettingsIndexRoute
+  '/subscriptions': typeof protectedSubscriptionsIndexRoute
+  '/you': typeof protectedYouIndexRoute
+  '/s/new': typeof guestSNewIndexRoute
+  '/admin/countries': typeof protectedAdminCountriesIndexRoute
+  '/admin/feedback': typeof protectedAdminFeedbackIndexRoute
+  '/admin/genres': typeof protectedAdminGenresIndexRoute
+  '/admin/moderation': typeof protectedAdminModerationIndexRoute
+  '/admin/reports': typeof protectedAdminReportsIndexRoute
+  '/admin/stations': typeof protectedAdminStationsIndexRoute
+  '/admin/subscriptions': typeof protectedAdminSubscriptionsIndexRoute
+  '/admin/users': typeof protectedAdminUsersIndexRoute
+  '/you/library': typeof protectedYouLibraryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/world-map': typeof WorldMapRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
-  '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
+  '/(protected)': typeof protectedRouteRouteWithChildren
+  '/(protected)/admin': typeof protectedAdminRouteRouteWithChildren
+  '/(protected)/settings': typeof protectedSettingsRouteRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/otp': typeof authOtpRoute
   '/(auth)/sign-in': typeof authSignInRoute
-  '/(auth)/sign-in-2': typeof authSignIn2Route
   '/(auth)/sign-up': typeof authSignUpRoute
   '/(errors)/401': typeof errors401Route
   '/(errors)/403': typeof errors403Route
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
-  '/_authenticated/$slugName': typeof AuthenticatedSlugNameRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/worldwide/': typeof WorldwideIndexRoute
-  '/_authenticated/s/$stationSlug': typeof AuthenticatedSStationSlugRoute
-  '/_authenticated/s/chat-popup': typeof AuthenticatedSChatPopupRoute
-  '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
-  '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
-  '/_authenticated/settings/language': typeof AuthenticatedSettingsLanguageRoute
-  '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/_authenticated/subscriptions/cancel': typeof AuthenticatedSubscriptionsCancelRoute
-  '/_authenticated/subscriptions/success': typeof AuthenticatedSubscriptionsSuccessRoute
-  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
-  '/_authenticated/browse/': typeof AuthenticatedBrowseIndexRoute
-  '/_authenticated/creator/': typeof AuthenticatedCreatorIndexRoute
-  '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/_authenticated/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
-  '/_authenticated/you/': typeof AuthenticatedYouIndexRoute
-  '/_authenticated/admin/countries/': typeof AuthenticatedAdminCountriesIndexRoute
-  '/_authenticated/admin/feedback/': typeof AuthenticatedAdminFeedbackIndexRoute
-  '/_authenticated/admin/genres/': typeof AuthenticatedAdminGenresIndexRoute
-  '/_authenticated/admin/moderation/': typeof AuthenticatedAdminModerationIndexRoute
-  '/_authenticated/admin/reports/': typeof AuthenticatedAdminReportsIndexRoute
-  '/_authenticated/admin/stations/': typeof AuthenticatedAdminStationsIndexRoute
-  '/_authenticated/admin/subscriptions/': typeof AuthenticatedAdminSubscriptionsIndexRoute
-  '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
-  '/_authenticated/s/new/': typeof AuthenticatedSNewIndexRoute
-  '/_authenticated/you/library/': typeof AuthenticatedYouLibraryIndexRoute
+  '/(guest)/$slugName': typeof guestSlugNameRoute
+  '/(protected)/': typeof protectedIndexRoute
+  '/(guest)/s/$stationSlug': typeof guestSStationSlugRoute
+  '/(guest)/s/chat-popup': typeof guestSChatPopupRoute
+  '/(protected)/settings/account': typeof protectedSettingsAccountRoute
+  '/(protected)/settings/appearance': typeof protectedSettingsAppearanceRoute
+  '/(protected)/settings/display': typeof protectedSettingsDisplayRoute
+  '/(protected)/settings/language': typeof protectedSettingsLanguageRoute
+  '/(protected)/settings/notifications': typeof protectedSettingsNotificationsRoute
+  '/(protected)/subscriptions/cancel': typeof protectedSubscriptionsCancelRoute
+  '/(protected)/subscriptions/success': typeof protectedSubscriptionsSuccessRoute
+  '/(guest)/browse/': typeof guestBrowseIndexRoute
+  '/(guest)/discover/': typeof guestDiscoverIndexRoute
+  '/(guest)/worldwide/': typeof guestWorldwideIndexRoute
+  '/(protected)/admin/': typeof protectedAdminIndexRoute
+  '/(protected)/creator/': typeof protectedCreatorIndexRoute
+  '/(protected)/settings/': typeof protectedSettingsIndexRoute
+  '/(protected)/subscriptions/': typeof protectedSubscriptionsIndexRoute
+  '/(protected)/you/': typeof protectedYouIndexRoute
+  '/(guest)/s/new/': typeof guestSNewIndexRoute
+  '/(protected)/admin/countries/': typeof protectedAdminCountriesIndexRoute
+  '/(protected)/admin/feedback/': typeof protectedAdminFeedbackIndexRoute
+  '/(protected)/admin/genres/': typeof protectedAdminGenresIndexRoute
+  '/(protected)/admin/moderation/': typeof protectedAdminModerationIndexRoute
+  '/(protected)/admin/reports/': typeof protectedAdminReportsIndexRoute
+  '/(protected)/admin/stations/': typeof protectedAdminStationsIndexRoute
+  '/(protected)/admin/subscriptions/': typeof protectedAdminSubscriptionsIndexRoute
+  '/(protected)/admin/users/': typeof protectedAdminUsersIndexRoute
+  '/(protected)/you/library/': typeof protectedYouLibraryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/world-map'
     | '/admin'
     | '/settings'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
-    | '/sign-in-2'
     | '/sign-up'
     | '/401'
     | '/403'
@@ -431,7 +415,6 @@ export interface FileRouteTypes {
     | '/503'
     | '/$slugName'
     | '/'
-    | '/worldwide'
     | '/s/$stationSlug'
     | '/s/chat-popup'
     | '/settings/account'
@@ -441,12 +424,15 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/subscriptions/cancel'
     | '/subscriptions/success'
-    | '/admin/'
     | '/browse'
+    | '/discover'
+    | '/worldwide'
+    | '/admin/'
     | '/creator'
     | '/settings/'
     | '/subscriptions'
     | '/you'
+    | '/s/new'
     | '/admin/countries'
     | '/admin/feedback'
     | '/admin/genres'
@@ -455,15 +441,12 @@ export interface FileRouteTypes {
     | '/admin/stations'
     | '/admin/subscriptions'
     | '/admin/users'
-    | '/s/new'
     | '/you/library'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/world-map'
     | '/forgot-password'
     | '/otp'
     | '/sign-in'
-    | '/sign-in-2'
     | '/sign-up'
     | '/401'
     | '/403'
@@ -472,7 +455,6 @@ export interface FileRouteTypes {
     | '/503'
     | '/$slugName'
     | '/'
-    | '/worldwide'
     | '/s/$stationSlug'
     | '/s/chat-popup'
     | '/settings/account'
@@ -482,12 +464,15 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/subscriptions/cancel'
     | '/subscriptions/success'
-    | '/admin'
     | '/browse'
+    | '/discover'
+    | '/worldwide'
+    | '/admin'
     | '/creator'
     | '/settings'
     | '/subscriptions'
     | '/you'
+    | '/s/new'
     | '/admin/countries'
     | '/admin/feedback'
     | '/admin/genres'
@@ -496,106 +481,94 @@ export interface FileRouteTypes {
     | '/admin/stations'
     | '/admin/subscriptions'
     | '/admin/users'
-    | '/s/new'
     | '/you/library'
   id:
     | '__root__'
-    | '/_authenticated'
-    | '/world-map'
-    | '/_authenticated/admin'
-    | '/_authenticated/settings'
+    | '/(protected)'
+    | '/(protected)/admin'
+    | '/(protected)/settings'
     | '/(auth)/forgot-password'
     | '/(auth)/otp'
     | '/(auth)/sign-in'
-    | '/(auth)/sign-in-2'
     | '/(auth)/sign-up'
     | '/(errors)/401'
     | '/(errors)/403'
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
-    | '/_authenticated/$slugName'
-    | '/_authenticated/'
-    | '/worldwide/'
-    | '/_authenticated/s/$stationSlug'
-    | '/_authenticated/s/chat-popup'
-    | '/_authenticated/settings/account'
-    | '/_authenticated/settings/appearance'
-    | '/_authenticated/settings/display'
-    | '/_authenticated/settings/language'
-    | '/_authenticated/settings/notifications'
-    | '/_authenticated/subscriptions/cancel'
-    | '/_authenticated/subscriptions/success'
-    | '/_authenticated/admin/'
-    | '/_authenticated/browse/'
-    | '/_authenticated/creator/'
-    | '/_authenticated/settings/'
-    | '/_authenticated/subscriptions/'
-    | '/_authenticated/you/'
-    | '/_authenticated/admin/countries/'
-    | '/_authenticated/admin/feedback/'
-    | '/_authenticated/admin/genres/'
-    | '/_authenticated/admin/moderation/'
-    | '/_authenticated/admin/reports/'
-    | '/_authenticated/admin/stations/'
-    | '/_authenticated/admin/subscriptions/'
-    | '/_authenticated/admin/users/'
-    | '/_authenticated/s/new/'
-    | '/_authenticated/you/library/'
+    | '/(guest)/$slugName'
+    | '/(protected)/'
+    | '/(guest)/s/$stationSlug'
+    | '/(guest)/s/chat-popup'
+    | '/(protected)/settings/account'
+    | '/(protected)/settings/appearance'
+    | '/(protected)/settings/display'
+    | '/(protected)/settings/language'
+    | '/(protected)/settings/notifications'
+    | '/(protected)/subscriptions/cancel'
+    | '/(protected)/subscriptions/success'
+    | '/(guest)/browse/'
+    | '/(guest)/discover/'
+    | '/(guest)/worldwide/'
+    | '/(protected)/admin/'
+    | '/(protected)/creator/'
+    | '/(protected)/settings/'
+    | '/(protected)/subscriptions/'
+    | '/(protected)/you/'
+    | '/(guest)/s/new/'
+    | '/(protected)/admin/countries/'
+    | '/(protected)/admin/feedback/'
+    | '/(protected)/admin/genres/'
+    | '/(protected)/admin/moderation/'
+    | '/(protected)/admin/reports/'
+    | '/(protected)/admin/stations/'
+    | '/(protected)/admin/subscriptions/'
+    | '/(protected)/admin/users/'
+    | '/(protected)/you/library/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  WorldMapRoute: typeof WorldMapRoute
+  protectedRouteRoute: typeof protectedRouteRouteWithChildren
   authForgotPasswordRoute: typeof authForgotPasswordRoute
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
-  authSignIn2Route: typeof authSignIn2Route
   authSignUpRoute: typeof authSignUpRoute
   errors401Route: typeof errors401Route
   errors403Route: typeof errors403Route
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
-  WorldwideIndexRoute: typeof WorldwideIndexRoute
+  guestSlugNameRoute: typeof guestSlugNameRoute
+  guestSStationSlugRoute: typeof guestSStationSlugRoute
+  guestSChatPopupRoute: typeof guestSChatPopupRoute
+  guestBrowseIndexRoute: typeof guestBrowseIndexRoute
+  guestDiscoverIndexRoute: typeof guestDiscoverIndexRoute
+  guestWorldwideIndexRoute: typeof guestWorldwideIndexRoute
+  guestSNewIndexRoute: typeof guestSNewIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/world-map': {
-      id: '/world-map'
-      path: '/world-map'
-      fullPath: '/world-map'
-      preLoaderRoute: typeof WorldMapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/(protected)': {
+      id: '/(protected)'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      preLoaderRoute: typeof protectedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/worldwide/': {
-      id: '/worldwide/'
-      path: '/worldwide'
-      fullPath: '/worldwide'
-      preLoaderRoute: typeof WorldwideIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/': {
-      id: '/_authenticated/'
+    '/(protected)/': {
+      id: '/(protected)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/$slugName': {
-      id: '/_authenticated/$slugName'
+    '/(guest)/$slugName': {
+      id: '/(guest)/$slugName'
       path: '/$slugName'
       fullPath: '/$slugName'
-      preLoaderRoute: typeof AuthenticatedSlugNameRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof guestSlugNameRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(errors)/503': {
       id: '/(errors)/503'
@@ -639,13 +612,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(auth)/sign-in-2': {
-      id: '/(auth)/sign-in-2'
-      path: '/sign-in-2'
-      fullPath: '/sign-in-2'
-      preLoaderRoute: typeof authSignIn2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(auth)/sign-in': {
       id: '/(auth)/sign-in'
       path: '/sign-in'
@@ -667,308 +633,309 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
+    '/(protected)/settings': {
+      id: '/(protected)/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedSettingsRouteRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
+    '/(protected)/admin': {
+      id: '/(protected)/admin'
       path: '/admin'
       fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedAdminRouteRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/you/': {
-      id: '/_authenticated/you/'
+    '/(protected)/you/': {
+      id: '/(protected)/you/'
       path: '/you'
       fullPath: '/you'
-      preLoaderRoute: typeof AuthenticatedYouIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedYouIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/subscriptions/': {
-      id: '/_authenticated/subscriptions/'
+    '/(protected)/subscriptions/': {
+      id: '/(protected)/subscriptions/'
       path: '/subscriptions'
       fullPath: '/subscriptions'
-      preLoaderRoute: typeof AuthenticatedSubscriptionsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedSubscriptionsIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/settings/': {
-      id: '/_authenticated/settings/'
+    '/(protected)/settings/': {
+      id: '/(protected)/settings/'
       path: '/'
       fullPath: '/settings/'
-      preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
+      preLoaderRoute: typeof protectedSettingsIndexRouteImport
+      parentRoute: typeof protectedSettingsRouteRoute
     }
-    '/_authenticated/creator/': {
-      id: '/_authenticated/creator/'
+    '/(protected)/creator/': {
+      id: '/(protected)/creator/'
       path: '/creator'
       fullPath: '/creator'
-      preLoaderRoute: typeof AuthenticatedCreatorIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedCreatorIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/browse/': {
-      id: '/_authenticated/browse/'
-      path: '/browse'
-      fullPath: '/browse'
-      preLoaderRoute: typeof AuthenticatedBrowseIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/': {
-      id: '/_authenticated/admin/'
+    '/(protected)/admin/': {
+      id: '/(protected)/admin/'
       path: '/'
       fullPath: '/admin/'
-      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/subscriptions/success': {
-      id: '/_authenticated/subscriptions/success'
+    '/(guest)/worldwide/': {
+      id: '/(guest)/worldwide/'
+      path: '/worldwide'
+      fullPath: '/worldwide'
+      preLoaderRoute: typeof guestWorldwideIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(guest)/discover/': {
+      id: '/(guest)/discover/'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof guestDiscoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(guest)/browse/': {
+      id: '/(guest)/browse/'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof guestBrowseIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(protected)/subscriptions/success': {
+      id: '/(protected)/subscriptions/success'
       path: '/subscriptions/success'
       fullPath: '/subscriptions/success'
-      preLoaderRoute: typeof AuthenticatedSubscriptionsSuccessRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedSubscriptionsSuccessRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/subscriptions/cancel': {
-      id: '/_authenticated/subscriptions/cancel'
+    '/(protected)/subscriptions/cancel': {
+      id: '/(protected)/subscriptions/cancel'
       path: '/subscriptions/cancel'
       fullPath: '/subscriptions/cancel'
-      preLoaderRoute: typeof AuthenticatedSubscriptionsCancelRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedSubscriptionsCancelRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/settings/notifications': {
-      id: '/_authenticated/settings/notifications'
+    '/(protected)/settings/notifications': {
+      id: '/(protected)/settings/notifications'
       path: '/notifications'
       fullPath: '/settings/notifications'
-      preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
+      preLoaderRoute: typeof protectedSettingsNotificationsRouteImport
+      parentRoute: typeof protectedSettingsRouteRoute
     }
-    '/_authenticated/settings/language': {
-      id: '/_authenticated/settings/language'
+    '/(protected)/settings/language': {
+      id: '/(protected)/settings/language'
       path: '/language'
       fullPath: '/settings/language'
-      preLoaderRoute: typeof AuthenticatedSettingsLanguageRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
+      preLoaderRoute: typeof protectedSettingsLanguageRouteImport
+      parentRoute: typeof protectedSettingsRouteRoute
     }
-    '/_authenticated/settings/display': {
-      id: '/_authenticated/settings/display'
+    '/(protected)/settings/display': {
+      id: '/(protected)/settings/display'
       path: '/display'
       fullPath: '/settings/display'
-      preLoaderRoute: typeof AuthenticatedSettingsDisplayRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
+      preLoaderRoute: typeof protectedSettingsDisplayRouteImport
+      parentRoute: typeof protectedSettingsRouteRoute
     }
-    '/_authenticated/settings/appearance': {
-      id: '/_authenticated/settings/appearance'
+    '/(protected)/settings/appearance': {
+      id: '/(protected)/settings/appearance'
       path: '/appearance'
       fullPath: '/settings/appearance'
-      preLoaderRoute: typeof AuthenticatedSettingsAppearanceRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
+      preLoaderRoute: typeof protectedSettingsAppearanceRouteImport
+      parentRoute: typeof protectedSettingsRouteRoute
     }
-    '/_authenticated/settings/account': {
-      id: '/_authenticated/settings/account'
+    '/(protected)/settings/account': {
+      id: '/(protected)/settings/account'
       path: '/account'
       fullPath: '/settings/account'
-      preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
+      preLoaderRoute: typeof protectedSettingsAccountRouteImport
+      parentRoute: typeof protectedSettingsRouteRoute
     }
-    '/_authenticated/s/chat-popup': {
-      id: '/_authenticated/s/chat-popup'
+    '/(guest)/s/chat-popup': {
+      id: '/(guest)/s/chat-popup'
       path: '/s/chat-popup'
       fullPath: '/s/chat-popup'
-      preLoaderRoute: typeof AuthenticatedSChatPopupRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof guestSChatPopupRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/s/$stationSlug': {
-      id: '/_authenticated/s/$stationSlug'
+    '/(guest)/s/$stationSlug': {
+      id: '/(guest)/s/$stationSlug'
       path: '/s/$stationSlug'
       fullPath: '/s/$stationSlug'
-      preLoaderRoute: typeof AuthenticatedSStationSlugRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof guestSStationSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/you/library/': {
-      id: '/_authenticated/you/library/'
+    '/(protected)/you/library/': {
+      id: '/(protected)/you/library/'
       path: '/you/library'
       fullPath: '/you/library'
-      preLoaderRoute: typeof AuthenticatedYouLibraryIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof protectedYouLibraryIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
-    '/_authenticated/s/new/': {
-      id: '/_authenticated/s/new/'
-      path: '/s/new'
-      fullPath: '/s/new'
-      preLoaderRoute: typeof AuthenticatedSNewIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/users/': {
-      id: '/_authenticated/admin/users/'
+    '/(protected)/admin/users/': {
+      id: '/(protected)/admin/users/'
       path: '/users'
       fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminUsersIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/subscriptions/': {
-      id: '/_authenticated/admin/subscriptions/'
+    '/(protected)/admin/subscriptions/': {
+      id: '/(protected)/admin/subscriptions/'
       path: '/subscriptions'
       fullPath: '/admin/subscriptions'
-      preLoaderRoute: typeof AuthenticatedAdminSubscriptionsIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminSubscriptionsIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/stations/': {
-      id: '/_authenticated/admin/stations/'
+    '/(protected)/admin/stations/': {
+      id: '/(protected)/admin/stations/'
       path: '/stations'
       fullPath: '/admin/stations'
-      preLoaderRoute: typeof AuthenticatedAdminStationsIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminStationsIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/reports/': {
-      id: '/_authenticated/admin/reports/'
+    '/(protected)/admin/reports/': {
+      id: '/(protected)/admin/reports/'
       path: '/reports'
       fullPath: '/admin/reports'
-      preLoaderRoute: typeof AuthenticatedAdminReportsIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminReportsIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/moderation/': {
-      id: '/_authenticated/admin/moderation/'
+    '/(protected)/admin/moderation/': {
+      id: '/(protected)/admin/moderation/'
       path: '/moderation'
       fullPath: '/admin/moderation'
-      preLoaderRoute: typeof AuthenticatedAdminModerationIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminModerationIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/genres/': {
-      id: '/_authenticated/admin/genres/'
+    '/(protected)/admin/genres/': {
+      id: '/(protected)/admin/genres/'
       path: '/genres'
       fullPath: '/admin/genres'
-      preLoaderRoute: typeof AuthenticatedAdminGenresIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminGenresIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/feedback/': {
-      id: '/_authenticated/admin/feedback/'
+    '/(protected)/admin/feedback/': {
+      id: '/(protected)/admin/feedback/'
       path: '/feedback'
       fullPath: '/admin/feedback'
-      preLoaderRoute: typeof AuthenticatedAdminFeedbackIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminFeedbackIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
     }
-    '/_authenticated/admin/countries/': {
-      id: '/_authenticated/admin/countries/'
+    '/(protected)/admin/countries/': {
+      id: '/(protected)/admin/countries/'
       path: '/countries'
       fullPath: '/admin/countries'
-      preLoaderRoute: typeof AuthenticatedAdminCountriesIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
+      preLoaderRoute: typeof protectedAdminCountriesIndexRouteImport
+      parentRoute: typeof protectedAdminRouteRoute
+    }
+    '/(guest)/s/new/': {
+      id: '/(guest)/s/new/'
+      path: '/s/new'
+      fullPath: '/s/new'
+      preLoaderRoute: typeof guestSNewIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AuthenticatedAdminRouteRouteChildren {
-  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
-  AuthenticatedAdminCountriesIndexRoute: typeof AuthenticatedAdminCountriesIndexRoute
-  AuthenticatedAdminFeedbackIndexRoute: typeof AuthenticatedAdminFeedbackIndexRoute
-  AuthenticatedAdminGenresIndexRoute: typeof AuthenticatedAdminGenresIndexRoute
-  AuthenticatedAdminModerationIndexRoute: typeof AuthenticatedAdminModerationIndexRoute
-  AuthenticatedAdminReportsIndexRoute: typeof AuthenticatedAdminReportsIndexRoute
-  AuthenticatedAdminStationsIndexRoute: typeof AuthenticatedAdminStationsIndexRoute
-  AuthenticatedAdminSubscriptionsIndexRoute: typeof AuthenticatedAdminSubscriptionsIndexRoute
-  AuthenticatedAdminUsersIndexRoute: typeof AuthenticatedAdminUsersIndexRoute
+interface protectedAdminRouteRouteChildren {
+  protectedAdminIndexRoute: typeof protectedAdminIndexRoute
+  protectedAdminCountriesIndexRoute: typeof protectedAdminCountriesIndexRoute
+  protectedAdminFeedbackIndexRoute: typeof protectedAdminFeedbackIndexRoute
+  protectedAdminGenresIndexRoute: typeof protectedAdminGenresIndexRoute
+  protectedAdminModerationIndexRoute: typeof protectedAdminModerationIndexRoute
+  protectedAdminReportsIndexRoute: typeof protectedAdminReportsIndexRoute
+  protectedAdminStationsIndexRoute: typeof protectedAdminStationsIndexRoute
+  protectedAdminSubscriptionsIndexRoute: typeof protectedAdminSubscriptionsIndexRoute
+  protectedAdminUsersIndexRoute: typeof protectedAdminUsersIndexRoute
 }
 
-const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+const protectedAdminRouteRouteChildren: protectedAdminRouteRouteChildren = {
+  protectedAdminIndexRoute: protectedAdminIndexRoute,
+  protectedAdminCountriesIndexRoute: protectedAdminCountriesIndexRoute,
+  protectedAdminFeedbackIndexRoute: protectedAdminFeedbackIndexRoute,
+  protectedAdminGenresIndexRoute: protectedAdminGenresIndexRoute,
+  protectedAdminModerationIndexRoute: protectedAdminModerationIndexRoute,
+  protectedAdminReportsIndexRoute: protectedAdminReportsIndexRoute,
+  protectedAdminStationsIndexRoute: protectedAdminStationsIndexRoute,
+  protectedAdminSubscriptionsIndexRoute: protectedAdminSubscriptionsIndexRoute,
+  protectedAdminUsersIndexRoute: protectedAdminUsersIndexRoute,
+}
+
+const protectedAdminRouteRouteWithChildren =
+  protectedAdminRouteRoute._addFileChildren(protectedAdminRouteRouteChildren)
+
+interface protectedSettingsRouteRouteChildren {
+  protectedSettingsAccountRoute: typeof protectedSettingsAccountRoute
+  protectedSettingsAppearanceRoute: typeof protectedSettingsAppearanceRoute
+  protectedSettingsDisplayRoute: typeof protectedSettingsDisplayRoute
+  protectedSettingsLanguageRoute: typeof protectedSettingsLanguageRoute
+  protectedSettingsNotificationsRoute: typeof protectedSettingsNotificationsRoute
+  protectedSettingsIndexRoute: typeof protectedSettingsIndexRoute
+}
+
+const protectedSettingsRouteRouteChildren: protectedSettingsRouteRouteChildren =
   {
-    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
-    AuthenticatedAdminCountriesIndexRoute:
-      AuthenticatedAdminCountriesIndexRoute,
-    AuthenticatedAdminFeedbackIndexRoute: AuthenticatedAdminFeedbackIndexRoute,
-    AuthenticatedAdminGenresIndexRoute: AuthenticatedAdminGenresIndexRoute,
-    AuthenticatedAdminModerationIndexRoute:
-      AuthenticatedAdminModerationIndexRoute,
-    AuthenticatedAdminReportsIndexRoute: AuthenticatedAdminReportsIndexRoute,
-    AuthenticatedAdminStationsIndexRoute: AuthenticatedAdminStationsIndexRoute,
-    AuthenticatedAdminSubscriptionsIndexRoute:
-      AuthenticatedAdminSubscriptionsIndexRoute,
-    AuthenticatedAdminUsersIndexRoute: AuthenticatedAdminUsersIndexRoute,
+    protectedSettingsAccountRoute: protectedSettingsAccountRoute,
+    protectedSettingsAppearanceRoute: protectedSettingsAppearanceRoute,
+    protectedSettingsDisplayRoute: protectedSettingsDisplayRoute,
+    protectedSettingsLanguageRoute: protectedSettingsLanguageRoute,
+    protectedSettingsNotificationsRoute: protectedSettingsNotificationsRoute,
+    protectedSettingsIndexRoute: protectedSettingsIndexRoute,
   }
 
-const AuthenticatedAdminRouteRouteWithChildren =
-  AuthenticatedAdminRouteRoute._addFileChildren(
-    AuthenticatedAdminRouteRouteChildren,
+const protectedSettingsRouteRouteWithChildren =
+  protectedSettingsRouteRoute._addFileChildren(
+    protectedSettingsRouteRouteChildren,
   )
 
-interface AuthenticatedSettingsRouteRouteChildren {
-  AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
-  AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
-  AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute
-  AuthenticatedSettingsLanguageRoute: typeof AuthenticatedSettingsLanguageRoute
-  AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
-  AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
+interface protectedRouteRouteChildren {
+  protectedAdminRouteRoute: typeof protectedAdminRouteRouteWithChildren
+  protectedSettingsRouteRoute: typeof protectedSettingsRouteRouteWithChildren
+  protectedIndexRoute: typeof protectedIndexRoute
+  protectedSubscriptionsCancelRoute: typeof protectedSubscriptionsCancelRoute
+  protectedSubscriptionsSuccessRoute: typeof protectedSubscriptionsSuccessRoute
+  protectedCreatorIndexRoute: typeof protectedCreatorIndexRoute
+  protectedSubscriptionsIndexRoute: typeof protectedSubscriptionsIndexRoute
+  protectedYouIndexRoute: typeof protectedYouIndexRoute
+  protectedYouLibraryIndexRoute: typeof protectedYouLibraryIndexRoute
 }
 
-const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteChildren =
-  {
-    AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
-    AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
-    AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
-    AuthenticatedSettingsLanguageRoute: AuthenticatedSettingsLanguageRoute,
-    AuthenticatedSettingsNotificationsRoute:
-      AuthenticatedSettingsNotificationsRoute,
-    AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
-  }
-
-const AuthenticatedSettingsRouteRouteWithChildren =
-  AuthenticatedSettingsRouteRoute._addFileChildren(
-    AuthenticatedSettingsRouteRouteChildren,
-  )
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
-  AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
-  AuthenticatedSlugNameRoute: typeof AuthenticatedSlugNameRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedSStationSlugRoute: typeof AuthenticatedSStationSlugRoute
-  AuthenticatedSChatPopupRoute: typeof AuthenticatedSChatPopupRoute
-  AuthenticatedSubscriptionsCancelRoute: typeof AuthenticatedSubscriptionsCancelRoute
-  AuthenticatedSubscriptionsSuccessRoute: typeof AuthenticatedSubscriptionsSuccessRoute
-  AuthenticatedBrowseIndexRoute: typeof AuthenticatedBrowseIndexRoute
-  AuthenticatedCreatorIndexRoute: typeof AuthenticatedCreatorIndexRoute
-  AuthenticatedSubscriptionsIndexRoute: typeof AuthenticatedSubscriptionsIndexRoute
-  AuthenticatedYouIndexRoute: typeof AuthenticatedYouIndexRoute
-  AuthenticatedSNewIndexRoute: typeof AuthenticatedSNewIndexRoute
-  AuthenticatedYouLibraryIndexRoute: typeof AuthenticatedYouLibraryIndexRoute
+const protectedRouteRouteChildren: protectedRouteRouteChildren = {
+  protectedAdminRouteRoute: protectedAdminRouteRouteWithChildren,
+  protectedSettingsRouteRoute: protectedSettingsRouteRouteWithChildren,
+  protectedIndexRoute: protectedIndexRoute,
+  protectedSubscriptionsCancelRoute: protectedSubscriptionsCancelRoute,
+  protectedSubscriptionsSuccessRoute: protectedSubscriptionsSuccessRoute,
+  protectedCreatorIndexRoute: protectedCreatorIndexRoute,
+  protectedSubscriptionsIndexRoute: protectedSubscriptionsIndexRoute,
+  protectedYouIndexRoute: protectedYouIndexRoute,
+  protectedYouLibraryIndexRoute: protectedYouLibraryIndexRoute,
 }
 
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
-  AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
-  AuthenticatedSlugNameRoute: AuthenticatedSlugNameRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedSStationSlugRoute: AuthenticatedSStationSlugRoute,
-  AuthenticatedSChatPopupRoute: AuthenticatedSChatPopupRoute,
-  AuthenticatedSubscriptionsCancelRoute: AuthenticatedSubscriptionsCancelRoute,
-  AuthenticatedSubscriptionsSuccessRoute:
-    AuthenticatedSubscriptionsSuccessRoute,
-  AuthenticatedBrowseIndexRoute: AuthenticatedBrowseIndexRoute,
-  AuthenticatedCreatorIndexRoute: AuthenticatedCreatorIndexRoute,
-  AuthenticatedSubscriptionsIndexRoute: AuthenticatedSubscriptionsIndexRoute,
-  AuthenticatedYouIndexRoute: AuthenticatedYouIndexRoute,
-  AuthenticatedSNewIndexRoute: AuthenticatedSNewIndexRoute,
-  AuthenticatedYouLibraryIndexRoute: AuthenticatedYouLibraryIndexRoute,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+const protectedRouteRouteWithChildren = protectedRouteRoute._addFileChildren(
+  protectedRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  WorldMapRoute: WorldMapRoute,
+  protectedRouteRoute: protectedRouteRouteWithChildren,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
-  authSignIn2Route: authSignIn2Route,
   authSignUpRoute: authSignUpRoute,
   errors401Route: errors401Route,
   errors403Route: errors403Route,
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
-  WorldwideIndexRoute: WorldwideIndexRoute,
+  guestSlugNameRoute: guestSlugNameRoute,
+  guestSStationSlugRoute: guestSStationSlugRoute,
+  guestSChatPopupRoute: guestSChatPopupRoute,
+  guestBrowseIndexRoute: guestBrowseIndexRoute,
+  guestDiscoverIndexRoute: guestDiscoverIndexRoute,
+  guestWorldwideIndexRoute: guestWorldwideIndexRoute,
+  guestSNewIndexRoute: guestSNewIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

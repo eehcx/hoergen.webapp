@@ -1,6 +1,12 @@
 import { useEffect } from 'react'
 import { QueryClient } from '@tanstack/react-query'
-import { createRootRouteWithContext, Outlet, useLocation } from '@tanstack/react-router'
+import { 
+  createRootRouteWithContext, 
+  Outlet, 
+  useLocation, 
+  //Navigate 
+} from '@tanstack/react-router'
+//import { useAuth } from '@/presentation/hooks'
 
 import { Toaster } from '@/presentation/components/ui/sonner'
 import { NavigationProgress } from '@/presentation/components/navigation-progress'
@@ -15,6 +21,7 @@ export const Route = createRootRouteWithContext<{
   component: () => {
     const { player, pause } = useMiniPlayer()
     const location = useLocation()
+    //const { isAuthenticated, isLoading, isInitialized } = useAuth()
 
     // Excluded routes 
     const hiddenRoutes = [
@@ -42,6 +49,7 @@ export const Route = createRootRouteWithContext<{
         pause()
       }
     }, [shouldHideMiniPlayer, player?.isPlaying, pause])
+
     
     return (
       <>

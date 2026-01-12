@@ -9,7 +9,7 @@ interface AuthGuardProps {
 
 export function AuthGuard({
   children,
-  redirectTo = '/sign-in',
+  redirectTo = '/discover',
 }: AuthGuardProps) {
   const { isAuthenticated, isLoading, user } = useAuth()
   const [timeoutReached, setTimeoutReached] = useState(false)
@@ -29,7 +29,7 @@ export function AuthGuard({
     const timeout = isElectron ? 15000 : 8000 // Más tiempo en Electron
     const timer = setTimeout(() => {
       if (isLoading) {
-        console.warn('AuthGuard: Loading timeout reached after', timeout, 'ms')
+        //console.warn('AuthGuard: Loading timeout reached after', timeout, 'ms')
         setTimeoutReached(true)
       }
     }, timeout)

@@ -109,6 +109,7 @@ export function useAuth() {
     user,
     claims,
     isLoading,
+    isInitialized,
     isAuthenticated: !!user,
     refreshClaims, // Exponemos la función para uso externo
   };

@@ -101,12 +101,14 @@ export function ProfileDropdown() {
                   <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              {/*
               <DropdownMenuItem className='cursor-pointer rounded-xs' asChild>
                 <Link to='/subscriptions'>
                   Billing
                   <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -165,12 +167,14 @@ export function ProfileDropdown() {
                   <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className='rounded-xs' asChild>
+              {/*
+              <DropdownMenuItem className='cursor-pointer rounded-xs' asChild>
                 <Link to='/subscriptions'>
                   Billing
                   <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -219,12 +223,14 @@ export function ProfileDropdown() {
                   <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              {/*
               <DropdownMenuItem className='cursor-pointer rounded-xs' asChild>
                 <Link to='/subscriptions'>
                   Billing
                   <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -283,12 +289,14 @@ export function ProfileDropdown() {
                   <DropdownMenuShortcut>⌘C</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              {/*
               <DropdownMenuItem className='cursor-pointer rounded-xs' asChild>
                 <Link to='/subscriptions'>
                   Billing
                   <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem

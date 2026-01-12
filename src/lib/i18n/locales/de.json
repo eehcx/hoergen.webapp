@@ -88,6 +88,11 @@
     "searchPlaceholder": "Suche nach Radiosendern weltweit...",
     "createRadio": "Radio erstellen"
   },
+  "discover": {
+    "openFrequencies": "Offene Frequenzen",
+    "openFrequenciesDescription": "Registrieren Sie sich, um Ihre eigene Radiostation zu erstellen, Favoriten zu speichern und auf Premium-Funktionen zuzugreifen. Oder erkunden Sie öffentliche Sender weltweit.",
+    "browseNodes": "Knoten durchsuchen"
+  },
   "worldMap": {
     "title": "Weltkarte",
     "description": "Entdecken Sie Radiosender auf der ganzen Welt",

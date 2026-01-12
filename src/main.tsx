@@ -54,11 +54,10 @@ const queryClient = new QueryClient({
     onError: (error) => {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
-          toast.error('Session expired!')
           useAuthStore.getState().setUser(null)
           useAuthStore.getState().setClaims(null)
           const redirect = `${router.history.location.href}`
-          router.navigate({ to: '/sign-in', search: { redirect } })
+          router.navigate({ to: '/sign-in', search: { redirect } }) //sign-in
         }
         if (error.response?.status === 500) {
           toast.error('Internal Server Error!')

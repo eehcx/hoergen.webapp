@@ -112,6 +112,11 @@
     "languageMenu": "Menú de Idioma",
     "themeMenu": "Menú de Tema"
   },
+  "discover": {
+    "openFrequencies": "Frecuencias Abiertas",
+    "openFrequenciesDescription": "Regístrate para crear tu propia estación de radio, guardar favoritos y acceder a funciones premium. O explora estaciones públicas en todo el mundo.",
+    "browseNodes": "Explorar Nodos"
+  },
   "worldMap": {
     "title": "Mapa Mundial",
     "description": "Explora estaciones de radio alrededor del mundo",
